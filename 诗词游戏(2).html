@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#8b4513">
+    <meta name="description" content="沉浸式古诗词学习游戏 - 诗笺雅集">
+    <title>诗笺雅集 - 沉浸式诗词游戏</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIuWtkOW/q+Wkp+mXqSIsICJzaG9ydF9uYW1lIjogIuWtkOW/qyIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjVmMGU2IiwgInRoZW1lX2NvbG9yIjogIiM4YjQ1MTMifQ==">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --paper: #f5f0e6;
+            --paper-dark: #e8dcc8;
+            --ink: #2c2c2c;
+            --ink-light: #4a4a4a;
+            --accent: #8b4513;
+            --accent-light: #a0522d;
+            --gold: #d4a574;
+            --success: #2e7d32;
+            --error: #c62828;
+            --warning: #f9a825;
+            --shadow: rgba(139, 69, 19, 0.15);
+            --shadow-heavy: rgba(139, 69, 19, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', 'STKaiti', '华文楷体', serif;
+            background: var(--paper);
+            min-height: 100vh;
+            color: var(--ink);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 纸张纹理背景 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"),
+                radial-gradient(circle at 20% 30%, rgba(139, 119, 101, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(139, 119, 101, 0.08) 0%, transparent 50%);
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* 水墨装饰 */
+        .ink-decoration {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .ink-decoration.top-right {
+            top: -50px;
+            right: -50px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(ellipse at center, var(--ink) 0%, transparent 70%);
+            filter: blur(40px);
+        }
+
+        .ink-decoration.bottom-left {
+            bottom: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(ellipse at center, var(--accent) 0%, transparent 60%);
+            filter: blur(60px);
+        }
+
+        #app {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 15px;
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 20px var(--shadow);
+            border: 2px solid var(--gold);
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .game-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 32px;
+            color: var(--accent);
+            text-shadow: 2px 2px 4px var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .game-title::before {
+            content: '📜';
+            font-size: 28px;
+        }
+
+        .score-board {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 12px;
+            color: var(--ink-light);
+            display: block;
+        }
+
+        .score-value {
+            font-family: 'ZCOOL XiaoWei', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* 模式切换 */
+        .mode-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            scrollbar-width: none;
+        }
+
+        .mode-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mode-tab {
+            flex: 1;
+            min-width: 80px;
+            padding: 12px 16px;
+            border: 2px solid var(--gold);
+            background: var(--paper);
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--ink-light);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-tab::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--accent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+            opacity: 0.1;
+        }
+
+        .mode-tab:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+
+        .mode-tab.active {
+            background: var(--accent);
+            color: var(--paper);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--shadow-heavy);
+        }
+
+        .mode-tab .icon {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+
+        /* Main Game Area */
+        main {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 8px 30px var(--shadow);
+            border: 2px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 难度选择器 */
+        .difficulty-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .difficulty-btn {
+            padding: 10px 25px;
+            border: 2px solid var(--gold);
+            background: var(--paper);
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .difficulty-btn.easy { color: var(--success); border-color: var(--success); }
+        .difficulty-btn.medium { color: var(--warning); border-color: var(--warning); }
+        .difficulty-btn.hard { color: var(--error); border-color: var(--error); }
+
+        .difficulty-btn.active {
+            transform: scale(1.05);
+            font-weight: 600;
+        }
+
+        .difficulty-btn.easy.active { background: var(--success); color: white; }
+        .difficulty-btn.medium.active { background: var(--warning); color: white; }
+        .difficulty-btn.hard.active { background: var(--error); color: white; }
+
+        /* 游戏内容区 */
+        .game-content {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 诗词展示区 */
+        .poem-display {
+            text-align: center;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, #faf8f3 0%, var(--paper) 100%);
+            border-radius: 15px;
+            border: 3px solid var(--gold);
+            margin-bottom: 30px;
+            position: relative;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .poem-display.prompt {
+            color: var(--ink-light);
+            font-size: 20px;
+        }
+
+        .poem-text {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 36px;
+            color: var(--ink);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .poem-hint {
+            font-size: 14px;
+            color: var(--ink-light);
+            margin-top: 10px;
+        }
+
+        /* 墨滴扩散动画 */
+        .ink-spread {
+            animation: inkSpread 0.8s ease-out;
+        }
+
+        @keyframes inkSpread {
+            0% { 
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 0 20px rgba(46, 125, 50, 0);
+                transform: scale(1.02);
+            }
+            100% { 
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0);
+                transform: scale(1);
+            }
+        }
+
+        /* 选项网格 */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 480px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-card {
+            padding: 20px;
+            background: white;
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .option-card:hover::after {
+            left: 100%;
+        }
+
+        .option-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--shadow);
+            border-color: var(--accent);
+        }
+
+        .option-card.correct {
+            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+            border-color: var(--success);
+            animation: correctPulse 0.6s ease;
+        }
+
+        .option-card.wrong {
+            background: linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%);
+            border-color: var(--error);
+            animation: paperShake 0.5s ease;
+        }
+
+        .option-card.highlight {
+            background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+            border-color: var(--warning);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes paperShake {
+            0%, 100% { transform: translateX(0) rotate(0); }
+            25% { transform: translateX(-10px) rotate(-2deg); }
+            75% { transform: translateX(10px) rotate(2deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(249, 168, 37, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(249, 168, 37, 0); }
+        }
+
+        /* 配对模式 */
+        .match-container {
+            position: relative;
+            min-height: 400px;
+        }
+
+        #matchCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .match-area {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+            position: relative;
+            z-index: 5;
+        }
+
+        .match-column {
+            flex: 1;
+            max-width: 48%;
+        }
+
+        .column-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--gold);
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+
+        .match-item {
+            padding: 18px;
+            background: white;
+            border: 2px solid var(--gold);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+        }
+
+        .match-item:hover {
+            transform: translateX(5px);
+            border-color: var(--accent);
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .match-column:last-child .match-item:hover {
+            transform: translateX(-5px);
+        }
+
+        .match-item.selected {
+            background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+            border-color: var(--warning);
+            box-shadow: 0 0 20px rgba(249, 168, 37, 0.3);
+        }
+
+        .match-item.matched {
+            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+            border-color: var(--success);
+            opacity: 0.7;
+            cursor: default;
+            transform: scale(0.98);
+        }
+
+        .match-item.wrong {
+            background: linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%);
+            border-color: var(--error);
+            animation: paperShake 0.5s ease;
+        }
+
+        /* 飞花令 */
+        .feihua-keyword {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 72px;
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px var(--shadow);
+            position: relative;
+            display: inline-block;
+        }
+
+        .feihua-keyword::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 2px;
+        }
+
+        .feihua-context {
+            text-align: center;
+            font-size: 20px;
+            color: var(--ink-light);
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        /* 接龙模式输入 */
+        .chain-input-area {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .chain-hint {
+            text-align: center;
+            font-size: 14px;
+            color: var(--ink-light);
+            margin-bottom: 20px;
+        }
+
+        .chain-input-wrapper {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .chain-input {
+            width: 100%;
+            padding: 20px;
+            font-size: 24px;
+            font-family: 'Ma Shan Zheng', cursive;
+            border: 3px solid var(--gold);
+            border-radius: 15px;
+            background: white;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .chain-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(139, 69, 19, 0.2);
+        }
+
+        .chain-input.correct {
+            border-color: var(--success);
+            background: #e8f5e9;
+        }
+
+        .chain-input.wrong {
+            border-color: var(--error);
+            animation: paperShake 0.5s ease;
+        }
+
+        .chain-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .chain-btn {
+            padding: 12px 24px;
+            border: 2px solid var(--accent);
+            background: white;
+            color: var(--accent);
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .chain-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .chain-btn.primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .chain-btn.primary:hover {
+            background: var(--accent-light);
+        }
+
+        .chain-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* 计时条 */
+        .timer-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--paper-dark);
+            border-radius: 3px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .timer-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--warning), var(--error));
+            border-radius: 3px;
+            transition: width 0.1s linear;
+        }
+
+        .timer-text {
+            text-align: center;
+            font-size: 14px;
+            color: var(--ink-light);
+            margin-top: 5px;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 20px var(--shadow);
+            border: 2px solid var(--gold);
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .status-bar {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-icon {
+            font-size: 20px;
+        }
+
+        .hearts {
+            display: flex;
+            gap: 3px;
+        }
+
+        .heart {
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .heart.lost {
+            opacity: 0.3;
+            filter: grayscale(100%);
+        }
+
+        .heart.lost {
+            animation: heartBreak 0.5s ease;
+        }
+
+        @keyframes heartBreak {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); opacity: 0.3; }
+        }
+
+        .streak-badge {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 14px;
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(255, 107, 107, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.8); }
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--accent);
+            background: white;
+            color: var(--accent);
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* 浮动反馈 */
+        .floating-feedback {
+            position: fixed;
+            pointer-events: none;
+            z-index: 2000;
+            font-weight: 700;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: floatUp 1s ease forwards;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-80px) scale(1.2); }
+        }
+
+        /* Combo 提示 */
+        .combo-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 48px;
+            color: #ff6b6b;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            z-index: 2000;
+            animation: comboAnim 1s ease forwards;
+            pointer-events: none;
+        }
+
+        @keyframes comboAnim {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5) rotate(-10deg); }
+            30% { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(5deg); }
+            60% { transform: translate(-50%, -50%) scale(1) rotate(-3deg); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8) rotate(0deg) translateY(-50px); }
+        }
+
+        /* 成就解锁 */
+        .achievement-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            backdrop-filter: blur(5px);
+        }
+
+        .achievement-modal.active {
+            display: flex;
+        }
+
+        .achievement-content {
+            background: linear-gradient(135deg, #faf8f3 0%, var(--paper) 100%);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            border: 3px solid var(--gold);
+            animation: achievementIn 0.5s ease;
+            max-width: 90%;
+            width: 400px;
+        }
+
+        @keyframes achievementIn {
+            from { transform: scale(0.8) rotate(-5deg); opacity: 0; }
+            to { transform: scale(1) rotate(0); opacity: 1; }
+        }
+
+        .achievement-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: iconBounce 0.6s ease;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .achievement-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 28px;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .achievement-desc {
+            color: var(--ink-light);
+            margin-bottom: 30px;
+        }
+
+        /* 游戏结束 */
+        .game-over-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            backdrop-filter: blur(8px);
+        }
+
+        .game-over-modal.active {
+            display: flex;
+        }
+
+        .game-over-content {
+            background: linear-gradient(135deg, #faf8f3 0%, var(--paper) 100%);
+            padding: 50px;
+            border-radius: 25px;
+            text-align: center;
+            border: 3px solid var(--accent);
+            max-width: 90%;
+            width: 450px;
+            position: relative;
+        }
+
+        .game-over-content::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, var(--gold), var(--accent), var(--gold));
+            border-radius: 30px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .game-over-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 36px;
+            color: var(--accent);
+            margin-bottom: 30px;
+        }
+
+        .final-score {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-family: 'ZCOOL XiaoWei', serif;
+        }
+
+        .score-breakdown {
+            color: var(--ink-light);
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .restart-btn {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-family: inherit;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow-heavy);
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--shadow-heavy);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 24px;
+            }
+
+            .poem-text {
+                font-size: 28px;
+            }
+
+            .feihua-keyword {
+                font-size: 56px;
+            }
+
+            .match-area {
+                flex-direction: column;
+            }
+
+            .match-column {
+                max-width: 100%;
+            }
+
+            #matchCanvas {
+                display: none; /* 移动端简化，不显示连线 */
+            }
+
+            .match-item.matched::after {
+                content: '✓';
+                position: absolute;
+                right: 10px;
+                color: var(--success);
+                font-weight: bold;
+            }
+
+            footer {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .action-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* 加载动画 */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--gold);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 隐藏类 */
+        .hidden {
+            display: none !important;
+        }
+
+        /* 进度环 */
+        .progress-ring {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            z-index: 100;
+        }
+
+        .progress-ring circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="ink-decoration top-right"></div>
+    <div class="ink-decoration bottom-left"></div>
+
+    <div id="app">
+        <header>
+            <div class="header-top">
+                <h1 class="game-title">诗笺雅集</h1>
+                <div class="score-board">
+                    <div class="score-item">
+                        <span class="score-label">得分</span>
+                        <span class="score-value" id="scoreValue">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-label">最高</span>
+                        <span class="score-value" id="highScoreValue">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="mode-tabs">
+                <button class="mode-tab active" data-mode="fill" onclick="game.switchMode('fill')">
+                    <span class="icon">✏️</span>
+                    <span>填空</span>
+                </button>
+                <button class="mode-tab" data-mode="match" onclick="game.switchMode('match')">
+                    <span class="icon">🔗</span>
+                    <span>配对</span>
+                </button>
+                <button class="mode-tab" data-mode="feihua" onclick="game.switchMode('feihua')">
+                    <span class="icon">🌸</span>
+                    <span>飞花令</span>
+                </button>
+                <button class="mode-tab" data-mode="chain" onclick="game.switchMode('chain')">
+                    <span class="icon">⛓️</span>
+                    <span>接龙</span>
+                </button>
+            </nav>
+        </header>
+
+        <main id="gameMain">
+            <!-- 动态内容 -->
+        </main>
+
+        <footer>
+            <div class="status-bar">
+                <div class="status-item">
+                    <span class="status-icon">❤️</span>
+                    <div class="hearts" id="heartsDisplay">
+                        <span class="heart">❤️</span>
+                        <span class="heart">❤️</span>
+                        <span class="heart">❤️</span>
+                    </div>
+                </div>
+                <div class="status-item" id="streakContainer" style="display: none;">
+                    <span class="streak-badge" id="streakBadge">连击 x0</span>
+                </div>
+                <div class="status-item" id="timerContainer" style="display: none;">
+                    <div class="timer-bar" style="width: 100px;">
+                        <div class="timer-progress" id="timerBar" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-btn" id="hintBtn" onclick="game.useHint()">
+                    💡 提示
+                </button>
+                <button class="action-btn" onclick="game.restart()">
+                    🔄 重开
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 成就解锁弹窗 -->
+    <div class="achievement-modal" id="achievementModal">
+        <div class="achievement-content">
+            <div class="achievement-icon" id="achievementIcon">🏆</div>
+            <div class="achievement-title" id="achievementTitle">成就解锁</div>
+            <div class="achievement-desc" id="achievementDesc">描述文本</div>
+            <button class="restart-btn" onclick="game.closeAchievement()">继续挑战</button>
+        </div>
+    </div>
+
+    <!-- 游戏结束弹窗 -->
+    <div class="game-over-modal" id="gameOverModal">
+        <div class="game-over-content">
+            <div class="game-over-title">游戏结束</div>
+            <div class="final-score" id="finalScore">0</div>
+            <div class="score-breakdown" id="scoreBreakdown">
+                最高连击: <span id="finalStreak">0</span> | 收集诗词: <span id="finalCollected">0</span>首
+            </div>
+            <button class="restart-btn" onclick="game.restart()">再玩一次</button>
+        </div>
+    </div>
+
+    <script>
+
+        // ==================== 诗词数据库 ====================
+        const PoemDatabase = {
+            // 去重后的诗词数据（150首）
+            poems: [
+                // 李白（20首）
+                {id: 1, up: "床前明月光", down: "疑是地上霜", author: "李白", dynasty: "唐", tags: ["思乡", "月亮"], difficulty: 1},
+                {id: 2, up: "举头望明月", down: "低头思故乡", author: "李白", dynasty: "唐", tags: ["思乡", "月亮"], difficulty: 1},
+                {id: 3, up: "朝辞白帝彩云间", down: "千里江陵一日还", author: "李白", dynasty: "唐", tags: ["山水", "行旅"], difficulty: 2},
+                {id: 4, up: "两岸猿声啼不住", down: "轻舟已过万重山", author: "李白", dynasty: "唐", tags: ["山水", "行旅"], difficulty: 2},
+                {id: 5, up: "桃花潭水深千尺", down: "不及汪伦送我情", author: "李白", dynasty: "唐", tags: ["友情", "离别"], difficulty: 1},
+                {id: 6, up: "天门中断楚江开", down: "碧水东流至此回", author: "李白", dynasty: "唐", tags: ["山水"], difficulty: 2},
+                {id: 7, up: "两岸青山相对出", down: "孤帆一片日边来", author: "李白", dynasty: "唐", tags: ["山水"], difficulty: 2},
+                {id: 8, up: "长风破浪会有时", down: "直挂云帆济沧海", author: "李白", dynasty: "唐", tags: ["壮志", "励志"], difficulty: 2},
+                {id: 9, up: "天生我材必有用", down: "千金散尽还复来", author: "李白", dynasty: "唐", tags: ["励志", "豪放"], difficulty: 2},
+                {id: 10, up: "君不见黄河之水天上来", down: "奔流到海不复回", author: "李白", dynasty: "唐", tags: ["山水", "时间"], difficulty: 3},
+                {id: 11, up: "大漠沙如雪", down: "燕山月似钩", author: "李白", dynasty: "唐", tags: ["边塞", "月亮"], difficulty: 2},
+                {id: 12, up: "白发三千丈", down: "缘愁似个长", author: "李白", dynasty: "唐", tags: ["愁绪"], difficulty: 2},
+                {id: 13, up: "我寄愁心与明月", down: "随君直到夜郎西", author: "李白", dynasty: "唐", tags: ["友情", "月亮"], difficulty: 2},
+                {id: 14, up: "飞流直下三千尺", down: "疑是银河落九天", author: "李白", dynasty: "唐", tags: ["山水"], difficulty: 1},
+                {id: 15, up: "山随平野尽", down: "江入大荒流", author: "李白", dynasty: "唐", tags: ["山水", "行旅"], difficulty: 2},
+                {id: 16, up: "峨眉山月半轮秋", down: "影入平羌江水流", author: "李白", dynasty: "唐", tags: ["山水", "月亮"], difficulty: 3},
+                {id: 17, up: "故人西辞黄鹤楼", down: "烟花三月下扬州", author: "李白", dynasty: "唐", tags: ["友情", "离别"], difficulty: 2},
+                {id: 18, up: "孤帆远影碧空尽", down: "唯见长江天际流", author: "李白", dynasty: "唐", tags: ["离别", "山水"], difficulty: 2},
+                {id: 19, up: "抽刀断水水更流", down: "举杯消愁愁更愁", author: "李白", dynasty: "唐", tags: ["愁绪"], difficulty: 3},
+                {id: 20, up: "云想衣裳花想容", down: "春风拂槛露华浓", author: "李白", dynasty: "唐", tags: ["花", "春天"], difficulty: 3},
+
+                // 杜甫（15首）
+                {id: 21, up: "两个黄鹂鸣翠柳", down: "一行白鹭上青天", author: "杜甫", dynasty: "唐", tags: ["春天", "自然"], difficulty: 1},
+                {id: 22, up: "窗含西岭千秋雪", down: "门泊东吴万里船", author: "杜甫", dynasty: "唐", tags: ["山水"], difficulty: 2},
+                {id: 23, up: "国破山河在", down: "城春草木深", author: "杜甫", dynasty: "唐", tags: ["忧国", "春天"], difficulty: 2},
+                {id: 24, up: "感时花溅泪", down: "恨别鸟惊心", author: "杜甫", dynasty: "唐", tags: ["忧国", "离别"], difficulty: 2},
+                {id: 25, up: "烽火连三月", down: "家书抵万金", author: "杜甫", dynasty: "唐", tags: ["战争", "思乡"], difficulty: 2},
+                {id: 26, up: "随风潜入夜", down: "润物细无声", author: "杜甫", dynasty: "唐", tags: ["春天", "雨"], difficulty: 1},
+                {id: 27, up: "无边落木萧萧下", down: "不尽长江滚滚来", author: "杜甫", dynasty: "唐", tags: ["秋天", "山水"], difficulty: 3},
+                {id: 28, up: "会当凌绝顶", down: "一览众山小", author: "杜甫", dynasty: "唐", tags: ["壮志", "山水"], difficulty: 2},
+                {id: 29, up: "出师未捷身先死", down: "长使英雄泪满襟", author: "杜甫", dynasty: "唐", tags: ["历史", "壮志"], difficulty: 3},
+                {id: 30, up: "露从今夜白", down: "月是故乡明", author: "杜甫", dynasty: "唐", tags: ["思乡", "月亮", "秋天"], difficulty: 2},
+                {id: 31, up: "好雨知时节", down: "当春乃发生", author: "杜甫", dynasty: "唐", tags: ["春天", "雨"], difficulty: 1},
+                {id: 32, up: "迟日江山丽", down: "春风花草香", author: "杜甫", dynasty: "唐", tags: ["春天", "自然"], difficulty: 1},
+                {id: 33, up: "泥融飞燕子", down: "沙暖睡鸳鸯", author: "杜甫", dynasty: "唐", tags: ["春天", "自然"], difficulty: 2},
+                {id: 34, up: "江碧鸟逾白", down: "山青花欲燃", author: "杜甫", dynasty: "唐", tags: ["春天", "山水"], difficulty: 2},
+                {id: 35, up: "正是江南好风景", down: "落花时节又逢君", author: "杜甫", dynasty: "唐", tags: ["友情", "花", "春天"], difficulty: 2},
+
+                // 王维（12首）
+                {id: 36, up: "空山新雨后", down: "天气晚来秋", author: "王维", dynasty: "唐", tags: ["秋天", "山水"], difficulty: 1},
+                {id: 37, up: "明月松间照", down: "清泉石上流", author: "王维", dynasty: "唐", tags: ["秋天", "山水", "月亮"], difficulty: 1},
+                {id: 38, up: "红豆生南国", down: "春来发几枝", author: "王维", dynasty: "唐", tags: ["相思", "春天"], difficulty: 1},
+                {id: 39, up: "愿君多采撷", down: "此物最相思", author: "王维", dynasty: "唐", tags: ["相思"], difficulty: 1},
+                {id: 40, up: "独在异乡为异客", down: "每逢佳节倍思亲", author: "王维", dynasty: "唐", tags: ["思乡", "节日"], difficulty: 1},
+                {id: 41, up: "遥知兄弟登高处", down: "遍插茱萸少一人", author: "王维", dynasty: "唐", tags: ["思乡", "节日", "秋天"], difficulty: 2},
+                {id: 42, up: "劝君更尽一杯酒", down: "西出阳关无故人", author: "王维", dynasty: "唐", tags: ["离别", "友情"], difficulty: 2},
+                {id: 43, up: "大漠孤烟直", down: "长河落日圆", author: "王维", dynasty: "唐", tags: ["边塞", "山水"], difficulty: 2},
+                {id: 44, up: "深林人不知", down: "明月来相照", author: "王维", dynasty: "唐", tags: ["隐逸", "月亮"], difficulty: 2},
+                {id: 45, up: "人闲桂花落", down: "夜静春山空", author: "王维", dynasty: "唐", tags: ["春天", "花", "夜晚"], difficulty: 2},
+                {id: 46, up: "月出惊山鸟", down: "时鸣春涧中", author: "王维", dynasty: "唐", tags: ["春天", "月亮", "自然"], difficulty: 3},
+                {id: 47, up: "行到水穷处", down: "坐看云起时", author: "王维", dynasty: "唐", tags: ["隐逸", "山水", "云"], difficulty: 3},
+
+                // 白居易（12首）
+                {id: 48, up: "离离原上草", down: "一岁一枯荣", author: "白居易", dynasty: "唐", tags: ["自然", "生命"], difficulty: 1},
+                {id: 49, up: "野火烧不尽", down: "春风吹又生", author: "白居易", dynasty: "唐", tags: ["自然", "生命"], difficulty: 1},
+                {id: 50, up: "同是天涯沦落人", down: "相逢何必曾相识", author: "白居易", dynasty: "唐", tags: ["知音", "感慨"], difficulty: 2},
+                {id: 51, up: "别有幽愁暗恨生", down: "此时无声胜有声", author: "白居易", dynasty: "唐", tags: ["音乐", "愁绪"], difficulty: 3},
+                {id: 52, up: "几处早莺争暖树", down: "谁家新燕啄春泥", author: "白居易", dynasty: "唐", tags: ["春天", "自然"], difficulty: 2},
+                {id: 53, up: "乱花渐欲迷人眼", down: "浅草才能没马蹄", author: "白居易", dynasty: "唐", tags: ["春天", "花"], difficulty: 2},
+                {id: 54, up: "日出江花红胜火", down: "春来江水绿如蓝", author: "白居易", dynasty: "唐", tags: ["春天", "江南", "花"], difficulty: 2},
+                {id: 55, up: "可怜九月初三夜", down: "露似真珠月似弓", author: "白居易", dynasty: "唐", tags: ["秋天", "月亮", "夜晚"], difficulty: 2},
+                {id: 56, up: "人间四月芳菲尽", down: "山寺桃花始盛开", author: "白居易", dynasty: "唐", tags: ["春天", "花", "山水"], difficulty: 2},
+                {id: 57, up: "长恨春归无觅处", down: "不知转入此中来", author: "白居易", dynasty: "唐", tags: ["春天", "花"], difficulty: 3},
+                {id: 58, up: "绿蚁新醅酒", down: "红泥小火炉", author: "白居易", dynasty: "唐", tags: ["友情", "冬天"], difficulty: 3},
+                {id: 59, up: "晚来天欲雪", down: "能饮一杯无", author: "白居易", dynasty: "唐", tags: ["友情", "冬天", "雪"], difficulty: 3},
+
+                // 王之涣（4首）
+                {id: 60, up: "白日依山尽", down: "黄河入海流", author: "王之涣", dynasty: "唐", tags: ["山水", "壮志"], difficulty: 1},
+                {id: 61, up: "欲穷千里目", down: "更上一层楼", author: "王之涣", dynasty: "唐", tags: ["壮志", "励志"], difficulty: 1},
+                {id: 62, up: "黄河远上白云间", down: "一片孤城万仞山", author: "王之涣", dynasty: "唐", tags: ["边塞", "山水"], difficulty: 3},
+                {id: 63, up: "羌笛何须怨杨柳", down: "春风不度玉门关", author: "王之涣", dynasty: "唐", tags: ["边塞", "春天"], difficulty: 3},
+
+                // 孟浩然（8首）
+                {id: 64, up: "春眠不觉晓", down: "处处闻啼鸟", author: "孟浩然", dynasty: "唐", tags: ["春天", "自然"], difficulty: 1},
+                {id: 65, up: "夜来风雨声", down: "花落知多少", author: "孟浩然", dynasty: "唐", tags: ["春天", "花", "雨"], difficulty: 1},
+                {id: 66, up: "气蒸云梦泽", down: "波撼岳阳城", author: "孟浩然", dynasty: "唐", tags: ["山水", "云"], difficulty: 3},
+                {id: 67, up: "野旷天低树", down: "江清月近人", author: "孟浩然", dynasty: "唐", tags: ["山水", "月亮", "愁绪"], difficulty: 2},
+                {id: 68, up: "故人具鸡黍", down: "邀我至田家", author: "孟浩然", dynasty: "唐", tags: ["田园", "友情"], difficulty: 2},
+                {id: 69, up: "绿树村边合", down: "青山郭外斜", author: "孟浩然", dynasty: "唐", tags: ["田园", "山水"], difficulty: 2},
+                {id: 70, up: "开轩面场圃", down: "把酒话桑麻", author: "孟浩然", dynasty: "唐", tags: ["田园", "友情"], difficulty: 3},
+                {id: 71, up: "待到重阳日", down: "还来就菊花", author: "孟浩然", dynasty: "唐", tags: ["田园", "友情", "花", "秋天"], difficulty: 2},
+
+                // 李商隐（10首）
+                {id: 72, up: "春蚕到死丝方尽", down: "蜡炬成灰泪始干", author: "李商隐", dynasty: "唐", tags: ["相思", "爱情"], difficulty: 2},
+                {id: 73, up: "身无彩凤双飞翼", down: "心有灵犀一点通", author: "李商隐", dynasty: "唐", tags: ["相思", "爱情"], difficulty: 2},
+                {id: 74, up: "夕阳无限好", down: "只是近黄昏", author: "李商隐", dynasty: "唐", tags: ["时间", "感慨"], difficulty: 1},
+                {id: 75, up: "锦瑟无端五十弦", down: "一弦一柱思华年", author: "李商隐", dynasty: "唐", tags: ["感慨", "时间"], difficulty: 3},
+                {id: 76, up: "何当共剪西窗烛", down: "却话巴山夜雨时", author: "李商隐", dynasty: "唐", tags: ["相思", "雨", "夜晚"], difficulty: 2},
+                {id: 77, up: "春心莫共花争发", down: "一寸相思一寸灰", author: "李商隐", dynasty: "唐", tags: ["相思", "花", "愁绪"], difficulty: 3},
+                {id: 78, up: "君问归期未有期", down: "巴山夜雨涨秋池", author: "李商隐", dynasty: "唐", tags: ["相思", "雨", "秋天"], difficulty: 2},
+                {id: 79, up: "沧海月明珠有泪", down: "蓝田日暖玉生烟", author: "李商隐", dynasty: "唐", tags: ["月亮", "感慨"], difficulty: 3},
+                {id: 80, up: "相见时难别亦难", down: "东风无力百花残", author: "李商隐", dynasty: "唐", tags: ["离别", "花", "春天"], difficulty: 2},
+                {id: 81, up: "晓镜但愁云鬓改", down: "夜吟应觉月光寒", author: "李商隐", dynasty: "唐", tags: ["相思", "月亮", "时间"], difficulty: 3},
+
+                // 柳宗元（2首）
+                {id: 82, up: "千山鸟飞绝", down: "万径人踪灭", author: "柳宗元", dynasty: "唐", tags: ["冬天", "雪", "孤独"], difficulty: 2},
+                {id: 83, up: "孤舟蓑笠翁", down: "独钓寒江雪", author: "柳宗元", dynasty: "唐", tags: ["冬天", "雪", "孤独"], difficulty: 2},
+
+                // 苏轼（15首）
+                {id: 84, up: "不识庐山真面目", down: "只缘身在此山中", author: "苏轼", dynasty: "宋", tags: ["山水", "哲理"], difficulty: 2},
+                {id: 85, up: "横看成岭侧成峰", down: "远近高低各不同", author: "苏轼", dynasty: "宋", tags: ["山水", "哲理"], difficulty: 2},
+                {id: 86, up: "欲把西湖比西子", down: "淡妆浓抹总相宜", author: "苏轼", dynasty: "宋", tags: ["山水", "春天"], difficulty: 2},
+                {id: 87, up: "水光潋滟晴方好", down: "山色空蒙雨亦奇", author: "苏轼", dynasty: "宋", tags: ["山水", "雨"], difficulty: 2},
+                {id: 88, up: "大江东去", down: "浪淘尽", author: "苏轼", dynasty: "宋", tags: ["历史", "豪放"], difficulty: 3},
+                {id: 89, up: "但愿人长久", down: "千里共婵娟", author: "苏轼", dynasty: "宋", tags: ["相思", "月亮", "中秋"], difficulty: 2},
+                {id: 90, up: "竹外桃花三两枝", down: "春江水暖鸭先知", author: "苏轼", dynasty: "宋", tags: ["春天", "花", "自然"], difficulty: 2},
+                {id: 91, up: "一年好景君须记", down: "最是橙黄橘绿时", author: "苏轼", dynasty: "宋", tags: ["秋天", "勉励"], difficulty: 2},
+                {id: 92, up: "回首向来萧瑟处", down: "归去也无风雨也无晴", author: "苏轼", dynasty: "宋", tags: ["人生", "雨", "豁达"], difficulty: 3},
+                {id: 93, up: "人有悲欢离合", down: "月有阴晴圆缺", author: "苏轼", dynasty: "宋", tags: ["人生", "月亮", "哲理"], difficulty: 2},
+                {id: 94, up: "十年生死两茫茫", down: "不思量自难忘", author: "苏轼", dynasty: "宋", tags: ["悼亡", "相思"], difficulty: 3},
+                {id: 95, up: "小轩窗", down: "正梳妆", author: "苏轼", dynasty: "宋", tags: ["悼亡", "生活"], difficulty: 3},
+                {id: 96, up: "相顾无言", down: "惟有泪千行", author: "苏轼", dynasty: "宋", tags: ["悼亡", "离别"], difficulty: 3},
+                {id: 97, up: "枝上柳绵吹又少", down: "天涯何处无芳草", author: "苏轼", dynasty: "宋", tags: ["春天", "离别", "豁达"], difficulty: 3},
+                {id: 98, up: "笑渐不闻声渐悄", down: "多情却被无情恼", author: "苏轼", dynasty: "宋", tags: ["春天", "感慨"], difficulty: 3},
+
+                // 其他宋代诗人
+                {id: 99, up: "人生自古谁无死", down: "留取丹心照汗青", author: "文天祥", dynasty: "宋", tags: ["爱国", "壮志"], difficulty: 2},
+                {id: 100, up: "无可奈何花落去", down: "似曾相识燕归来", author: "晏殊", dynasty: "宋", tags: ["春天", "花", "时间"], difficulty: 2},
+                {id: 101, up: "昨夜西风凋碧树", down: "独上高楼望尽天涯路", author: "晏殊", dynasty: "宋", tags: ["秋天", "孤独", "望远"], difficulty: 3},
+                {id: 102, up: "莫等闲白了少年头", down: "空悲切", author: "岳飞", dynasty: "宋", tags: ["励志", "时间"], difficulty: 2},
+                {id: 103, up: "三十功名尘与土", down: "八千里路云和月", author: "岳飞", dynasty: "宋", tags: ["壮志", "云", "月亮"], difficulty: 2},
+                {id: 104, up: "众里寻他千百度", down: "蓦然回首那人却在灯火阑珊处", author: "辛弃疾", dynasty: "宋", tags: ["元宵", "爱情"], difficulty: 3},
+                {id: 105, up: "醉里挑灯看剑", down: "梦回吹角连营", author: "辛弃疾", dynasty: "宋", tags: ["壮志", "战争"], difficulty: 3},
+                {id: 106, up: "稻花香里说丰年", down: "听取蛙声一片", author: "辛弃疾", dynasty: "宋", tags: ["田园", "夏天", "花"], difficulty: 2},
+                {id: 107, up: "青山遮不住", down: "毕竟东流去", author: "辛弃疾", dynasty: "宋", tags: ["山水", "哲理"], difficulty: 2},
+                {id: 108, up: "今宵酒醒何处", down: "杨柳岸晓风残月", author: "柳永", dynasty: "宋", tags: ["离别", "月亮", "柳"], difficulty: 3},
+                {id: 109, up: "衣带渐宽终不悔", down: "为伊消得人憔悴", author: "柳永", dynasty: "宋", tags: ["相思", "爱情"], difficulty: 2},
+                {id: 110, up: "昨夜雨疏风骤", down: "浓睡不消残酒", author: "李清照", dynasty: "宋", tags: ["春天", "花", "雨"], difficulty: 2},
+                {id: 111, up: "知否知否", down: "应是绿肥红瘦", author: "李清照", dynasty: "宋", tags: ["春天", "花"], difficulty: 2},
+                {id: 112, up: "寻寻觅觅", down: "冷冷清清凄凄惨惨戚戚", author: "李清照", dynasty: "宋", tags: ["秋天", "愁绪"], difficulty: 3},
+                {id: 113, up: "这次第", down: "怎一个愁字了得", author: "李清照", dynasty: "宋", tags: ["秋天", "愁绪"], difficulty: 3},
+                {id: 114, up: "生当作人杰", down: "死亦为鬼雄", author: "李清照", dynasty: "宋", tags: ["壮志", "历史"], difficulty: 2},
+                {id: 115, up: "至今思项羽", down: "不肯过江东", author: "李清照", dynasty: "宋", tags: ["历史", "壮志"], difficulty: 2},
+
+                // 五代
+                {id: 116, up: "问君能有几多愁", down: "恰似一江春水向东流", author: "李煜", dynasty: "五代", tags: ["愁绪", "水", "春天"], difficulty: 2},
+                {id: 117, up: "剪不断理还乱", down: "是离愁别是一般滋味在心头", author: "李煜", dynasty: "五代", tags: ["愁绪", "离别"], difficulty: 3},
+                {id: 118, up: "春花秋月何时了", down: "往事知多少", author: "李煜", dynasty: "五代", tags: ["时间", "花", "月亮", "愁绪"], difficulty: 2},
+                {id: 119, up: "小楼昨夜又东风", down: "故国不堪回首月明中", author: "李煜", dynasty: "五代", tags: ["春天", "月亮", "思乡"], difficulty: 3},
+
+                // 元代
+                {id: 120, up: "枯藤老树昏鸦", down: "小桥流水人家", author: "马致远", dynasty: "元", tags: ["秋天", "乡愁"], difficulty: 2},
+                {id: 121, up: "古道西风瘦马", down: "夕阳西下断肠人在天涯", author: "马致远", dynasty: "元", tags: ["秋天", "乡愁", "夕阳"], difficulty: 2},
+                {id: 122, up: "兴百姓苦", down: "亡百姓苦", author: "张养浩", dynasty: "元", tags: ["忧国", "历史"], difficulty: 3},
+
+                // 明代
+                {id: 123, up: "粉身碎骨浑不怕", down: "要留清白在人间", author: "于谦", dynasty: "明", tags: ["励志", "品格"], difficulty: 2},
+
+                // 清代
+                {id: 124, up: "千磨万击还坚劲", down: "任尔东西南北风", author: "郑燮", dynasty: "清", tags: ["励志", "品格"], difficulty: 2},
+                {id: 125, up: "咬定青山不放松", down: "立根原在破岩中", author: "郑燮", dynasty: "清", tags: ["励志", "品格", "山水"], difficulty: 2},
+                {id: 126, up: "落红不是无情物", down: "化作春泥更护花", author: "龚自珍", dynasty: "清", tags: ["花", "奉献", "春天"], difficulty: 2},
+                {id: 127, up: "我劝天公重抖擞", down: "不拘一格降人才", author: "龚自珍", dynasty: "清", tags: ["忧国", "人才"], difficulty: 2},
+
+                // 其他唐代诗人
+                {id: 128, up: "落霞与孤鹜齐飞", down: "秋水共长天一色", author: "王勃", dynasty: "唐", tags: ["秋天", "自然", "水"], difficulty: 3},
+                {id: 129, up: "海内存知己", down: "天涯若比邻", author: "王勃", dynasty: "唐", tags: ["友情", "离别"], difficulty: 2},
+                {id: 130, up: "慈母手中线", down: "游子身上衣", author: "孟郊", dynasty: "唐", tags: ["亲情", "母爱"], difficulty: 1},
+                {id: 131, up: "谁言寸草心", down: "报得三春晖", author: "孟郊", dynasty: "唐", tags: ["亲情", "母爱", "春天"], difficulty: 1},
+                {id: 132, up: "少小离家老大回", down: "乡音无改鬓毛衰", author: "贺知章", dynasty: "唐", tags: ["思乡", "时间"], difficulty: 2},
+                {id: 133, up: "儿童相见不相识", down: "笑问客从何处来", author: "贺知章", dynasty: "唐", tags: ["思乡", "时间"], difficulty: 2},
+                {id: 134, up: "海日生残夜", down: "江春入旧年", author: "王湾", dynasty: "唐", tags: ["时间", "春天", "山水"], difficulty: 3},
+                {id: 135, up: "春江潮水连海平", down: "海上明月共潮生", author: "张若虚", dynasty: "唐", tags: ["春天", "月亮", "水"], difficulty: 3},
+                {id: 136, up: "江畔何人初见月", down: "江月何年初照人", author: "张若虚", dynasty: "唐", tags: ["月亮", "时间", "哲理"], difficulty: 3},
+                {id: 137, up: "东边日出西边雨", down: "道是无晴却有晴", author: "刘禹锡", dynasty: "唐", tags: ["爱情", "天气", "夏天"], difficulty: 2},
+                {id: 138, up: "旧时王谢堂前燕", down: "飞入寻常百姓家", author: "刘禹锡", dynasty: "唐", tags: ["历史", "时间", "春天"], difficulty: 2},
+                {id: 139, up: "沉舟侧畔千帆过", down: "病树前头万木春", author: "刘禹锡", dynasty: "唐", tags: ["励志", "春天", "哲理"], difficulty: 2},
+                {id: 140, up: "黄沙百战穿金甲", down: "不破楼兰终不还", author: "王昌龄", dynasty: "唐", tags: ["战争", "壮志"], difficulty: 2},
+                {id: 141, up: "秦时明月汉时关", down: "万里长征人未还", author: "王昌龄", dynasty: "唐", tags: ["战争", "月亮", "历史"], difficulty: 2},
+                {id: 142, up: "葡萄美酒夜光杯", down: "欲饮琵琶马上催", author: "王翰", dynasty: "唐", tags: ["战争", "边塞"], difficulty: 3},
+                {id: 143, up: "醉卧沙场君莫笑", down: "古来征战几人回", author: "王翰", dynasty: "唐", tags: ["战争", "边塞", "豪放"], difficulty: 2},
+                {id: 144, up: "黑云压城城欲摧", down: "甲光向日金鳞开", author: "李贺", dynasty: "唐", tags: ["战争", "边塞"], difficulty: 3},
+                {id: 145, up: "商女不知亡国恨", down: "隔江犹唱后庭花", author: "杜牧", dynasty: "唐", tags: ["忧国", "历史"], difficulty: 2},
+                {id: 146, up: "停车坐爱枫林晚", down: "霜叶红于二月花", author: "杜牧", dynasty: "唐", tags: ["秋天", "自然"], difficulty: 1},
+                {id: 147, up: "南朝四百八十寺", down: "多少楼台烟雨中", author: "杜牧", dynasty: "唐", tags: ["历史", "春天", "雨"], difficulty: 2},
+                {id: 148, up: "清明时节雨纷纷", down: "路上行人欲断魂", author: "杜牧", dynasty: "唐", tags: ["清明", "雨", "愁绪"], difficulty: 1},
+                {id: 149, up: "借问酒家何处有", down: "牧童遥指杏花村", author: "杜牧", dynasty: "唐", tags: ["清明", "春天", "花"], difficulty: 1},
+                {id: 150, up: "春风又绿江南岸", down: "明月何时照我还", author: "王安石", dynasty: "宋", tags: ["思乡", "春天", "月亮"], difficulty: 2}
+            ],
+
+            // 飞花令关键字
+            keywords: ["花", "月", "春", "山", "水", "风", "雨", "云", "人", "情", "梦", "酒", "夜", "雪", "秋", "江", "柳", "愁"],
+
+            // 预建索引
+            index: {
+                byAuthor: {},
+                byKeyword: {},
+                byTag: {},
+                byDifficulty: {1: [], 2: [], 3: []}
+            },
+
+            // 构建索引
+            buildIndex() {
+                this.poems.forEach(poem => {
+                    // 作者索引
+                    if (!this.index.byAuthor[poem.author]) {
+                        this.index.byAuthor[poem.author] = [];
+                    }
+                    this.index.byAuthor[poem.author].push(poem);
+
+                    // 难度索引
+                    this.index.byDifficulty[poem.difficulty].push(poem);
+
+                    // 标签索引
+                    poem.tags.forEach(tag => {
+                        if (!this.index.byTag[tag]) this.index.byTag[tag] = [];
+                        this.index.byTag[tag].push(poem);
+                    });
+
+                    // 关键字索引（从诗句中提取）
+                    const text = poem.up + poem.down;
+                    this.keywords.forEach(kw => {
+                        if (text.includes(kw)) {
+                            if (!this.index.byKeyword[kw]) this.index.byKeyword[kw] = [];
+                            if (!this.index.byKeyword[kw].includes(poem)) {
+                                this.index.byKeyword[kw].push(poem);
+                            }
+                        }
+                    });
+                });
+            },
+
+            // 智能查询
+            query({difficulty, excludeIds = [], limit = 10, requireKeyword = null, author = null} = {}) {
+                let pool = [];
+
+                if (difficulty) {
+                    pool = [...this.index.byDifficulty[difficulty]];
+                } else {
+                    pool = [...this.poems];
+                }
+
+                if (author) {
+                    pool = pool.filter(p => p.author === author);
+                }
+
+                if (requireKeyword) {
+                    pool = pool.filter(p => {
+                        const text = p.up + p.down;
+                        return text.includes(requireKeyword);
+                    });
+                }
+
+                // 排除已使用
+                pool = pool.filter(p => !excludeIds.includes(p.id));
+
+                // 随机打乱并限制
+                return pool.sort(() => Math.random() - 0.5).slice(0, limit);
+            },
+
+            // 模糊匹配（用于接龙模式）
+            fuzzyMatch(input, target, tolerance = 0.85) {
+                // 完全匹配
+                if (input === target) return {match: true, score: 1};
+
+                // 忽略标点匹配
+                const cleanInput = input.replace(/[，。？！、；：""''（）【】]/g, '');
+                const cleanTarget = target.replace(/[，。？！、；：""''（）【】]/g, '');
+                if (cleanInput === cleanTarget) return {match: true, score: 0.98};
+
+                // 编辑距离计算
+                const distance = this.levenshtein(cleanInput, cleanTarget);
+                const maxLen = Math.max(cleanInput.length, cleanTarget.length);
+                const similarity = 1 - distance / maxLen;
+
+                if (similarity >= tolerance) {
+                    return {match: true, score: similarity, diff: distance};
+                }
+
+                // 检查同音字（简化版：检查是否有至少50%字符相同或同音）
+                // 实际应用需要拼音库，这里用字符重叠度作为近似
+                const commonChars = [...cleanInput].filter(c => cleanTarget.includes(c)).length;
+                const overlapRatio = commonChars / Math.min(cleanInput.length, cleanTarget.length);
+
+                if (overlapRatio >= 0.7) {
+                    return {match: true, score: overlapRatio * 0.9, hint: "音近字"};
+                }
+
+                return {match: false, score: similarity};
+            },
+
+            levenshtein(a, b) {
+                const matrix = [];
+                for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+                for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+
+                for (let i = 1; i <= b.length; i++) {
+                    for (let j = 1; j <= a.length; j++) {
+                        matrix[i][j] = b.charAt(i-1) === a.charAt(j-1) 
+                            ? matrix[i-1][j-1] 
+                            : Math.min(matrix[i-1][j-1] + 1, matrix[i][j-1] + 1, matrix[i-1][j] + 1);
+                    }
+                }
+                return matrix[b.length][a.length];
+            }
+        };
+
+        // 初始化索引
+        PoemDatabase.buildIndex();
+
+        // ==================== 音效引擎 ====================
+        class SoundEngine {
+            constructor() {
+                this.ctx = null;
+                this.enabled = true;
+                this.init();
+            }
+
+            init() {
+                try {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                } catch(e) {
+                    console.log('Audio not supported');
+                }
+            }
+
+            ensureContext() {
+                if (!this.ctx) this.init();
+                if (this.ctx && this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            }
+
+            play(type) {
+                if (!this.enabled || !this.ctx) return;
+                this.ensureContext();
+
+                const t = this.ctx.currentTime;
+
+                switch(type) {
+                    case 'correct':
+                        this.playChord([523.25, 659.25, 783.99], 0.3, 'sine', 0.5);
+                        break;
+                    case 'wrong':
+                        this.playTone(200, 0.3, 'sawtooth', 0.25, 150);
+                        break;
+                    case 'combo':
+                        this.playSequence([523.25, 659.25, 783.99, 1046.50], 0.1, 'triangle');
+                        break;
+                    case 'perfect':
+                        this.playChord([392, 523.25, 659.25, 783.99, 1046.50], 0.2, 'sine', 0.8);
+                        break;
+                    case 'hint':
+                        this.playTone(880, 0.2, 'sine', 0.2, 1108.73);
+                        break;
+                    case 'achievement':
+                        this.playFanfare();
+                        break;
+                    case 'tick':
+                        this.playTone(800, 0.05, 'sine', 0.1);
+                        break;
+                }
+            }
+
+            playTone(freq, duration, type, vol, freqEnd = null) {
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                if (freqEnd) {
+                    osc.frequency.setValueAtTime(freqEnd, this.ctx.currentTime + duration * 0.5);
+                }
+
+                gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + duration);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + duration);
+            }
+
+            playChord(freqs, vol, type, duration) {
+                freqs.forEach((f, i) => {
+                    setTimeout(() => this.playTone(f, duration, type, vol * (1 - i*0.1)), i * 50);
+                });
+            }
+
+            playSequence(freqs, interval, type) {
+                freqs.forEach((f, i) => {
+                    setTimeout(() => this.playTone(f, interval * 2, type, 0.2), i * interval * 1000);
+                });
+            }
+
+            playFanfare() {
+                const now = this.ctx.currentTime;
+                [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((f, i) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(f, now + i * 0.1);
+                    gain.gain.setValueAtTime(0.15, now + i * 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.5);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(now + i * 0.1);
+                    osc.stop(now + i * 0.1 + 0.5);
+                });
+            }
+        }
+
+        // ==================== 游戏状态管理 ====================
+        class GameState {
+            constructor() {
+                this.reset();
+                this.load();
+            }
+
+            reset() {
+                this.mode = 'MENU';
+                this.difficulty = 'MEDIUM'; // EASY, MEDIUM, HARD
+                this.score = 0;
+                this.streak = 0;
+                this.maxStreak = 0;
+                this.hearts = 3;
+                this.hintsUsed = 0;
+                this.hintLimit = 3;
+                this.collectedPoems = new Set();
+                this.achievements = {
+                    streakMaster: false,
+                    speedKing: false,
+                    perfectRun: false,
+                    collector: false
+                };
+                this.usedPoemIds = [];
+                this.comboCount = 0;
+                this.isProcessing = false;
+                this.timer = null;
+                this.timeLeft = 0;
+            }
+
+            load() {
+                const saved = localStorage.getItem('poemGameState');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    this.highScore = data.highScore || 0;
+                    this.totalCollected = data.totalCollected || 0;
+                    this.achievements = {...this.achievements, ...data.achievements};
+                } else {
+                    this.highScore = 0;
+                    this.totalCollected = 0;
+                }
+            }
+
+            save() {
+                const data = {
+                    highScore: Math.max(this.score, this.highScore),
+                    totalCollected: this.collectedPoems.size + this.totalCollected,
+                    achievements: this.achievements,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('poemGameState', JSON.stringify(data));
+            }
+
+            addScore(points) {
+                this.score += points;
+                if (this.score > this.highScore) {
+                    this.highScore = this.score;
+                }
+            }
+
+            addStreak() {
+                this.streak++;
+                this.comboCount++;
+                if (this.streak > this.maxStreak) {
+                    this.maxStreak = this.streak;
+                }
+
+                // 连击奖励
+                if (this.streak % 3 === 0) {
+                    this.addScore(5);
+                    return true; // 触发奖励
+                }
+                return false;
+            }
+
+            breakStreak() {
+                this.streak = 0;
+                this.comboCount = 0;
+            }
+
+            loseHeart() {
+                this.hearts--;
+                this.breakStreak();
+                return this.hearts <= 0;
+            }
+
+            useHint() {
+                if (this.hintsUsed >= this.hintLimit || this.score < 5) return false;
+                this.hintsUsed++;
+                this.score -= 5;
+                return true;
+            }
+
+            collectPoem(poemId) {
+                this.collectedPoems.add(poemId);
+                // 收集成就检查
+                if (this.collectedPoems.size >= 20 && !this.achievements.collector) {
+                    this.achievements.collector = true;
+                    return 'collector';
+                }
+                return null;
+            }
+
+            checkAchievements(type) {
+                const unlocked = [];
+
+                if (this.streak >= 10 && !this.achievements.streakMaster) {
+                    this.achievements.streakMaster = true;
+                    unlocked.push({id: 'streakMaster', icon: '🔥', title: '连击大师', desc: '连续答对10题！'});
+                }
+
+                if (this.hintsUsed === 0 && this.score >= 50 && !this.achievements.perfectRun) {
+                    this.achievements.perfectRun = true;
+                    unlocked.push({id: 'perfectRun', icon: '⭐', title: '完美通关', desc: '不使用提示获得50分！'});
+                }
+
+                return unlocked;
+            }
+
+            setDifficulty(diff) {
+                this.difficulty = diff;
+                this.hintLimit = {EASY: 5, MEDIUM: 3, HARD: 1}[diff] || 3;
+            }
+        }
+
+        // ==================== 游戏引擎 ====================
+        class PoemGame {
+            constructor() {
+                this.state = new GameState();
+                this.sound = new SoundEngine();
+                this.currentQuestion = null;
+                this.matchState = null;
+                this.chainState = null;
+                this.canvas = null;
+                this.ctx = null;
+
+                this.init();
+            }
+
+            init() {
+                this.updateUI();
+                this.switchMode('fill');
+
+                // 防止页面刷新时丢失状态
+                window.addEventListener('beforeunload', () => this.state.save());
+            }
+
+            // 模式切换
+            switchMode(mode) {
+                this.state.mode = mode;
+                this.state.isProcessing = false;
+                this.stopTimer();
+
+                // 更新标签
+                document.querySelectorAll('.mode-tab').forEach(tab => {
+                    tab.classList.toggle('active', tab.dataset.mode === mode);
+                });
+
+                // 清空主区域
+                const main = document.getElementById('gameMain');
+                main.innerHTML = '';
+
+                // 根据模式初始化
+                switch(mode) {
+                    case 'fill':
+                        this.initFillMode();
+                        break;
+                    case 'match':
+                        this.initMatchMode();
+                        break;
+                    case 'feihua':
+                        this.initFeihuaMode();
+                        break;
+                    case 'chain':
+                        this.initChainMode();
+                        break;
+                }
+
+                this.updateUI();
+            }
+
+            // ========== 填空模式 ==========
+            initFillMode() {
+                const main = document.getElementById('gameMain');
+
+                // 难度选择
+                const diffSelector = document.createElement('div');
+                diffSelector.className = 'difficulty-selector';
+                diffSelector.innerHTML = `
+                    <button class="difficulty-btn easy ${this.state.difficulty === 'EASY' ? 'active' : ''}" onclick="game.setDifficulty('EASY')">简单</button>
+                    <button class="difficulty-btn medium ${this.state.difficulty === 'MEDIUM' ? 'active' : ''}" onclick="game.setDifficulty('MEDIUM')">中等</button>
+                    <button class="difficulty-btn hard ${this.state.difficulty === 'HARD' ? 'active' : ''}" onclick="game.setDifficulty('HARD')">困难</button>
+                `;
+                main.appendChild(diffSelector);
+
+                // 游戏内容区
+                const content = document.createElement('div');
+                content.className = 'game-content';
+                content.id = 'fillContent';
+                main.appendChild(content);
+
+                this.generateFillQuestion();
+            }
+
+            setDifficulty(diff) {
+                this.state.setDifficulty(diff);
+                this.state.usedPoemIds = [];
+                document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.textContent === {EASY: '简单', MEDIUM: '中等', HARD: '困难'}[diff]) {
+                        btn.classList.add('active');
+                    }
+                });
+                this.generateFillQuestion();
+            }
+
+            generateFillQuestion() {
+                if (this.state.hearts <= 0) return;
+
+                const content = document.getElementById('fillContent');
+                const diffMap = {EASY: 1, MEDIUM: 2, HARD: 3};
+                const difficulty = diffMap[this.state.difficulty];
+
+                // 动态难度：高分后提升难度
+                let effectiveDiff = difficulty;
+                if (this.state.score >= 50 && difficulty === 1) effectiveDiff = 2;
+                if (this.state.score >= 100 && difficulty === 2) effectiveDiff = 3;
+
+                const pool = PoemDatabase.query({
+                    difficulty: effectiveDiff,
+                    excludeIds: this.state.usedPoemIds,
+                    limit: 1
+                });
+
+                if (pool.length === 0) {
+                    this.state.usedPoemIds = [];
+                    this.generateFillQuestion();
+                    return;
+                }
+
+                const poem = pool[0];
+                this.state.usedPoemIds.push(poem.id);
+                this.currentQuestion = {poem, type: 'fill', answer: poem.down};
+
+                content.innerHTML = `
+                    <div class="poem-display" id="poemDisplay">
+                        <div class="poem-text">${poem.up}</div>
+                        <div class="poem-hint">—— ${poem.dynady || '唐'}代 · ${poem.author}</div>
+                    </div>
+                    <div class="options-grid" id="optionsGrid"></div>
+                `;
+
+                // 生成选项
+                const options = this.generateOptions(poem, 'down');
+                const grid = document.getElementById('optionsGrid');
+
+                options.forEach((opt, idx) => {
+                    const card = document.createElement('div');
+                    card.className = 'option-card';
+                    card.textContent = opt;
+                    card.onclick = () => this.checkFillAnswer(card, opt);
+                    grid.appendChild(card);
+                });
+
+                this.state.isProcessing = false;
+            }
+
+            generateOptions(correctPoem, field) {
+                const correct = correctPoem[field];
+                const options = [correct];
+                const diffMap = {EASY: 1, MEDIUM: 2, HARD: 3};
+
+                // 获取干扰项
+                const pool = PoemDatabase.query({
+                    difficulty: diffMap[this.state.difficulty],
+                    limit: 20
+                }).filter(p => p.id !== correctPoem.id && p[field] !== correct);
+
+                const shuffled = pool.sort(() => Math.random() - 0.5);
+
+                for (let i = 0; i < 3 && i < shuffled.length; i++) {
+                    const opt = shuffled[i][field];
+                    if (!options.includes(opt)) {
+                        options.push(opt);
+                    }
+                }
+
+                // 填充不足
+                while (options.length < 4) {
+                    const random = PoemDatabase.poems[Math.floor(Math.random() * PoemDatabase.poems.length)];
+                    if (!options.includes(random[field])) {
+                        options.push(random[field]);
+                    }
+                }
+
+                return options.sort(() => Math.random() - 0.5);
+            }
+
+            checkFillAnswer(card, answer) {
+                if (this.state.isProcessing) return;
+                this.state.isProcessing = true;
+
+                const isCorrect = answer === this.currentQuestion.answer;
+
+                if (isCorrect) {
+                    card.classList.add('correct');
+                    document.getElementById('poemDisplay').classList.add('ink-spread');
+                    this.sound.play('correct');
+
+                    this.state.addScore(10);
+                    if (this.state.addStreak()) {
+                        this.showComboBonus();
+                    }
+
+                    this.checkAndShowAchievements();
+
+                    setTimeout(() => this.generateFillQuestion(), 1200);
+                } else {
+                    card.classList.add('wrong');
+                    this.sound.play('wrong');
+
+                    // 显示正确答案
+                    document.querySelectorAll('.option-card').forEach(c => {
+                        if (c.textContent === this.currentQuestion.answer) {
+                            setTimeout(() => c.classList.add('correct'), 500);
+                        }
+                    });
+
+                    if (this.state.loseHeart()) {
+                        setTimeout(() => this.gameOver(), 1500);
+                    } else {
+                        setTimeout(() => this.generateFillQuestion(), 1800);
+                    }
+                }
+
+                this.updateUI();
+            }
+
+
+            // ========== 配对模式 ==========
+            initMatchMode() {
+                const main = document.getElementById('gameMain');
+                main.innerHTML = `
+                    <div class="match-container">
+                        <canvas id="matchCanvas"></canvas>
+                        <div class="match-area" id="matchArea">
+                            <div class="match-column" id="leftColumn">
+                                <div class="column-title">诗句上句</div>
+                            </div>
+                            <div class="match-column" id="rightColumn">
+                                <div class="column-title">作者 / 下句</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                this.initCanvas();
+                this.generateMatchGame();
+            }
+
+            initCanvas() {
+                const canvas = document.getElementById('matchCanvas');
+                if (!canvas) return;
+
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.resizeCanvas();
+
+                window.addEventListener('resize', () => this.resizeCanvas());
+            }
+
+            resizeCanvas() {
+                if (!this.canvas) return;
+                const container = document.querySelector('.match-container');
+                if (container) {
+                    this.canvas.width = container.offsetWidth;
+                    this.canvas.height = container.offsetHeight;
+                }
+            }
+
+            generateMatchGame() {
+                // 根据分数动态调整配对数量
+                let pairCount = 3;
+                if (this.state.score >= 50) pairCount = 4;
+                if (this.state.score >= 100) pairCount = 5;
+
+                const pool = PoemDatabase.query({limit: pairCount * 2});
+                const selected = pool.slice(0, pairCount);
+
+                this.matchState = {
+                    poems: selected,
+                    selectedLeft: null,
+                    selectedRight: null,
+                    matched: 0,
+                    target: pairCount,
+                    isProcessing: false
+                };
+
+                const leftCol = document.getElementById('leftColumn');
+                const rightCol = document.getElementById('rightColumn');
+
+                // 保留标题
+                const leftTitle = leftCol.querySelector('.column-title');
+                const rightTitle = rightCol.querySelector('.column-title');
+                leftCol.innerHTML = '';
+                rightCol.innerHTML = '';
+                leftCol.appendChild(leftTitle);
+                rightCol.appendChild(rightTitle);
+
+                // 左侧：诗句上句
+                selected.forEach((poem, idx) => {
+                    const item = document.createElement('div');
+                    item.className = 'match-item';
+                    item.textContent = poem.up;
+                    item.dataset.index = idx;
+                    item.dataset.side = 'left';
+                    item.onclick = () => this.selectMatchItem(item, 'left');
+                    leftCol.appendChild(item);
+                });
+
+                // 右侧：混合作者和下句
+                const rightItems = [];
+                selected.forEach((poem, idx) => {
+                    rightItems.push({text: poem.author, index: idx, type: 'author'});
+                    rightItems.push({text: poem.down, index: idx, type: 'down'});
+                });
+
+                // 打乱
+                rightItems.sort(() => Math.random() - 0.5);
+
+                rightItems.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'match-item';
+                    div.textContent = item.text;
+                    div.dataset.index = item.index;
+                    div.dataset.side = 'right';
+                    div.dataset.type = item.type;
+                    div.onclick = () => this.selectMatchItem(div, 'right');
+                    rightCol.appendChild(div);
+                });
+
+                this.updateMatchProgress();
+            }
+
+            selectMatchItem(item, side) {
+                if (this.matchState.isProcessing) return;
+                if (item.classList.contains('matched')) return;
+
+                // 清除同侧其他选中
+                document.querySelectorAll(`[data-side="${side}"]`).forEach(el => {
+                    if (!el.classList.contains('matched')) el.classList.remove('selected');
+                });
+
+                item.classList.add('selected');
+
+                if (side === 'left') {
+                    this.matchState.selectedLeft = item;
+                } else {
+                    this.matchState.selectedRight = item;
+                }
+
+                // 检查是否配对
+                if (this.matchState.selectedLeft && this.matchState.selectedRight) {
+                    this.checkMatch();
+                }
+            }
+
+            checkMatch() {
+                const state = this.matchState;
+                state.isProcessing = true;
+
+                const leftIdx = parseInt(state.selectedLeft.dataset.index);
+                const rightIdx = parseInt(state.selectedRight.dataset.index);
+
+                if (leftIdx === rightIdx) {
+                    // 正确配对
+                    state.selectedLeft.classList.remove('selected');
+                    state.selectedRight.classList.remove('selected');
+                    state.selectedLeft.classList.add('matched');
+                    state.selectedRight.classList.add('matched');
+
+                    // 绘制连线（桌面端）
+                    if (window.innerWidth > 768) {
+                        this.drawMatchLine(state.selectedLeft, state.selectedRight);
+                    }
+
+                    this.sound.play('correct');
+                    this.state.addScore(10);
+                    state.matched++;
+
+                    if (state.matched >= state.target) {
+                        this.sound.play('perfect');
+                        setTimeout(() => this.generateMatchGame(), 1500);
+                    } else {
+                        state.selectedLeft = null;
+                        state.selectedRight = null;
+                        state.isProcessing = false;
+                    }
+                } else {
+                    // 错误
+                    state.selectedLeft.classList.add('wrong');
+                    state.selectedRight.classList.add('wrong');
+                    this.sound.play('wrong');
+
+                    setTimeout(() => {
+                        state.selectedLeft.classList.remove('wrong', 'selected');
+                        state.selectedRight.classList.remove('wrong', 'selected');
+                        state.selectedLeft = null;
+                        state.selectedRight = null;
+                        state.isProcessing = false;
+                    }, 800);
+                }
+
+                this.updateMatchProgress();
+                this.updateUI();
+            }
+
+            drawMatchLine(leftItem, rightItem) {
+                if (!this.ctx) return;
+
+                const container = document.querySelector('.match-container').getBoundingClientRect();
+                const leftRect = leftItem.getBoundingClientRect();
+                const rightRect = rightItem.getBoundingClientRect();
+
+                const startX = leftRect.right - container.left;
+                const startY = leftRect.top + leftRect.height / 2 - container.top;
+                const endX = rightRect.left - container.left;
+                const endY = rightRect.top + rightRect.height / 2 - container.top;
+
+                // 贝塞尔曲线
+                const cpX = (startX + endX) / 2;
+
+                this.ctx.beginPath();
+                this.ctx.moveTo(startX, startY);
+                this.ctx.quadraticCurveTo(cpX, startY, cpX, (startY + endY) / 2);
+                this.ctx.quadraticCurveTo(cpX, endY, endX, endY);
+
+                this.ctx.strokeStyle = '#2e7d32';
+                this.ctx.lineWidth = 3;
+                this.ctx.lineCap = 'round';
+                this.ctx.stroke();
+
+                // 渐变消失
+                setTimeout(() => {
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                }, 1000);
+            }
+
+            updateMatchProgress() {
+                const progress = document.getElementById('matchProgress');
+                if (progress && this.matchState) {
+                    progress.querySelector('.info-value').textContent = 
+                        `${this.matchState.matched}/${this.matchState.target}`;
+                }
+            }
+
+            // ========== 飞花令模式 ==========
+            initFeihuaMode() {
+                const main = document.getElementById('gameMain');
+                main.innerHTML = `
+                    <div class="game-content" id="feihuaContent">
+                        <div style="text-align: center;">
+                            <div class="feihua-keyword" id="feihuaKeyword">花</div>
+                            <div class="feihua-context" id="feihuaContext">请选出含有此字的诗句</div>
+                        </div>
+                        <div class="poem-display" id="feihuaPoem" style="min-height: 80px;"></div>
+                        <div class="options-grid" id="feihuaOptions"></div>
+                    </div>
+                `;
+                this.generateFeihuaQuestion();
+            }
+
+            generateFeihuaQuestion() {
+                if (this.state.hearts <= 0) return;
+
+                const keyword = PoemDatabase.keywords[Math.floor(Math.random() * PoemDatabase.keywords.length)];
+                const matching = PoemDatabase.query({requireKeyword: keyword, limit: 10});
+
+                if (matching.length < 4) {
+                    this.generateFeihuaQuestion();
+                    return;
+                }
+
+                const selected = matching[0];
+                const isUp = selected.up.includes(keyword);
+                const displayText = isUp ? selected.down : selected.up;
+                const answer = isUp ? selected.up : selected.down;
+
+                document.getElementById('feihuaKeyword').textContent = keyword;
+                document.getElementById('feihuaPoem').innerHTML = `
+                    <div class="poem-text">${displayText}</div>
+                `;
+
+                this.currentQuestion = {answer, keyword, poem: selected, type: 'feihua'};
+
+                // 生成选项
+                const options = [answer];
+                const distractors = matching.slice(1).filter(p => p.id !== selected.id);
+
+                for (let i = 0; i < 3 && i < distractors.length; i++) {
+                    const p = distractors[i];
+                    const opt = p.up.includes(keyword) ? p.up : p.down;
+                    if (!options.includes(opt)) options.push(opt);
+                }
+
+                while (options.length < 4) {
+                    const random = PoemDatabase.poems[Math.floor(Math.random() * PoemDatabase.poems.length)];
+                    const text = random.up + random.down;
+                    if (text.includes(keyword) && !options.includes(random.up) && !options.includes(random.down)) {
+                        options.push(random.up.includes(keyword) ? random.up : random.down);
+                    }
+                }
+
+                this.renderOptions(options, 'feihuaOptions', (card, ans) => this.checkFeihuaAnswer(card, ans));
+            }
+
+            checkFeihuaAnswer(card, answer) {
+                if (this.state.isProcessing) return;
+                this.state.isProcessing = true;
+
+                const isCorrect = answer === this.currentQuestion.answer;
+                this.handleAnswerResult(card, isCorrect, this.currentQuestion.answer, 'feihua');
+            }
+
+            // ========== 接龙模式 ==========
+            initChainMode() {
+                const main = document.getElementById('gameMain');
+                main.innerHTML = `
+                    <div class="game-content" id="chainContent">
+                        <div class="poem-display" style="margin-bottom: 20px;">
+                            <div class="poem-text" id="chainPrompt">准备开始...</div>
+                            <div class="poem-hint" id="chainHint">输入下句完成接龙</div>
+                        </div>
+                        <div class="chain-input-area">
+                            <div class="chain-hint">支持同音字容错 | 限时15秒</div>
+                            <div class="timer-bar">
+                                <div class="timer-progress" id="chainTimer" style="width: 100%;"></div>
+                            </div>
+                            <div class="chain-input-wrapper">
+                                <input type="text" class="chain-input" id="chainInput" 
+                                    placeholder="请输入下句..." autocomplete="off">
+                            </div>
+                            <div class="chain-controls">
+                                <button class="chain-btn primary" id="chainSubmit" onclick="game.submitChain()">提交</button>
+                                <button class="chain-btn" id="chainHintBtn" onclick="game.getChainHint()">💡 提示一字 (-10分)</button>
+                                <button class="chain-btn" onclick="game.skipChain()">跳过 (-5分)</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // 绑定回车
+                document.getElementById('chainInput').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.submitChain();
+                });
+
+                this.generateChainQuestion();
+            }
+
+            generateChainQuestion() {
+                if (this.state.hearts <= 0) return;
+
+                const pool = PoemDatabase.query({
+                    excludeIds: this.state.usedPoemIds,
+                    limit: 1
+                });
+
+                if (pool.length === 0) {
+                    this.state.usedPoemIds = [];
+                    this.generateChainQuestion();
+                    return;
+                }
+
+                const poem = pool[0];
+                this.state.usedPoemIds.push(poem.id);
+
+                this.chainState = {
+                    poem,
+                    answer: poem.down,
+                    timeLeft: 15,
+                    hinted: false
+                };
+
+                document.getElementById('chainPrompt').textContent = poem.up;
+                document.getElementById('chainInput').value = '';
+                document.getElementById('chainInput').classList.remove('correct', 'wrong');
+                document.getElementById('chainInput').disabled = false;
+                document.getElementById('chainSubmit').disabled = false;
+
+                this.startChainTimer();
+            }
+
+            startChainTimer() {
+                this.stopTimer();
+
+                const updateTimer = () => {
+                    if (!this.chainState || this.state.mode !== 'chain') return;
+
+                    this.chainState.timeLeft -= 0.1;
+                    const pct = (this.chainState.timeLeft / 15) * 100;
+                    document.getElementById('chainTimer').style.width = pct + '%';
+
+                    if (this.chainState.timeLeft <= 0) {
+                        this.stopTimer();
+                        this.handleChainTimeout();
+                    }
+                };
+
+                this.state.timer = setInterval(updateTimer, 100);
+            }
+
+            stopTimer() {
+                if (this.state.timer) {
+                    clearInterval(this.state.timer);
+                    this.state.timer = null;
+                }
+            }
+
+            handleChainTimeout() {
+                const input = document.getElementById('chainInput');
+                input.classList.add('wrong');
+                input.value = this.chainState.answer;
+                input.disabled = true;
+
+                this.sound.play('wrong');
+
+                if (this.state.loseHeart()) {
+                    setTimeout(() => this.gameOver(), 1500);
+                } else {
+                    setTimeout(() => this.generateChainQuestion(), 2000);
+                }
+
+                this.updateUI();
+            }
+
+            submitChain() {
+                if (this.state.isProcessing || !this.chainState) return;
+
+                const input = document.getElementById('chainInput');
+                const userAnswer = input.value.trim();
+
+                if (!userAnswer) return;
+
+                this.state.isProcessing = true;
+                this.stopTimer();
+
+                const result = PoemDatabase.fuzzyMatch(userAnswer, this.chainState.answer);
+
+                if (result.match) {
+                    // 正确
+                    input.classList.add('correct');
+                    input.disabled = true;
+                    document.getElementById('chainSubmit').disabled = true;
+
+                    this.sound.play('correct');
+
+                    let points = 15;
+                    if (result.score < 1) {
+                        points = 12; // 容错扣分
+                        this.showFloatingText('同音字通过！+12', '#f9a825');
+                    } else {
+                        this.showFloatingText('+15', '#2e7d32');
+                    }
+
+                    this.state.addScore(points);
+                    if (this.state.addStreak()) {
+                        this.showComboBonus();
+                    }
+
+                    this.checkAndShowAchievements();
+
+                    setTimeout(() => {
+                        this.state.isProcessing = false;
+                        this.generateChainQuestion();
+                    }, 1500);
+                } else {
+                    // 错误
+                    input.classList.add('wrong');
+                    this.sound.play('wrong');
+
+                    setTimeout(() => {
+                        input.classList.remove('wrong');
+                        this.state.isProcessing = false;
+                    }, 500);
+                }
+
+                this.updateUI();
+            }
+
+            getChainHint() {
+                if (!this.chainState || this.chainState.hinted) return;
+                if (this.state.score < 10) {
+                    this.showFloatingText('分数不足！', '#c62828');
+                    return;
+                }
+
+                this.state.score -= 10;
+                this.chainState.hinted = true;
+
+                const answer = this.chainState.answer;
+                const hint = answer.substring(0, 1) + '...';
+
+                document.getElementById('chainInput').placeholder = `提示: ${hint} (${answer.length}字)`;
+                this.sound.play('hint');
+                this.updateUI();
+            }
+
+            skipChain() {
+                if (this.state.score < 5) {
+                    this.showFloatingText('分数不足！', '#c62828');
+                    return;
+                }
+
+                this.state.score -= 5;
+                this.stopTimer();
+                this.generateChainQuestion();
+                this.updateUI();
+            }
+
+            // ========== 通用方法 ==========
+            renderOptions(options, containerId, callback) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = '';
+
+                // 打乱
+                const shuffled = options.sort(() => Math.random() - 0.5);
+
+                shuffled.forEach(opt => {
+                    const card = document.createElement('div');
+                    card.className = 'option-card';
+                    card.textContent = opt;
+                    card.onclick = () => callback(card, opt);
+                    container.appendChild(card);
+                });
+            }
+
+            handleAnswerResult(card, isCorrect, correctAnswer, mode) {
+                if (isCorrect) {
+                    card.classList.add('correct');
+                    if (mode === 'fill') {
+                        document.getElementById('poemDisplay').classList.add('ink-spread');
+                    }
+
+                    this.sound.play('correct');
+                    this.state.addScore(10);
+
+                    if (this.state.addStreak()) {
+                        this.showComboBonus();
+                    }
+
+                    // 收集诗词
+                    if (this.currentQuestion && this.currentQuestion.poem) {
+                        const achievement = this.state.collectPoem(this.currentQuestion.poem.id);
+                        if (achievement) this.showAchievement(achievement);
+                    }
+
+                    this.checkAndShowAchievements();
+
+                    setTimeout(() => {
+                        this.state.isProcessing = false;
+                        if (mode === 'fill') this.generateFillQuestion();
+                        else if (mode === 'feihua') this.generateFeihuaQuestion();
+                    }, 1200);
+                } else {
+                    card.classList.add('wrong');
+                    this.sound.play('wrong');
+
+                    // 显示正确答案
+                    const container = card.parentElement;
+                    container.querySelectorAll('.option-card').forEach(c => {
+                        if (c.textContent === correctAnswer) {
+                            setTimeout(() => c.classList.add('correct'), 500);
+                        }
+                    });
+
+                    if (this.state.loseHeart()) {
+                        setTimeout(() => this.gameOver(), 1500);
+                    } else {
+                        setTimeout(() => {
+                            this.state.isProcessing = false;
+                            if (mode === 'fill') this.generateFillQuestion();
+                            else if (mode === 'feihua') this.generateFeihuaQuestion();
+                        }, 1800);
+                    }
+                }
+
+                this.updateUI();
+            }
+
+            showComboBonus() {
+                this.sound.play('combo');
+
+                const popup = document.createElement('div');
+                popup.className = 'combo-popup';
+                popup.textContent = `🔥 ${this.state.streak}连击! +5 bonus!`;
+                document.body.appendChild(popup);
+
+                setTimeout(() => popup.remove(), 1000);
+            }
+
+            checkAndShowAchievements() {
+                const unlocked = this.state.checkAchievements();
+                unlocked.forEach(ach => this.showAchievement(ach));
+            }
+
+            showAchievement(ach) {
+                this.sound.play('achievement');
+
+                document.getElementById('achievementIcon').textContent = ach.icon;
+                document.getElementById('achievementTitle').textContent = ach.title;
+                document.getElementById('achievementDesc').textContent = ach.desc;
+                document.getElementById('achievementModal').classList.add('active');
+            }
+
+            closeAchievement() {
+                document.getElementById('achievementModal').classList.remove('active');
+            }
+
+            showFloatingText(text, color) {
+                const el = document.createElement('div');
+                el.className = 'floating-feedback';
+                el.style.color = color;
+                el.textContent = text;
+                el.style.left = '50%';
+                el.style.top = '40%';
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 1000);
+            }
+
+            useHint() {
+                if (this.state.mode === 'fill' && this.currentQuestion) {
+                    if (!this.state.useHint()) {
+                        this.showFloatingText('提示次数已用完或分数不足', '#c62828');
+                        return;
+                    }
+
+                    // 高亮正确答案
+                    const cards = document.querySelectorAll('#optionsGrid .option-card');
+                    cards.forEach(card => {
+                        if (card.textContent === this.currentQuestion.answer) {
+                            card.classList.add('highlight');
+                            setTimeout(() => card.classList.remove('highlight'), 3000);
+                        }
+                    });
+
+                    this.sound.play('hint');
+                    this.updateUI();
+                }
+            }
+
+            gameOver() {
+                this.state.save();
+
+                document.getElementById('finalScore').textContent = this.state.score;
+                document.getElementById('finalStreak').textContent = this.state.maxStreak;
+                document.getElementById('finalCollected').textContent = this.state.collectedPoems.size;
+                document.getElementById('gameOverModal').classList.add('active');
+            }
+
+            restart() {
+                this.state.reset();
+                document.getElementById('gameOverModal').classList.remove('active');
+                document.getElementById('achievementModal').classList.remove('active');
+
+                // 清除画布
+                if (this.ctx) {
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                }
+
+                this.switchMode(this.state.mode);
+                this.updateUI();
+            }
+
+            updateUI() {
+                document.getElementById('scoreValue').textContent = this.state.score;
+                document.getElementById('highScoreValue').textContent = this.state.highScore;
+
+                // 更新心形
+                const hearts = document.querySelectorAll('.heart');
+                hearts.forEach((h, i) => {
+                    h.classList.toggle('lost', i >= this.state.hearts);
+                });
+
+                // 连击显示
+                const streakContainer = document.getElementById('streakContainer');
+                const streakBadge = document.getElementById('streakBadge');
+                if (this.state.streak > 0) {
+                    streakContainer.style.display = 'flex';
+                    streakBadge.textContent = `连击 x${this.state.streak}`;
+                } else {
+                    streakContainer.style.display = 'none';
+                }
+
+                // 提示按钮
+                const hintBtn = document.getElementById('hintBtn');
+                if (this.state.mode === 'fill') {
+                    hintBtn.style.display = 'flex';
+                    hintBtn.disabled = this.state.hintsUsed >= this.state.hintLimit || this.state.score < 5;
+                } else {
+                    hintBtn.style.display = 'none';
+                }
+            }
+        }
+
+        // 初始化游戏
+        const game = new PoemGame();
+
+        // 防止空格滚动页面（接龙模式输入时）
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
+                e.preventDefault();
+            }
+        });
+
+        // PWA：注册Service Worker（简化版）
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:text/javascript;base64,' + btoa(`
+                self.addEventListener('install', e => e.waitUntil(self.skipWaiting()));
+                self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => new Response('Offline'))));
+            `)).catch(() => console.log('SW registration skipped'));
+        }
+    </script>
+</body>
+</html>
