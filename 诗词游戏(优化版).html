@@ -257,6 +257,223 @@
             75% { transform: translateX(10px); }
         }
 
+        /* ==================== 挑战模式样式 ==================== */
+        .challenge-context {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+            border-radius: 15px;
+            border: 2px solid var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .challenge-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 28px;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .challenge-desc {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--ink-light);
+        }
+
+        /* ==================== 配对模式样式 ==================== */
+        .match-container {
+            padding: 10px 0;
+        }
+
+        .match-area {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .match-area {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        .match-column {
+            flex: 1;
+            background: white;
+            border: 2px solid var(--gold);
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 48%;
+        }
+
+        @media (max-width: 768px) {
+            .match-column {
+                max-width: 100%;
+            }
+        }
+
+        .column-title {
+            text-align: center;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 20px;
+            color: var(--accent);
+            padding-bottom: 10px;
+            border-bottom: 2px dashed var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .match-item {
+            padding: 15px 12px;
+            background: var(--paper);
+            border: 2px solid var(--gold);
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+        }
+
+        .match-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .match-item.selected {
+            background: linear-gradient(135deg, #ffecb3 0%, #ffe082 100%);
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .match-item.matched {
+            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+            border-color: var(--success);
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .match-item.wrong {
+            background: linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%);
+            border-color: var(--error);
+            animation: paperShake 0.5s ease;
+        }
+
+        /* ==================== 接龙模式样式 ==================== */
+        .chain-input-area {
+            padding: 10px 0;
+        }
+
+        .chain-input {
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            display: block;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-family: 'Noto Serif SC', serif;
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .chain-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .chain-input.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+
+        .chain-input.wrong {
+            border-color: var(--error);
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            animation: paperShake 0.5s ease;
+        }
+
+        /* ==================== 飞花令样式 ==================== */
+        .feihua-keyword {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 48px;
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #ffecb3 0%, #ffe082 100%);
+            border-radius: 20px;
+            border: 3px solid var(--gold);
+        }
+
+        .feihua-context {
+            font-size: 16px;
+            color: var(--ink-light);
+            margin-bottom: 20px;
+        }
+
+        /* ==================== 学习模式收藏网格样式 ==================== */
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            .collection-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .collection-card {
+            background: white;
+            border: 2px solid var(--gold);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .collection-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px var(--shadow-heavy);
+            border-color: var(--accent);
+        }
+
+        .collection-poem {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 22px;
+            color: var(--ink);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .collection-author {
+            font-size: 14px;
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--gold);
+        }
+
+        .collection-preview {
+            font-size: 15px;
+            color: var(--ink-light);
+            text-align: center;
+            line-height: 1.6;
+        }
+
         /* ==================== 优化后的学习面板 ==================== */
         .learn-panel {
             background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
@@ -464,7 +681,7 @@
             .game-title { font-size: 24px; }
             .poem-text { font-size: 26px; }
             .options-grid { grid-template-columns: 1fr; }
-            
+
             .learn-content-wrapper.expanded {
                 max-height: 60vh;
             }
@@ -561,11 +778,6 @@
 
         .combo-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Ma Shan Zheng', cursive; font-size: 48px; color: #ff6b6b; z-index: 2000; animation: comboAnim 1s ease forwards; }
         @keyframes comboAnim { 0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); } 30% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8) translateY(-50px); } }
-
-        @media (max-width: 768px) {
-            footer { flex-direction: column; text-align: center; }
-            .collection-grid { grid-template-columns: 1fr; }
-        }
     </style>
 </head>
 <body>
@@ -643,289 +855,288 @@ const PoemDatabase = {
     poems: [
         // 李白 20首
         {id: 1, up: "床前明月光", down: "疑是地上霜", author: "李白", dynasty: "唐", tags: ["思乡", "月亮"], difficulty: 1,
-         background: "此诗为李白漫游扬州时所作。诗人客居他乡，秋夜难眠，见明月而思乡。", note: "床：指井边栏杆。疑：怀疑。",
-         fullPoem: "床前明月光，疑是地上霜。举头望明月，低头思故乡。"},
-        {id: 2, up: "举头望明月", down: "低头思故乡", author: "李白", dynasty: "唐", tags: ["思乡", "月亮"], difficulty: 1, background: "《静夜思》后两句，直接抒发思乡之情。"},
+         background: "此诗为李白漫游扬州时所作。诗人客居他乡,秋夜难眠,见明月而思乡。", note: "床:指井边栏杆。疑:怀疑。",
+         fullPoem: "床前明月光,疑是地上霜。举头望明月,低头思故乡。"},
+        {id: 2, up: "举头望明月", down: "低头思故乡", author: "李白", dynasty: "唐", tags: ["思乡", "月亮"], difficulty: 1, background: "《静夜思》后两句,直接抒发思乡之情。"},
         {id: 3, up: "朝辞白帝彩云间", down: "千里江陵一日还", author: "李白", dynasty: "唐", tags: ["山水", "行旅"], difficulty: 2,
-         background: "唐肃宗乾元二年，李白流放夜郎，行至白帝城遇赦，乘舟东归所作。", note: "白帝城：在今重庆奉节。江陵：今湖北荆州。"},
-        {id: 4, up: "两岸猿声啼不住", down: "轻舟已过万重山", author: "李白", dynasty: "唐", tags: ["山水", "行旅"], difficulty: 2, background: "写舟行如飞，长江三峡的壮丽景色。"},
+         background: "唐肃宗乾元二年,李白流放夜郎,行至白帝城遇赦,乘舟东归所作。", note: "白帝城:在今重庆奉节。江陵:今湖北荆州。"},
+        {id: 4, up: "两岸猿声啼不住", down: "轻舟已过万重山", author: "李白", dynasty: "唐", tags: ["山水", "行旅"], difficulty: 2, background: "写舟行如飞,长江三峡的壮丽景色。"},
         {id: 5, up: "桃花潭水深千尺", down: "不及汪伦送我情", author: "李白", dynasty: "唐", tags: ["友情", "离别"], difficulty: 1,
-         background: "李白游泾县桃花潭，村民汪伦常酿美酒款待，李白临行作诗相赠。", note: "桃花潭：在今安徽泾县。"},
+         background: "李白游泾县桃花潭,村民汪伦常酿美酒款待,李白临行作诗相赠。", note: "桃花潭:在今安徽泾县。"},
         {id: 6, up: "天门中断楚江开", down: "碧水东流至此回", author: "李白", dynasty: "唐", tags: ["山水"], difficulty: 2,
-         background: "唐玄宗开元十三年，李白出蜀途中，舟行长江，望天门山所作。", note: "天门山：在今安徽当涂。"},
+         background: "唐玄宗开元十三年,李白出蜀途中,舟行长江,望天门山所作。", note: "天门山:在今安徽当涂。"},
         {id: 7, up: "两岸青山相对出", down: "孤帆一片日边来", author: "李白", dynasty: "唐", tags: ["山水"], difficulty: 2},
         {id: 8, up: "长风破浪会有时", down: "直挂云帆济沧海", author: "李白", dynasty: "唐", tags: ["壮志", "励志"], difficulty: 2,
-         background: "李白被赐金放还后，在长安所作，抒发虽遭挫折但仍怀壮志。", note: "长风破浪：比喻志向远大。"},
+         background: "李白被赐金放还后,在长安所作,抒发虽遭挫折但仍怀壮志。", note: "长风破浪:比喻志向远大。"},
         {id: 9, up: "天生我材必有用", down: "千金散尽还复来", author: "李白", dynasty: "唐", tags: ["励志", "豪放"], difficulty: 2,
-         background: "李白与友人饮酒时所作，抒发怀才不遇但自信豪迈的情怀。", note: "材：同才。"},
-        {id: 10, up: "君不见黄河之水天上来", down: "奔流到海不复回", author: "李白", dynasty: "唐", tags: ["山水", "时间"], difficulty: 3, background: "《将进酒》开篇，以黄河奔流喻时光流逝。"},
+         background: "李白与友人饮酒时所作,抒发怀才不遇但自信豪迈的情怀。", note: "材:同才。"},
+        {id: 10, up: "君不见黄河之水天上来", down: "奔流到海不复回", author: "李白", dynasty: "唐", tags: ["山水", "时间"], difficulty: 3, background: "《将进酒》开篇,以黄河奔流喻时光流逝。"},
         {id: 11, up: "白发三千丈", down: "缘愁似个长", author: "李白", dynasty: "唐", tags: ["愁绪"], difficulty: 2,
-         background: "李白在秋浦（今安徽贵池）所作，以夸张手法写愁绪。", note: "缘：因为。个：这般。"},
+         background: "李白在秋浦(今安徽贵池)所作,以夸张手法写愁绪。", note: "缘:因为。个:这般。"},
         {id: 12, up: "我寄愁心与明月", down: "随君直到夜郎西", author: "李白", dynasty: "唐", tags: ["友情", "月亮"], difficulty: 2,
-         background: "王昌龄被贬龙标尉，李白闻讯作此诗寄赠。", note: "夜郎：唐代县名，在今湖南。"},
+         background: "王昌龄被贬龙标尉,李白闻讯作此诗寄赠。", note: "夜郎:唐代县名,在今湖南。"},
         {id: 13, up: "飞流直下三千尺", down: "疑是银河落九天", author: "李白", dynasty: "唐", tags: ["山水"], difficulty: 1,
-         background: "李白游庐山，见瀑布壮观而作。", note: "庐山：在今江西九江。"},
+         background: "李白游庐山,见瀑布壮观而作。", note: "庐山:在今江西九江。"},
         {id: 14, up: "故人西辞黄鹤楼", down: "烟花三月下扬州", author: "李白", dynasty: "唐", tags: ["友情", "离别"], difficulty: 2,
-         background: "孟浩然去广陵（扬州），李白在黄鹤楼送别。", note: "黄鹤楼：在今湖北武汉。烟花：形容春色。"},
+         background: "孟浩然去广陵(扬州),李白在黄鹤楼送别。", note: "黄鹤楼:在今湖北武汉。烟花:形容春色。"},
         {id: 15, up: "孤帆远影碧空尽", down: "唯见长江天际流", author: "李白", dynasty: "唐", tags: ["离别", "山水"], difficulty: 2},
         {id: 16, up: "抽刀断水水更流", down: "举杯消愁愁更愁", author: "李白", dynasty: "唐", tags: ["愁绪"], difficulty: 3,
-         background: "李白在宣州谢朓楼设宴送别族叔李云，抒发怀才不遇的愁绪。", note: "谢朓楼：在今安徽宣城。"},
+         background: "李白在宣州谢朓楼设宴送别族叔李云,抒发怀才不遇的愁绪。", note: "谢朓楼:在今安徽宣城。"},
         {id: 17, up: "云想衣裳花想容", down: "春风拂槛露华浓", author: "李白", dynasty: "唐", tags: ["花", "春天"], difficulty: 3,
-         background: "唐玄宗与杨贵妃赏牡丹，命李白作新词。", note: "槛：栏杆。"},
+         background: "唐玄宗与杨贵妃赏牡丹,命李白作新词。", note: "槛:栏杆。"},
         {id: 18, up: "相看两不厌", down: "只有敬亭山", author: "李白", dynasty: "唐", tags: ["山水", "孤独"], difficulty: 2,
-         background: "李白独坐敬亭山，以山为友，抒发孤独情怀。", note: "敬亭山：在今安徽宣城。"},
-        {id: 19, up: "峨眉山月半轮秋", down: "影入平羌江水流", author: "李白", dynasty: "唐", tags: ["山水", "月亮"], difficulty: 3, background: "李白出蜀时，离别峨眉山所作。"},
-        {id: 20, up: "山随平野尽", down: "江入大荒流", author: "李白", dynasty: "唐", tags: ["山水", "行旅"], difficulty: 2, background: "李白出蜀远游，经三峡出荆门时所作。"},
+         background: "李白独坐敬亭山,以山为友,抒发孤独情怀。", note: "敬亭山:在今安徽宣城。"},
+        {id: 19, up: "峨眉山月半轮秋", down: "影入平羌江水流", author: "李白", dynasty: "唐", tags: ["山水", "月亮"], difficulty: 3, background: "李白出蜀时,离别峨眉山所作。"},
+        {id: 20, up: "山随平野尽", down: "江入大荒流", author: "李白", dynasty: "唐", tags: ["山水", "行旅"], difficulty: 2, background: "李白出蜀远游,经三峡出荆门时所作。"},
 
         // 杜甫 15首
         {id: 21, up: "两个黄鹂鸣翠柳", down: "一行白鹭上青天", author: "杜甫", dynasty: "唐", tags: ["春天", "自然"], difficulty: 1,
-         background: "杜甫在成都草堂所作，描绘明媚春光。"},
+         background: "杜甫在成都草堂所作,描绘明媚春光。"},
         {id: 22, up: "窗含西岭千秋雪", down: "门泊东吴万里船", author: "杜甫", dynasty: "唐", tags: ["山水"], difficulty: 2},
         {id: 23, up: "国破山河在", down: "城春草木深", author: "杜甫", dynasty: "唐", tags: ["忧国", "春天"], difficulty: 2,
-         background: "安史之乱中，长安沦陷，杜甫被俘，伤时感事而作。", note: "国破：指长安被叛军占领。"},
-        {id: 24, up: "感时花溅泪", down: "恨别鸟惊心", author: "杜甫", dynasty: "唐", tags: ["忧国", "离别"], difficulty: 2, note: "感时：感伤时事。恨别：痛恨离别。"},
-        {id: 25, up: "烽火连三月", down: "家书抵万金", author: "杜甫", dynasty: "唐", tags: ["战争", "思乡"], difficulty: 2, note: "烽火：战火。抵：值。"},
+         background: "安史之乱中,长安沦陷,杜甫被俘,伤时感事而作。", note: "国破:指长安被叛军占领。"},
+        {id: 24, up: "感时花溅泪", down: "恨别鸟惊心", author: "杜甫", dynasty: "唐", tags: ["忧国", "离别"], difficulty: 2, note: "感时:感伤时事。恨别:痛恨离别。"},
+        {id: 25, up: "烽火连三月", down: "家书抵万金", author: "杜甫", dynasty: "唐", tags: ["战争", "思乡"], difficulty: 2, note: "烽火:战火。抵:值。"},
         {id: 26, up: "随风潜入夜", down: "润物细无声", author: "杜甫", dynasty: "唐", tags: ["春天", "雨"], difficulty: 1,
-         background: "杜甫定居成都，春雨润泽万物，欣喜而作。"},
+         background: "杜甫定居成都,春雨润泽万物,欣喜而作。"},
         {id: 27, up: "无边落木萧萧下", down: "不尽长江滚滚来", author: "杜甫", dynasty: "唐", tags: ["秋天", "山水"], difficulty: 3,
-         background: "杜甫晚年流寓夔州，重阳节登高，感秋而作。", note: "落木：落叶。萧萧：落叶声。"},
+         background: "杜甫晚年流寓夔州,重阳节登高,感秋而作。", note: "落木:落叶。萧萧:落叶声。"},
         {id: 28, up: "会当凌绝顶", down: "一览众山小", author: "杜甫", dynasty: "唐", tags: ["壮志", "山水"], difficulty: 2,
-         background: "杜甫青年时漫游齐鲁，望泰山而作，气势雄伟。", note: "会当：终当。凌：登上。"},
+         background: "杜甫青年时漫游齐鲁,望泰山而作,气势雄伟。", note: "会当:终当。凌:登上。"},
         {id: 29, up: "出师未捷身先死", down: "长使英雄泪满襟", author: "杜甫", dynasty: "唐", tags: ["历史", "壮志"], difficulty: 3,
-         background: "杜甫游武侯祠，追怀诸葛亮功业未成而身死，感慨而作。", note: "蜀相：三国蜀汉丞相诸葛亮。"},
+         background: "杜甫游武侯祠,追怀诸葛亮功业未成而身死,感慨而作。", note: "蜀相:三国蜀汉丞相诸葛亮。"},
         {id: 30, up: "露从今夜白", down: "月是故乡明", author: "杜甫", dynasty: "唐", tags: ["思乡", "月亮", "秋天"], difficulty: 2,
-         background: "安史之乱中，杜甫与弟离散，月夜思亲而作。", note: "白露：二十四节气之一。"},
-        {id: 31, up: "迟日江山丽", down: "春风花草香", author: "杜甫", dynasty: "唐", tags: ["春天", "自然"], difficulty: 1, background: "杜甫居草堂时所作，写春日美景。", note: "迟日：春日。"},
-        {id: 32, up: "泥融飞燕子", down: "沙暖睡鸳鸯", author: "杜甫", dynasty: "唐", tags: ["春天", "自然"], difficulty: 2, note: "泥融：泥土湿润。"},
+         background: "安史之乱中,杜甫与弟离散,月夜思亲而作。", note: "白露:二十四节气之一。"},
+        {id: 31, up: "迟日江山丽", down: "春风花草香", author: "杜甫", dynasty: "唐", tags: ["春天", "自然"], difficulty: 1, background: "杜甫居草堂时所作,写春日美景。", note: "迟日:春日。"},
+        {id: 32, up: "泥融飞燕子", down: "沙暖睡鸳鸯", author: "杜甫", dynasty: "唐", tags: ["春天", "自然"], difficulty: 2, note: "泥融:泥土湿润。"},
         {id: 33, up: "正是江南好风景", down: "落花时节又逢君", author: "杜甫", dynasty: "唐", tags: ["友情", "花", "春天"], difficulty: 2,
-         background: "杜甫晚年流寓江南，遇昔日乐师李龟年，感慨而作。", note: "李龟年：唐代著名音乐家。"},
+         background: "杜甫晚年流寓江南,遇昔日乐师李龟年,感慨而作。", note: "李龟年:唐代著名音乐家。"},
         {id: 34, up: "白日放歌须纵酒", down: "青春作伴好还乡", author: "杜甫", dynasty: "唐", tags: ["喜悦", "还乡"], difficulty: 2,
-         background: "安史之乱平定，杜甫闻讯欣喜若狂，欲还乡。", note: "青春：明媚春光。"},
+         background: "安史之乱平定,杜甫闻讯欣喜若狂,欲还乡。", note: "青春:明媚春光。"},
         {id: 35, up: "即从巴峡穿巫峡", down: "便下襄阳向洛阳", author: "杜甫", dynasty: "唐", tags: ["喜悦", "还乡"], difficulty: 3},
 
         // 王维 12首
         {id: 36, up: "空山新雨后", down: "天气晚来秋", author: "王维", dynasty: "唐", tags: ["秋天", "山水"], difficulty: 1,
-         background: "王维隐居辋川时所作，描绘秋日傍晚雨后山林景色。"},
+         background: "王维隐居辋川时所作,描绘秋日傍晚雨后山林景色。"},
         {id: 37, up: "明月松间照", down: "清泉石上流", author: "王维", dynasty: "唐", tags: ["秋天", "山水", "月亮"], difficulty: 1},
         {id: 38, up: "红豆生南国", down: "春来发几枝", author: "王维", dynasty: "唐", tags: ["相思", "春天"], difficulty: 1,
-         background: "王维借红豆抒发对友人或恋人的思念之情。", note: "红豆：又名相思子，象征相思。"},
-        {id: 39, up: "愿君多采撷", down: "此物最相思", author: "王维", dynasty: "唐", tags: ["相思"], difficulty: 1, note: "采撷：采摘。"},
+         background: "王维借红豆抒发对友人或恋人的思念之情。", note: "红豆:又名相思子,象征相思。"},
+        {id: 39, up: "愿君多采撷", down: "此物最相思", author: "王维", dynasty: "唐", tags: ["相思"], difficulty: 1, note: "采撷:采摘。"},
         {id: 40, up: "独在异乡为异客", down: "每逢佳节倍思亲", author: "王维", dynasty: "唐", tags: ["思乡", "节日"], difficulty: 1,
-         background: "王维十七岁时，重阳节思念家乡亲人而作。"},
-        {id: 41, up: "遥知兄弟登高处", down: "遍插茱萸少一人", author: "王维", dynasty: "唐", tags: ["思乡", "节日", "秋天"], difficulty: 2, note: "茱萸：香草，重阳节佩戴以避邪。"},
+         background: "王维十七岁时,重阳节思念家乡亲人而作。"},
+        {id: 41, up: "遥知兄弟登高处", down: "遍插茱萸少一人", author: "王维", dynasty: "唐", tags: ["思乡", "节日", "秋天"], difficulty: 2, note: "茱萸:香草,重阳节佩戴以避邪。"},
         {id: 42, up: "劝君更尽一杯酒", down: "西出阳关无故人", author: "王维", dynasty: "唐", tags: ["离别", "友情"], difficulty: 2,
-         background: "王维送别友人出使安西，在渭城饯行所作。", note: "阳关：在今甘肃敦煌西。"},
+         background: "王维送别友人出使安西,在渭城饯行所作。", note: "阳关:在今甘肃敦煌西。"},
         {id: 43, up: "大漠孤烟直", down: "长河落日圆", author: "王维", dynasty: "唐", tags: ["边塞", "山水"], difficulty: 2,
-         background: "王维以监察御史身份出使凉州，途中的所见所感。", note: "孤烟：烽火台燃起的狼烟。"},
-        {id: 44, up: "深林人不知", down: "明月来相照", author: "王维", dynasty: "唐", tags: ["隐逸", "月亮"], difficulty: 2, background: "王维隐居辋川，写独坐幽篁的闲适情趣。"},
+         background: "王维以监察御史身份出使凉州,途中的所见所感。", note: "孤烟:烽火台燃起的狼烟。"},
+        {id: 44, up: "深林人不知", down: "明月来相照", author: "王维", dynasty: "唐", tags: ["隐逸", "月亮"], difficulty: 2, background: "王维隐居辋川,写独坐幽篁的闲适情趣。"},
         {id: 45, up: "人闲桂花落", down: "夜静春山空", author: "王维", dynasty: "唐", tags: ["春天", "花", "夜晚"], difficulty: 2, background: "写春夜山间宁静空寂的境界。"},
         {id: 46, up: "行到水穷处", down: "坐看云起时", author: "王维", dynasty: "唐", tags: ["隐逸", "山水", "云"], difficulty: 3,
-         background: "王维晚年隐居辋川，写闲适恬淡的禅意生活。", note: "水穷处：水源尽头。"},
-        {id: 47, up: "月出惊山鸟", down: "时鸣春涧中", author: "王维", dynasty: "唐", tags: ["春天", "月亮", "自然"], difficulty: 3, background: "以动衬静，写春夜山涧的幽静。"},
+         background: "王维晚年隐居辋川,写闲适恬淡的禅意生活。", note: "水穷处:水源尽头。"},
+        {id: 47, up: "月出惊山鸟", down: "时鸣春涧中", author: "王维", dynasty: "唐", tags: ["春天", "月亮", "自然"], difficulty: 3, background: "以动衬静,写春夜山涧的幽静。"},
 
         // 白居易 12首
         {id: 48, up: "离离原上草", down: "一岁一枯荣", author: "白居易", dynasty: "唐", tags: ["自然", "生命"], difficulty: 1,
-         background: "白居易十六岁时所作，以草的生命力喻人，成为千古名句。", note: "离离：草木茂盛的样子。"},
+         background: "白居易十六岁时所作,以草的生命力喻人,成为千古名句。", note: "离离:草木茂盛的样子。"},
         {id: 49, up: "野火烧不尽", down: "春风吹又生", author: "白居易", dynasty: "唐", tags: ["自然", "生命"], difficulty: 1},
         {id: 50, up: "同是天涯沦落人", down: "相逢何必曾相识", author: "白居易", dynasty: "唐", tags: ["知音", "感慨"], difficulty: 2,
-         background: "白居易被贬江州司马，送客浔阳江头，遇琵琶女，感其身世而作。"},
+         background: "白居易被贬江州司马,送客浔阳江头,遇琵琶女,感其身世而作。"},
         {id: 51, up: "别有幽愁暗恨生", down: "此时无声胜有声", author: "白居易", dynasty: "唐", tags: ["音乐", "愁绪"], difficulty: 3,
-         background: "《琵琶行》中描写琵琶女技艺高超，音乐感染力极强。"},
+         background: "《琵琶行》中描写琵琶女技艺高超,音乐感染力极强。"},
         {id: 52, up: "几处早莺争暖树", down: "谁家新燕啄春泥", author: "白居易", dynasty: "唐", tags: ["春天", "自然"], difficulty: 2,
-         background: "白居易任杭州刺史时，春游西湖所作。", note: "暖树：向阳的树。"},
+         background: "白居易任杭州刺史时,春游西湖所作。", note: "暖树:向阳的树。"},
         {id: 53, up: "乱花渐欲迷人眼", down: "浅草才能没马蹄", author: "白居易", dynasty: "唐", tags: ["春天", "花"], difficulty: 2, background: "写西湖早春花草初萌的景色。"},
         {id: 54, up: "日出江花红胜火", down: "春来江水绿如蓝", author: "白居易", dynasty: "唐", tags: ["春天", "江南", "花"], difficulty: 2,
-         background: "白居易回忆江南美景，思念江南所作。", note: "蓝：蓝草，可制染料。"},
+         background: "白居易回忆江南美景,思念江南所作。", note: "蓝:蓝草,可制染料。"},
         {id: 55, up: "可怜九月初三夜", down: "露似真珠月似弓", author: "白居易", dynasty: "唐", tags: ["秋天", "月亮", "夜晚"], difficulty: 2,
-         background: "写秋夜新月初升的美景。", note: "可怜：可爱。真珠：珍珠。"},
+         background: "写秋夜新月初升的美景。", note: "可怜:可爱。真珠:珍珠。"},
         {id: 56, up: "人间四月芳菲尽", down: "山寺桃花始盛开", author: "白居易", dynasty: "唐", tags: ["春天", "花", "山水"], difficulty: 2,
-         background: "白居易游庐山大林寺，见山下春花已谢，山寺桃花方盛。"},
+         background: "白居易游庐山大林寺,见山下春花已谢,山寺桃花方盛。"},
         {id: 57, up: "绿蚁新醅酒", down: "红泥小火炉", author: "白居易", dynasty: "唐", tags: ["友情", "冬天"], difficulty: 3,
-         background: "白居易邀请朋友刘十九来饮酒取暖的邀请诗。", note: "绿蚁：新酿米酒上的绿色泡沫。"},
-        {id: 58, up: "晚来天欲雪", down: "能饮一杯无", author: "白居易", dynasty: "唐", tags: ["友情", "冬天", "雪"], difficulty: 3, note: "无：吗，疑问语气词。"},
+         background: "白居易邀请朋友刘十九来饮酒取暖的邀请诗。", note: "绿蚁:新酿米酒上的绿色泡沫。"},
+        {id: 58, up: "晚来天欲雪", down: "能饮一杯无", author: "白居易", dynasty: "唐", tags: ["友情", "冬天", "雪"], difficulty: 3, note: "无:吗,疑问语气词。"},
         {id: 59, up: "天长地久有时尽", down: "此恨绵绵无绝期", author: "白居易", dynasty: "唐", tags: ["爱情", "长恨歌"], difficulty: 3,
-         background: "《长恨歌》结尾，写唐玄宗与杨贵妃的爱情悲剧。"},
+         background: "《长恨歌》结尾,写唐玄宗与杨贵妃的爱情悲剧。"},
 
         // 王之涣、孟浩然、李商隐等...
         {id: 60, up: "白日依山尽", down: "黄河入海流", author: "王之涣", dynasty: "唐", tags: ["山水", "壮志"], difficulty: 1,
-         background: "王之涣登鹳雀楼所作，气势磅礴，寓理于景。", note: "鹳雀楼：在今山西永济。"},
+         background: "王之涣登鹳雀楼所作,气势磅礴,寓理于景。", note: "鹳雀楼:在今山西永济。"},
         {id: 61, up: "欲穷千里目", down: "更上一层楼", author: "王之涣", dynasty: "唐", tags: ["壮志", "励志"], difficulty: 1},
         {id: 62, up: "黄河远上白云间", down: "一片孤城万仞山", author: "王之涣", dynasty: "唐", tags: ["边塞", "山水"], difficulty: 3,
-         background: "写黄河上游边塞孤城的苍凉景象。", note: "凉州词：唐代乐府曲名。"},
-        {id: 63, up: "羌笛何须怨杨柳", down: "春风不度玉门关", author: "王之涣", dynasty: "唐", tags: ["边塞", "春天"], difficulty: 3, note: "玉门关：在今甘肃敦煌西。"},
+         background: "写黄河上游边塞孤城的苍凉景象。", note: "凉州词:唐代乐府曲名。"},
+        {id: 63, up: "羌笛何须怨杨柳", down: "春风不度玉门关", author: "王之涣", dynasty: "唐", tags: ["边塞", "春天"], difficulty: 3, note: "玉门关:在今甘肃敦煌西。"},
 
         {id: 64, up: "春眠不觉晓", down: "处处闻啼鸟", author: "孟浩然", dynasty: "唐", tags: ["春天", "自然"], difficulty: 1,
-         background: "孟浩然隐居鹿门山时所作，写春日晨景。", fullPoem: "春眠不觉晓，处处闻啼鸟。夜来风雨声，花落知多少。"},
+         background: "孟浩然隐居鹿门山时所作,写春日晨景。", fullPoem: "春眠不觉晓,处处闻啼鸟。夜来风雨声,花落知多少。"},
         {id: 65, up: "夜来风雨声", down: "花落知多少", author: "孟浩然", dynasty: "唐", tags: ["春天", "花", "雨"], difficulty: 1},
         {id: 66, up: "野旷天低树", down: "江清月近人", author: "孟浩然", dynasty: "唐", tags: ["山水", "月亮", "愁绪"], difficulty: 2,
-         background: "孟浩然漫游吴越，夜泊建德江，写羁旅之思。", note: "建德江：在今浙江。"},
+         background: "孟浩然漫游吴越,夜泊建德江,写羁旅之思。", note: "建德江:在今浙江。"},
         {id: 67, up: "待到重阳日", down: "还来就菊花", author: "孟浩然", dynasty: "唐", tags: ["田园", "友情", "花", "秋天"], difficulty: 2,
-         background: "孟浩然受友人之邀做客，临别时相约重阳再聚。"},
+         background: "孟浩然受友人之邀做客,临别时相约重阳再聚。"},
 
         {id: 68, up: "春蚕到死丝方尽", down: "蜡炬成灰泪始干", author: "李商隐", dynasty: "唐", tags: ["相思", "爱情"], difficulty: 2,
-         background: "李商隐写相思之苦，以春蚕、蜡炬作比，成为千古名句。", note: "丝：谐音思。"},
-        {id: 69, up: "身无彩凤双飞翼", down: "心有灵犀一点通", author: "李商隐", dynasty: "唐", tags: ["相思", "爱情"], difficulty: 2, note: "灵犀：传说犀牛角有白纹如线，感应灵敏。"},
+         background: "李商隐写相思之苦,以春蚕、蜡炬作比,成为千古名句。", note: "丝:谐音思。"},
+        {id: 69, up: "身无彩凤双飞翼", down: "心有灵犀一点通", author: "李商隐", dynasty: "唐", tags: ["相思", "爱情"], difficulty: 2, note: "灵犀:传说犀牛角有白纹如线,感应灵敏。"},
         {id: 70, up: "夕阳无限好", down: "只是近黄昏", author: "李商隐", dynasty: "唐", tags: ["时间", "感慨"], difficulty: 1,
-         background: "李商隐登乐游原，见夕阳美景，感叹时光易逝。", note: "乐游原：在今西安南。"},
+         background: "李商隐登乐游原,见夕阳美景,感叹时光易逝。", note: "乐游原:在今西安南。"},
         {id: 71, up: "何当共剪西窗烛", down: "却话巴山夜雨时", author: "李商隐", dynasty: "唐", tags: ["相思", "雨", "夜晚"], difficulty: 2,
-         background: "李商隐客居巴蜀，雨夜思家，想象归后与妻子夜话的情景。", note: "剪烛：剪去燃焦的烛芯。"},
+         background: "李商隐客居巴蜀,雨夜思家,想象归后与妻子夜话的情景。", note: "剪烛:剪去燃焦的烛芯。"},
 
         {id: 72, up: "千山鸟飞绝", down: "万径人踪灭", author: "柳宗元", dynasty: "唐", tags: ["冬天", "雪", "孤独"], difficulty: 2,
-         background: "柳宗元被贬永州，写寒江独钓，寄托孤傲情怀。", fullPoem: "千山鸟飞绝，万径人踪灭。孤舟蓑笠翁，独钓寒江雪。"},
+         background: "柳宗元被贬永州,写寒江独钓,寄托孤傲情怀。", fullPoem: "千山鸟飞绝,万径人踪灭。孤舟蓑笠翁,独钓寒江雪。"},
         {id: 73, up: "孤舟蓑笠翁", down: "独钓寒江雪", author: "柳宗元", dynasty: "唐", tags: ["冬天", "雪", "孤独"], difficulty: 2},
 
         // 宋代 苏轼 12首
         {id: 74, up: "不识庐山真面目", down: "只缘身在此山中", author: "苏轼", dynasty: "宋", tags: ["山水", "哲理"], difficulty: 2,
-         background: "苏轼游庐山，从不同角度看山形不同，悟出当局者迷的道理。", note: "缘：因为。", fullPoem: "横看成岭侧成峰，远近高低各不同。不识庐山真面目，只缘身在此山中。"},
+         background: "苏轼游庐山,从不同角度看山形不同,悟出当局者迷的道理。", note: "缘:因为。", fullPoem: "横看成岭侧成峰,远近高低各不同。不识庐山真面目,只缘身在此山中。"},
         {id: 75, up: "横看成岭侧成峰", down: "远近高低各不同", author: "苏轼", dynasty: "宋", tags: ["山水", "哲理"], difficulty: 2},
         {id: 76, up: "欲把西湖比西子", down: "淡妆浓抹总相宜", author: "苏轼", dynasty: "宋", tags: ["山水", "春天"], difficulty: 2,
-         background: "苏轼任杭州通判时，饮湖上初晴后雨所作，以西施比西湖。", note: "西子：西施。"},
-        {id: 77, up: "水光潋滟晴方好", down: "山色空蒙雨亦奇", author: "苏轼", dynasty: "宋", tags: ["山水", "雨"], difficulty: 2, note: "潋滟：水波荡漾的样子。空蒙：细雨迷蒙。"},
+         background: "苏轼任杭州通判时,饮湖上初晴后雨所作,以西施比西湖。", note: "西子:西施。"},
+        {id: 77, up: "水光潋滟晴方好", down: "山色空蒙雨亦奇", author: "苏轼", dynasty: "宋", tags: ["山水", "雨"], difficulty: 2, note: "潋滟:水波荡漾的样子。空蒙:细雨迷蒙。"},
         {id: 78, up: "但愿人长久", down: "千里共婵娟", author: "苏轼", dynasty: "宋", tags: ["相思", "月亮", "中秋"], difficulty: 2,
-         background: "苏轼中秋望月怀人，思念弟弟苏辙所作。", note: "婵娟：月亮。", fullPoem: "明月几时有？把酒问青天。不知天上宫阙，今夕是何年。我欲乘风归去，又恐琼楼玉宇，高处不胜寒。起舞弄清影，何似在人间。转朱阁，低绮户，照无眠。不应有恨，何事长向别时圆？人有悲欢离合，月有阴晴圆缺，此事古难全。但愿人长久，千里共婵娟。"},
+         background: "苏轼中秋望月怀人,思念弟弟苏辙所作。", note: "婵娟:月亮。", fullPoem: "明月几时有?把酒问青天。不知天上宫阙,今夕是何年。我欲乘风归去,又恐琼楼玉宇,高处不胜寒。起舞弄清影,何似在人间。转朱阁,低绮户,照无眠。不应有恨,何事长向别时圆?人有悲欢离合,月有阴晴圆缺,此事古难全。但愿人长久,千里共婵娟。"},
         {id: 79, up: "人有悲欢离合", down: "月有阴晴圆缺", author: "苏轼", dynasty: "宋", tags: ["人生", "月亮", "哲理"], difficulty: 2},
         {id: 80, up: "竹外桃花三两枝", down: "春江水暖鸭先知", author: "苏轼", dynasty: "宋", tags: ["春天", "花", "自然"], difficulty: 2,
-         background: "苏轼题惠崇和尚的画作，写早春江景。", note: "惠崇：北宋名僧，画家。"},
+         background: "苏轼题惠崇和尚的画作,写早春江景。", note: "惠崇:北宋名僧,画家。"},
         {id: 81, up: "大江东去", down: "浪淘尽", author: "苏轼", dynasty: "宋", tags: ["历史", "豪放"], difficulty: 3,
-         background: "苏轼游览赤壁古战场，怀古伤今，豪放词代表作。", fullPoem: "大江东去，浪淘尽，千古风流人物。故垒西边，人道是，三国周郎赤壁。乱石穿空，惊涛拍岸，卷起千堆雪。江山如画，一时多少豪杰。遥想公瑾当年，小乔初嫁了，雄姿英发。羽扇纶巾，谈笑间，樯橹灰飞烟灭。故国神游，多情应笑我，早生华发。人生如梦，一尊还酹江月。"},
+         background: "苏轼游览赤壁古战场,怀古伤今,豪放词代表作。", fullPoem: "大江东去,浪淘尽,千古风流人物。故垒西边,人道是,三国周郎赤壁。乱石穿空,惊涛拍岸,卷起千堆雪。江山如画,一时多少豪杰。遥想公瑾当年,小乔初嫁了,雄姿英发。羽扇纶巾,谈笑间,樯橹灰飞烟灭。故国神游,多情应笑我,早生华发。人生如梦,一尊还酹江月。"},
         {id: 82, up: "十年生死两茫茫", down: "不思量自难忘", author: "苏轼", dynasty: "宋", tags: ["悼亡", "相思"], difficulty: 3,
-         background: "苏轼悼念亡妻王弗，词中真情流露，感人至深。", note: "乙卯正月二十日夜记梦"},
+         background: "苏轼悼念亡妻王弗,词中真情流露,感人至深。", note: "乙卯正月二十日夜记梦"},
         {id: 83, up: "回首向来萧瑟处", down: "归去也无风雨也无晴", author: "苏轼", dynasty: "宋", tags: ["人生", "雨", "豁达"], difficulty: 3,
-         background: "苏轼途中遇雨，借景抒怀，表现出豁达超脱的人生态度。", fullPoem: "莫听穿林打叶声，何妨吟啸且徐行。竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。料峭春风吹酒醒，微冷，山头斜照却相迎。回首向来萧瑟处，归去，也无风雨也无晴。"},
+         background: "苏轼途中遇雨,借景抒怀,表现出豁达超脱的人生态度。", fullPoem: "莫听穿林打叶声,何妨吟啸且徐行。竹杖芒鞋轻胜马,谁怕?一蓑烟雨任平生。料峭春风吹酒醒,微冷,山头斜照却相迎。回首向来萧瑟处,归去,也无风雨也无晴。"},
         {id: 84, up: "一年好景君须记", down: "最是橙黄橘绿时", author: "苏轼", dynasty: "宋", tags: ["秋天", "勉励"], difficulty: 2,
-         background: "苏轼赠好友刘景文，勉励其虽年迈仍有作为。", note: "刘景文：苏轼好友。"},
-        {id: 85, up: "枝上柳绵吹又少", down: "天涯何处无芳草", author: "苏轼", dynasty: "宋", tags: ["春天", "离别", "豁达"], difficulty: 3, background: "苏轼被贬惠州时所作，词中寓含身世之感。"},
+         background: "苏轼赠好友刘景文,勉励其虽年迈仍有作为。", note: "刘景文:苏轼好友。"},
+        {id: 85, up: "枝上柳绵吹又少", down: "天涯何处无芳草", author: "苏轼", dynasty: "宋", tags: ["春天", "离别", "豁达"], difficulty: 3, background: "苏轼被贬惠州时所作,词中寓含身世之感。"},
 
         // 李清照 8首
         {id: 86, up: "昨夜雨疏风骤", down: "浓睡不消残酒", author: "李清照", dynasty: "宋", tags: ["春天", "花", "雨"], difficulty: 2,
-         background: "李清照早期作品，写惜花之情，含蓄婉约。", fullPoem: "昨夜雨疏风骤，浓睡不消残酒。试问卷帘人，却道海棠依旧。知否，知否？应是绿肥红瘦。"},
-        {id: 87, up: "知否知否", down: "应是绿肥红瘦", author: "李清照", dynasty: "宋", tags: ["春天", "花"], difficulty: 2, note: "绿肥红瘦：绿叶繁茂，红花凋零。"},
+         background: "李清照早期作品,写惜花之情,含蓄婉约。", fullPoem: "昨夜雨疏风骤,浓睡不消残酒。试问卷帘人,却道海棠依旧。知否,知否?应是绿肥红瘦。"},
+        {id: 87, up: "知否知否", down: "应是绿肥红瘦", author: "李清照", dynasty: "宋", tags: ["春天", "花"], difficulty: 2, note: "绿肥红瘦:绿叶繁茂,红花凋零。"},
         {id: 88, up: "生当作人杰", down: "死亦为鬼雄", author: "李清照", dynasty: "宋", tags: ["壮志", "历史"], difficulty: 2,
-         background: "李清照南渡后，路过乌江，追思项羽，讽刺南宋朝廷苟安。", fullPoem: "生当作人杰，死亦为鬼雄。至今思项羽，不肯过江东。"},
-        {id: 89, up: "至今思项羽", down: "不肯过江东", author: "李清照", dynasty: "宋", tags: ["历史", "壮志"], difficulty: 2, note: "项羽：西楚霸王，兵败乌江自刎。"},
+         background: "李清照南渡后,路过乌江,追思项羽,讽刺南宋朝廷苟安。", fullPoem: "生当作人杰,死亦为鬼雄。至今思项羽,不肯过江东。"},
+        {id: 89, up: "至今思项羽", down: "不肯过江东", author: "李清照", dynasty: "宋", tags: ["历史", "壮志"], difficulty: 2, note: "项羽:西楚霸王,兵败乌江自刎。"},
         {id: 90, up: "寻寻觅觅", down: "冷冷清清凄凄惨惨戚戚", author: "李清照", dynasty: "宋", tags: ["秋天", "愁绪"], difficulty: 3,
-         background: "李清照晚年所作，开篇连用七组叠字，写尽孤寂凄凉。", fullPoem: "寻寻觅觅，冷冷清清，凄凄惨惨戚戚。乍暖还寒时候，最难将息。三杯两盏淡酒，怎敌他、晚来风急！雁过也，正伤心，却是旧时相识。满地黄花堆积，憔悴损，如今有谁堪摘？守着窗儿，独自怎生得黑！梧桐更兼细雨，到黄昏、点点滴滴。这次第，怎一个愁字了得！"},
-        {id: 91, up: "这次第", down: "怎一个愁字了得", author: "李清照", dynasty: "宋", tags: ["秋天", "愁绪"], difficulty: 3, note: "次第：情形。"},
+         background: "李清照晚年所作,开篇连用七组叠字,写尽孤寂凄凉。", fullPoem: "寻寻觅觅,冷冷清清,凄凄惨惨戚戚。乍暖还寒时候,最难将息。三杯两盏淡酒,怎敌他、晚来风急!雁过也,正伤心,却是旧时相识。满地黄花堆积,憔悴损,如今有谁堪摘?守着窗儿,独自怎生得黑!梧桐更兼细雨,到黄昏、点点滴滴。这次第,怎一个愁字了得!"},
+        {id: 91, up: "这次第", down: "怎一个愁字了得", author: "李清照", dynasty: "宋", tags: ["秋天", "愁绪"], difficulty: 3, note: "次第:情形。"},
         {id: 92, up: "莫道不销魂", down: "帘卷西风人比黄花瘦", author: "李清照", dynasty: "宋", tags: ["秋天", "相思"], difficulty: 3,
-         background: "李清照婚后所作，重阳思夫，以黄花比人，写出相思之苦。", fullPoem: "薄雾浓云愁永昼，瑞脑销金兽。佳节又重阳，玉枕纱厨，半夜凉初透。东篱把酒黄昏后，有暗香盈袖。莫道不销魂，帘卷西风，人比黄花瘦。"},
-        {id: 93, up: "物是人非事事休", down: "欲语泪先流", author: "李清照", dynasty: "宋", tags: ["愁绪", "时间"], difficulty: 3, background: "李清照南渡后，物是人非，感慨所作。"},
+         background: "李清照婚后所作,重阳思夫,以黄花比人,写出相思之苦。", fullPoem: "薄雾浓云愁永昼,瑞脑销金兽。佳节又重阳,玉枕纱厨,半夜凉初透。东篱把酒黄昏后,有暗香盈袖。莫道不销魂,帘卷西风,人比黄花瘦。"},
+        {id: 93, up: "物是人非事事休", down: "欲语泪先流", author: "李清照", dynasty: "宋", tags: ["愁绪", "时间"], difficulty: 3, background: "李清照南渡后,物是人非,感慨所作。"},
 
         // 辛弃疾 8首
         {id: 94, up: "众里寻他千百度", down: "蓦然回首那人却在灯火阑珊处", author: "辛弃疾", dynasty: "宋", tags: ["元宵", "爱情"], difficulty: 3,
-         background: "辛弃疾元宵夜，写情人约会，后多喻指治学或事业追求。", note: "阑珊：稀疏。", fullPoem: "东风夜放花千树，更吹落、星如雨。宝马雕车香满路。凤箫声动，玉壶光转，一夜鱼龙舞。蛾儿雪柳黄金缕，笑语盈盈暗香去。众里寻他千百度，蓦然回首，那人却在，灯火阑珊处。"},
+         background: "辛弃疾元宵夜,写情人约会,后多喻指治学或事业追求。", note: "阑珊:稀疏。", fullPoem: "东风夜放花千树,更吹落、星如雨。宝马雕车香满路。凤箫声动,玉壶光转,一夜鱼龙舞。蛾儿雪柳黄金缕,笑语盈盈暗香去。众里寻他千百度,蓦然回首,那人却在,灯火阑珊处。"},
         {id: 95, up: "醉里挑灯看剑", down: "梦回吹角连营", author: "辛弃疾", dynasty: "宋", tags: ["壮志", "战争"], difficulty: 3,
-         background: "辛弃疾闲居信州，梦见军营生活，抒发壮志难酬的悲愤。", fullPoem: "醉里挑灯看剑，梦回吹角连营。八百里分麾下炙，五十弦翻塞外声，沙场秋点兵。马作的卢飞快，弓如霹雳弦惊。了却君王天下事，赢得生前身后名。可怜白发生！"},
+         background: "辛弃疾闲居信州,梦见军营生活,抒发壮志难酬的悲愤。", fullPoem: "醉里挑灯看剑,梦回吹角连营。八百里分麾下炙,五十弦翻塞外声,沙场秋点兵。马作的卢飞快,弓如霹雳弦惊。了却君王天下事,赢得生前身后名。可怜白发生!"},
         {id: 96, up: "了却君王天下事", down: "赢得生前身后名", author: "辛弃疾", dynasty: "宋", tags: ["壮志", "战争"], difficulty: 3},
         {id: 97, up: "可怜白发生", down: "", author: "辛弃疾", dynasty: "宋", tags: ["壮志", "感慨"], difficulty: 3, upOnly: true},
         {id: 98, up: "稻花香里说丰年", down: "听取蛙声一片", author: "辛弃疾", dynasty: "宋", tags: ["田园", "夏天"], difficulty: 2,
-         background: "辛弃疾闲居带湖，写夏夜农村风光，洋溢着丰收的喜悦。", fullPoem: "明月别枝惊鹊，清风半夜鸣蝉。稻花香里说丰年，听取蛙声一片。七八个星天外，两三点雨山前。旧时茅店社林边，路转溪桥忽见。"},
+         background: "辛弃疾闲居带湖,写夏夜农村风光,洋溢着丰收的喜悦。", fullPoem: "明月别枝惊鹊,清风半夜鸣蝉。稻花香里说丰年,听取蛙声一片。七八个星天外,两三点雨山前。旧时茅店社林边,路转溪桥忽见。"},
         {id: 99, up: "青山遮不住", down: "毕竟东流去", author: "辛弃疾", dynasty: "宋", tags: ["山水", "哲理"], difficulty: 2,
-         background: "辛弃疾被贬后，以江水喻指时局，表达抗金决心不可阻挡。", note: "郁孤台：在今江西赣州。"},
+         background: "辛弃疾被贬后,以江水喻指时局,表达抗金决心不可阻挡。", note: "郁孤台:在今江西赣州。"},
         {id: 100, up: "少年不识愁滋味", down: "爱上层楼", author: "辛弃疾", dynasty: "宋", tags: ["愁绪", "时间"], difficulty: 2,
-         background: "辛弃疾以少年与老年对比，写不同人生阶段的愁绪。", fullPoem: "少年不识愁滋味，爱上层楼。爱上层楼，为赋新词强说愁。而今识尽愁滋味，欲说还休。欲说还休，却道天凉好个秋。"},
+         background: "辛弃疾以少年与老年对比,写不同人生阶段的愁绪。", fullPoem: "少年不识愁滋味,爱上层楼。爱上层楼,为赋新词强说愁。而今识尽愁滋味,欲说还休。欲说还休,却道天凉好个秋。"},
         {id: 101, up: "而今识尽愁滋味", down: "欲说还休", author: "辛弃疾", dynasty: "宋", tags: ["愁绪", "时间"], difficulty: 2},
 
         // 继续扩充其他名家...
         {id: 102, up: "人生自古谁无死", down: "留取丹心照汗青", author: "文天祥", dynasty: "宋", tags: ["爱国", "壮志"], difficulty: 2,
-         background: "文天祥兵败被俘，过零丁洋时所作，表明以死明志的决心。", note: "汗青：史册。"},
+         background: "文天祥兵败被俘,过零丁洋时所作,表明以死明志的决心。", note: "汗青:史册。"},
         {id: 103, up: "山河破碎风飘絮", down: "身世浮沉雨打萍", author: "文天祥", dynasty: "宋", tags: ["爱国", "愁绪"], difficulty: 3, background: "以柳絮、浮萍比喻国家和个人命运。"},
         {id: 104, up: "无可奈何花落去", down: "似曾相识燕归来", author: "晏殊", dynasty: "宋", tags: ["春天", "花", "时间"], difficulty: 2,
-         background: "晏殊感叹春光易逝，人事变迁，对仗工整，成为名句。", fullPoem: "一曲新词酒一杯，去年天气旧亭台。夕阳西下几时回？无可奈何花落去，似曾相识燕归来。小园香径独徘徊。"},
+         background: "晏殊感叹春光易逝,人事变迁,对仗工整,成为名句。", fullPoem: "一曲新词酒一杯,去年天气旧亭台。夕阳西下几时回?无可奈何花落去,似曾相识燕归来。小园香径独徘徊。"},
         {id: 105, up: "昨夜西风凋碧树", down: "独上高楼望尽天涯路", author: "晏殊", dynasty: "宋", tags: ["秋天", "孤独"], difficulty: 3,
-         background: "王国维《人间词话》以此为古今之成大事业者必经的第一境界。", fullPoem: "槛菊愁烟兰泣露，罗幕轻寒，燕子双飞去。明月不谙离恨苦，斜光到晓穿朱户。昨夜西风凋碧树，独上高楼，望尽天涯路。欲寄彩笺兼尺素，山长水阔知何处？"},
+         background: "王国维《人间词话》以此为古今之成大事业者必经的第一境界。", fullPoem: "槛菊愁烟兰泣露,罗幕轻寒,燕子双飞去。明月不谙离恨苦,斜光到晓穿朱户。昨夜西风凋碧树,独上高楼,望尽天涯路。欲寄彩笺兼尺素,山长水阔知何处?"},
         {id: 106, up: "衣带渐宽终不悔", down: "为伊消得人憔悴", author: "柳永", dynasty: "宋", tags: ["相思", "爱情"], difficulty: 2,
-         background: "柳永写相思之苦，王国维以此为成大事业者第二境界。", fullPoem: "伫倚危楼风细细，望极春愁，黯黯生天际。草色烟光残照里，无言谁会凭阑意。拟把疏狂图一醉，对酒当歌，强乐还无味。衣带渐宽终不悔，为伊消得人憔悴。"},
+         background: "柳永写相思之苦,王国维以此为成大事业者第二境界。", fullPoem: "伫倚危楼风细细,望极春愁,黯黯生天际。草色烟光残照里,无言谁会凭阑意。拟把疏狂图一醉,对酒当歌,强乐还无味。衣带渐宽终不悔,为伊消得人憔悴。"},
         {id: 107, up: "今宵酒醒何处", down: "杨柳岸晓风残月", author: "柳永", dynasty: "宋", tags: ["离别", "月亮", "柳"], difficulty: 3,
-         background: "柳永离别情人，设想酒醒后的凄凉景象，脍炙人口。"},
+         background: "柳永离别情人,设想酒醒后的凄凉景象,脍炙人口。"},
         {id: 108, up: "两情若是久长时", down: "又岂在朝朝暮暮", author: "秦观", dynasty: "宋", tags: ["爱情", "七夕"], difficulty: 2,
-         background: "秦观七夕词，写牛郎织女，歌颂坚贞爱情，立意高远。", fullPoem: "纤云弄巧，飞星传恨，银汉迢迢暗度。金风玉露一相逢，便胜却人间无数。柔情似水，佳期如梦，忍顾鹊桥归路。两情若是久长时，又岂在朝朝暮暮。"},
+         background: "秦观七夕词,写牛郎织女,歌颂坚贞爱情,立意高远。", fullPoem: "纤云弄巧,飞星传恨,银汉迢迢暗度。金风玉露一相逢,便胜却人间无数。柔情似水,佳期如梦,忍顾鹊桥归路。两情若是久长时,又岂在朝朝暮暮。"},
 
         // 唐诗补充
         {id: 109, up: "海内存知己", down: "天涯若比邻", author: "王勃", dynasty: "唐", tags: ["友情", "离别"], difficulty: 2,
-         background: "王勃送别友人，一扫送别诗的悲戚，气势豪迈。", fullPoem: "城阙辅三秦，风烟望五津。与君离别意，同是宦游人。海内存知己，天涯若比邻。无为在歧路，儿女共沾巾。"},
+         background: "王勃送别友人,一扫送别诗的悲戚,气势豪迈。", fullPoem: "城阙辅三秦,风烟望五津。与君离别意,同是宦游人。海内存知己,天涯若比邻。无为在歧路,儿女共沾巾。"},
         {id: 110, up: "落霞与孤鹜齐飞", down: "秋水共长天一色", author: "王勃", dynasty: "唐", tags: ["秋天", "自然"], difficulty: 3,
-         background: "《滕王阁序》名句，写滕王阁秋日美景，成为千古绝唱。"},
+         background: "《滕王阁序》名句,写滕王阁秋日美景,成为千古绝唱。"},
         {id: 111, up: "慈母手中线", down: "游子身上衣", author: "孟郊", dynasty: "唐", tags: ["亲情", "母爱"], difficulty: 1,
-         background: "孟郊贫寒中感念母爱，写出千古传诵的母爱诗。", fullPoem: "慈母手中线，游子身上衣。临行密密缝，意恐迟迟归。谁言寸草心，报得三春晖。"},
-        {id: 112, up: "谁言寸草心", down: "报得三春晖", author: "孟郊", dynasty: "唐", tags: ["亲情", "母爱"], difficulty: 1, note: "三春晖：春天的阳光，比喻母爱。"},
+         background: "孟郊贫寒中感念母爱,写出千古传诵的母爱诗。", fullPoem: "慈母手中线,游子身上衣。临行密密缝,意恐迟迟归。谁言寸草心,报得三春晖。"},
+        {id: 112, up: "谁言寸草心", down: "报得三春晖", author: "孟郊", dynasty: "唐", tags: ["亲情", "母爱"], difficulty: 1, note: "三春晖:春天的阳光,比喻母爱。"},
         {id: 113, up: "少小离家老大回", down: "乡音无改鬓毛衰", author: "贺知章", dynasty: "唐", tags: ["思乡", "时间"], difficulty: 2,
-         background: "贺知章八十六岁辞官归乡，感慨万千。", fullPoem: "少小离家老大回，乡音无改鬓毛衰。儿童相见不相识，笑问客从何处来。"},
+         background: "贺知章八十六岁辞官归乡,感慨万千。", fullPoem: "少小离家老大回,乡音无改鬓毛衰。儿童相见不相识,笑问客从何处来。"},
         {id: 114, up: "儿童相见不相识", down: "笑问客从何处来", author: "贺知章", dynasty: "唐", tags: ["思乡", "时间"], difficulty: 2},
         {id: 115, up: "春江潮水连海平", down: "海上明月共潮生", author: "张若虚", dynasty: "唐", tags: ["春天", "月亮", "水"], difficulty: 3,
-         background: "《春江花月夜》开篇，写春江月夜美景，被誉为孤篇盖全唐。", fullPoem: "春江潮水连海平，海上明月共潮生。滟滟随波千万里，何处春江无月明！江流宛转绕芳甸，月照花林皆似霰。空里流霜不觉飞，汀上白沙看不见。江天一色无纤尘，皎皎空中孤月轮。江畔何人初见月？江月何年初照人？人生代代无穷已，江月年年望相似。不知江月待何人，但见长江送流水。白云一片去悠悠，青枫浦上不胜愁。谁家今夜扁舟子？何处相思明月楼？可怜楼上月徘徊，应照离人妆镜台。玉户帘中卷不去，捣衣砧上拂还来。此时相望不相闻，愿逐月华流照君。鸿雁长飞光不度，鱼龙潜跃水成文。昨夜闲潭梦落花，可怜春半不还家。江水流春去欲尽，江潭落月复西斜。斜月沉沉藏海雾，碣石潇湘无限路。不知乘月几人归，落月摇情满江树。"},
+         background: "《春江花月夜》开篇,写春江月夜美景,被誉为孤篇盖全唐。", fullPoem: "春江潮水连海平,海上明月共潮生。滟滟随波千万里,何处春江无月明!江流宛转绕芳甸,月照花林皆似霰。空里流霜不觉飞,汀上白沙看不见。江天一色无纤尘,皎皎空中孤月轮。江畔何人初见月?江月何年初照人?人生代代无穷已,江月年年望相似。不知江月待何人,但见长江送流水。白云一片去悠悠,青枫浦上不胜愁。谁家今夜扁舟子,何处相思明月楼?可怜楼上月徘徊,应照离人妆镜台。玉户帘中卷不去,捣衣砧上拂还来。此时相望不相闻,愿逐月华流照君。鸿雁长飞光不度,鱼龙潜跃水成文。昨夜闲潭梦落花,可怜春半不还家。江水流春去欲尽,江潭落月复西斜。斜月沉沉藏海雾,碣石潇湘无限路。不知乘月几人归,落月摇情满江树。"},
         {id: 116, up: "江畔何人初见月", down: "江月何年初照人", author: "张若虚", dynasty: "唐", tags: ["月亮", "时间", "哲理"], difficulty: 3, background: "对人生和宇宙的深刻思考。"},
         {id: 117, up: "清明时节雨纷纷", down: "路上行人欲断魂", author: "杜牧", dynasty: "唐", tags: ["清明", "雨", "愁绪"], difficulty: 1,
-         background: "杜牧清明踏青，写雨中行人的愁绪。", fullPoem: "清明时节雨纷纷，路上行人欲断魂。借问酒家何处有，牧童遥指杏花村。"},
+         background: "杜牧清明踏青,写雨中行人的愁绪。", fullPoem: "清明时节雨纷纷,路上行人欲断魂。借问酒家何处有,牧童遥指杏花村。"},
         {id: 118, up: "借问酒家何处有", down: "牧童遥指杏花村", author: "杜牧", dynasty: "唐", tags: ["清明", "春天", "花"], difficulty: 1},
         {id: 119, up: "停车坐爱枫林晚", down: "霜叶红于二月花", author: "杜牧", dynasty: "唐", tags: ["秋天", "自然"], difficulty: 1,
-         background: "杜牧秋游，发现枫叶比春花更红，立意新颖。", fullPoem: "远上寒山石径斜，白云生处有人家。停车坐爱枫林晚，霜叶红于二月花。"},
+         background: "杜牧秋游,发现枫叶比春花更红,立意新颖。", fullPoem: "远上寒山石径斜,白云生处有人家。停车坐爱枫林晚,霜叶红于二月花。"},
         {id: 120, up: "南朝四百八十寺", down: "多少楼台烟雨中", author: "杜牧", dynasty: "唐", tags: ["历史", "春天", "雨"], difficulty: 2,
-         background: "杜牧江南春景，凭吊南朝佛教兴盛的遗迹。", note: "四百八十寺：形容寺庙之多。"},
+         background: "杜牧江南春景,凭吊南朝佛教兴盛的遗迹。", note: "四百八十寺:形容寺庙之多。"},
         {id: 121, up: "商女不知亡国恨", down: "隔江犹唱后庭花", author: "杜牧", dynasty: "唐", tags: ["忧国", "历史"], difficulty: 2,
-         background: "杜牧夜泊秦淮，听亡国之音，讽刺晚唐统治者。", note: "后庭花：南朝陈后主所作亡国之音。"},
+         background: "杜牧夜泊秦淮,听亡国之音,讽刺晚唐统治者。", note: "后庭花:南朝陈后主所作亡国之音。"},
         {id: 122, up: "东风不与周郎便", down: "铜雀春深锁二乔", author: "杜牧", dynasty: "唐", tags: ["历史", "赤壁"], difficulty: 3,
-         background: "杜牧过赤壁，假设历史，感叹机遇的重要性。", fullPoem: "折戟沉沙铁未销，自将磨洗认前朝。东风不与周郎便，铜雀春深锁二乔。"},
+         background: "杜牧过赤壁,假设历史,感叹机遇的重要性。", fullPoem: "折戟沉沙铁未销,自将磨洗认前朝。东风不与周郎便,铜雀春深锁二乔。"},
 
         // 更多宋词和名句
         {id: 123, up: "问君能有几多愁", down: "恰似一江春水向东流", author: "李煜", dynasty: "五代", tags: ["愁绪", "水", "春天"], difficulty: 2,
-         background: "南唐后主李煜亡国后被囚汴京，写尽亡国之痛。", note: "虞美人", fullPoem: "春花秋月何时了，往事知多少。小楼昨夜又东风，故国不堪回首月明中。雕栏玉砌应犹在，只是朱颜改。问君能有几多愁？恰似一江春水向东流。"},
+         background: "南唐后主李煜亡国后被囚汴京,写尽亡国之痛。", note: "虞美人", fullPoem: "春花秋月何时了,往事知多少。小楼昨夜又东风,故国不堪回首月明中。雕栏玉砌应犹在,只是朱颜改。问君能有几多愁?恰似一江春水向东流。"},
         {id: 124, up: "剪不断理还乱", down: "是离愁别是一般滋味在心头", author: "李煜", dynasty: "五代", tags: ["愁绪", "离别"], difficulty: 3, note: "相见欢"},
         {id: 125, up: "春花秋月何时了", down: "往事知多少", author: "李煜", dynasty: "五代", tags: ["时间", "愁绪"], difficulty: 2},
 
         {id: 126, up: "枯藤老树昏鸦", down: "小桥流水人家", author: "马致远", dynasty: "元", tags: ["秋天", "乡愁"], difficulty: 2,
-         background: "《天净沙·秋思》被誉为秋思之祖，写尽游子思乡之情。", fullPoem: "枯藤老树昏鸦，小桥流水人家，古道西风瘦马。夕阳西下，断肠人在天涯。"},
+         background: "《天净沙·秋思》被誉为秋思之祖,写尽游子思乡之情。", fullPoem: "枯藤老树昏鸦,小桥流水人家,古道西风瘦马。夕阳西下,断肠人在天涯。"},
         {id: 127, up: "古道西风瘦马", down: "夕阳西下断肠人在天涯", author: "马致远", dynasty: "元", tags: ["秋天", "乡愁"], difficulty: 2},
 
         {id: 128, up: "粉身碎骨浑不怕", down: "要留清白在人间", author: "于谦", dynasty: "明", tags: ["励志", "品格"], difficulty: 2,
-         background: "于谦以石灰自喻，表达为国尽忠、坚守节操的决心。", fullPoem: "千锤万凿出深山，烈火焚烧若等闲。粉身碎骨浑不怕，要留清白在人间。"},
+         background: "于谦以石灰自喻,表达为国尽忠、坚守节操的决心。", fullPoem: "千锤万凿出深山,烈火焚烧若等闲。粉身碎骨浑不怕,要留清白在人间。"},
         {id: 129, up: "千磨万击还坚劲", down: "任尔东西南北风", author: "郑燮", dynasty: "清", tags: ["励志", "品格"], difficulty: 2,
-         background: "郑板桥（郑燮）题画竹，借竹咏志。", fullPoem: "咬定青山不放松，立根原在破岩中。千磨万击还坚劲，任尔东西南北风。"},
+         background: "郑板桥(郑燮)题画竹,借竹咏志。", fullPoem: "咬定青山不放松,立根原在破岩中。千磨万击还坚劲,任尔东西南北风。"},
         {id: 130, up: "落红不是无情物", down: "化作春泥更护花", author: "龚自珍", dynasty: "清", tags: ["花", "奉献", "春天"], difficulty: 2,
-         background: "龚自珍辞官南归，以落花自喻，表达虽退隐仍关心国家。", fullPoem: "浩荡离愁白日斜，吟鞭东指即天涯。落红不是无情物，化作春泥更护花。"},
+         background: "龚自珍辞官南归,以落花自喻,表达虽退隐仍关心国家。", fullPoem: "浩荡离愁白日斜,吟鞭东指即天涯。落红不是无情物,化作春泥更护花。"},
         {id: 131, up: "我劝天公重抖擞", down: "不拘一格降人才", author: "龚自珍", dynasty: "清", tags: ["忧国", "人才"], difficulty: 2,
-         background: "龚自珍不满晚清死气沉沉的局面，呼吁变革和人才。"},
+         background: "龚自珍不满晚清死气沉沉的局面,呼吁变革和人才。"},
 
         // 补充更多经典
         {id: 132, up: "东边日出西边雨", down: "道是无晴却有晴", author: "刘禹锡", dynasty: "唐", tags: ["爱情", "天气", "夏天"], difficulty: 2,
-         background: "刘禹锡用双关语写少女初恋的微妙心情。", note: "晴：谐音情。"},
+         background: "刘禹锡用双关语写少女初恋的微妙心情。", note: "晴:谐音情。"},
         {id: 133, up: "旧时王谢堂前燕", down: "飞入寻常百姓家", author: "刘禹锡", dynasty: "唐", tags: ["历史", "时间"], difficulty: 2,
-         background: "刘禹锡凭吊乌衣巷，感叹世家大族的兴衰。", fullPoem: "朱雀桥边野草花，乌衣巷口夕阳斜。旧时王谢堂前燕，飞入寻常百姓家。"},
+         background: "刘禹锡凭吊乌衣巷,感叹世家大族的兴衰。", fullPoem: "朱雀桥边野草花,乌衣巷口夕阳斜。旧时王谢堂前燕,飞入寻常百姓家。"},
         {id: 134, up: "沉舟侧畔千帆过", down: "病树前头万木春", author: "刘禹锡", dynasty: "唐", tags: ["励志", "春天", "哲理"], difficulty: 2,
-         background: "刘禹锡被贬二十三年后回朝，以诗答谢白居易，表现出豁达胸襟。", fullPoem: "巴山楚水凄凉地，二十三年弃置身。怀旧空吟闻笛赋，到乡翻似烂柯人。沉舟侧畔千帆过，病树前头万木春。今日听君歌一曲，暂凭杯酒长精神。"},
+         background: "刘禹锡被贬二十三年后回朝,以诗答谢白居易,表现出豁达胸襟。", fullPoem: "巴山楚水凄凉地,二十三年弃置身。怀旧空吟闻笛赋,到乡翻似烂柯人。沉舟侧畔千帆过,病树前头万木春。今日听君歌一曲,暂凭杯酒长精神。"},
         {id: 135, up: "自古逢秋悲寂寥", down: "我言秋日胜春朝", author: "刘禹锡", dynasty: "唐", tags: ["秋天", "励志"], difficulty: 2,
-         background: "刘禹锡一反悲秋传统，赞颂秋天的美好。", fullPoem: "自古逢秋悲寂寥，我言秋日胜春朝。晴空一鹤排云上，便引诗情到碧霄。"},
+         background: "刘禹锡一反悲秋传统,赞颂秋天的美好。", fullPoem: "自古逢秋悲寂寥,我言秋日胜春朝。晴空一鹤排云上,便引诗情到碧霄。"},
 
         {id: 136, up: "黄沙百战穿金甲", down: "不破楼兰终不还", author: "王昌龄", dynasty: "唐", tags: ["战争", "壮志"], difficulty: 2,
-         background: "王昌龄写边塞将士誓死保卫边疆的决心。", fullPoem: "青海长云暗雪山，孤城遥望玉门关。黄沙百战穿金甲，不破楼兰终不还。"},
+         background: "王昌龄写边塞将士誓死保卫边疆的决心。", fullPoem: "青海长云暗雪山,孤城遥望玉门关。黄沙百战穿金甲,不破楼兰终不还。"},
         {id: 137, up: "秦时明月汉时关", down: "万里长征人未还", author: "王昌龄", dynasty: "唐", tags: ["战争", "月亮", "历史"], difficulty: 2,
-         background: "王昌龄感叹边塞战争自古不断，征人难归。", fullPoem: "秦时明月汉时关，万里长征人未还。但使龙城飞将在，不教胡马度阴山。"},
-        {id: 138, up: "但使龙城飞将在", down: "不教胡马度阴山", author: "王昌龄", dynasty: "唐", tags: ["战争", "壮志"], difficulty: 2, note: "飞将：指李广。"},
+         background: "王昌龄感叹边塞战争自古不断,征人难归。", fullPoem: "秦时明月汉时关,万里长征人未还。但使龙城飞将在,不教胡马度阴山。"},
+        {id: 138, up: "但使龙城飞将在", down: "不教胡马度阴山", author: "王昌龄", dynasty: "唐", tags: ["战争", "壮志"], difficulty: 2, note: "飞将:指李广。"},
         {id: 139, up: "洛阳亲友如相问", down: "一片冰心在玉壶", author: "王昌龄", dynasty: "唐", tags: ["友情", "品格"], difficulty: 2,
-         background: "王昌龄被贬江宁丞，送别友人时表明自己清白坚贞。", note: "冰心玉壶：比喻心地纯洁。"},
+         background: "王昌龄被贬江宁丞,送别友人时表明自己清白坚贞。", note: "冰心玉壶:比喻心地纯洁。"},
 
         {id: 140, up: "葡萄美酒夜光杯", down: "欲饮琵琶马上催", author: "王翰", dynasty: "唐", tags: ["战争", "边塞"], difficulty: 3,
-         background: "王翰写边塞将士宴饮，豪放悲壮。", fullPoem: "葡萄美酒夜光杯，欲饮琵琶马上催。醉卧沙场君莫笑，古来征战几人回？"},
+         background: "王翰写边塞将士宴饮,豪放悲壮。", fullPoem: "葡萄美酒夜光杯,欲饮琵琶马上催。醉卧沙场君莫笑,古来征战几人回?"},
         {id: 141, up: "醉卧沙场君莫笑", down: "古来征战几人回", author: "王翰", dynasty: "唐", tags: ["战争", "边塞"], difficulty: 2},
 
         {id: 142, up: "莫愁前路无知己", down: "天下谁人不识君", author: "高适", dynasty: "唐", tags: ["友情", "离别"], difficulty: 2,
-         background: "高适送别琴师董庭兰，以豪迈语气安慰友人。", fullPoem: "千里黄云白日曛，北风吹雁雪纷纷。莫愁前路无知己，天下谁人不识君？"},
-
+         background: "高适送别琴师董庭兰,以豪迈语气安慰友人。", fullPoem: "千里黄云白日曛,北风吹雁雪纷纷。莫愁前路无知己,天下谁人不识君?"},
         {id: 143, up: "忽如一夜春风来", down: "千树万树梨花开", author: "岑参", dynasty: "唐", tags: ["冬天", "雪", "春天"], difficulty: 2,
-         background: "岑参以春花喻冬雪，写出边塞雪景的壮美。", fullPoem: "北风卷地白草折，胡天八月即飞雪。忽如一夜春风来，千树万树梨花开。散入珠帘湿罗幕，狐裘不暖锦衾薄。将军角弓不得控，都护铁衣冷难着。瀚海阑干百丈冰，愁云惨淡万里凝。中军置酒饮归客，胡琴琵琶与羌笛。纷纷暮雪下辕门，风掣红旗冻不翻。轮台东门送君去，去时雪满天山路。山回路转不见君，雪上空留马行处。"},
+         background: "岑参以春花喻冬雪,写出边塞雪景的壮美。", fullPoem: "北风卷地白草折,胡天八月即飞雪。忽如一夜春风来,千树万树梨花开。散入珠帘湿罗幕,狐裘不暖锦衾薄。将军角弓不得控,都护铁衣冷难着。瀚海阑干百丈冰,愁云惨淡万里凝。中军置酒饮归客,胡琴琵琶与羌笛。纷纷暮雪下辕门,风掣红旗冻不翻。轮台东门送君去,去时雪满天山路。山回路转不见君,雪上空留马行处。"},
         {id: 144, up: "春风得意马蹄疾", down: "一日看尽长安花", author: "孟郊", dynasty: "唐", tags: ["喜悦", "春天"], difficulty: 2,
-         background: "孟郊四十六岁中进士后，写尽得意之情。", fullPoem: "昔日龌龊不足夸，今朝放荡思无涯。春风得意马蹄疾，一日看尽长安花。"},
+         background: "孟郊四十六岁中进士后,写尽得意之情。", fullPoem: "昔日龌龊不足夸,今朝放荡思无涯。春风得意马蹄疾,一日看尽长安花。"},
 
         {id: 145, up: "曾经沧海难为水", down: "除却巫山不是云", author: "元稹", dynasty: "唐", tags: ["爱情", "悼亡"], difficulty: 3,
-         background: "元稹悼念亡妻韦丛，表达对妻子的忠贞不渝。", fullPoem: "曾经沧海难为水，除却巫山不是云。取次花丛懒回顾，半缘修道半缘君。"},
-        {id: 146, up: "诚知此恨人人有", down: "贫贱夫妻百事哀", author: "元稹", dynasty: "唐", tags: ["爱情", "悼亡"], difficulty: 3, background: "元稹悼念亡妻，写贫贱夫妻的深厚感情。"},
+         background: "元稹悼念亡妻韦丛,表达对妻子的忠贞不渝。", fullPoem: "曾经沧海难为水,除却巫山不是云。取次花丛懒回顾,半缘修道半缘君。"},
+        {id: 146, up: "诚知此恨人人有", down: "贫贱夫妻百事哀", author: "元稹", dynasty: "唐", tags: ["爱情", "悼亡"], difficulty: 3, background: "元稹悼念亡妻,写贫贱夫妻的深厚感情。"},
 
         {id: 147, up: "相见时难别亦难", down: "东风无力百花残", author: "李商隐", dynasty: "唐", tags: ["离别", "花", "春天"], difficulty: 2,
-         background: "李商隐写离别之苦，两个难字道出深情。", fullPoem: "相见时难别亦难，东风无力百花残。春蚕到死丝方尽，蜡炬成灰泪始干。晓镜但愁云鬓改，夜吟应觉月光寒。蓬山此去无多路，青鸟殷勤为探看。"},
-        {id: 148, up: "晓镜但愁云鬓改", down: "夜吟应觉月光寒", author: "李商隐", dynasty: "唐", tags: ["相思", "月亮", "时间"], difficulty: 3, note: "云鬓：女子美发。"},
+         background: "李商隐写离别之苦,两个难字道出深情。", fullPoem: "相见时难别亦难,东风无力百花残。春蚕到死丝方尽,蜡炬成灰泪始干。晓镜但愁云鬓改,夜吟应觉月光寒。蓬山此去无多路,青鸟殷勤为探看。"},
+        {id: 148, up: "晓镜但愁云鬓改", down: "夜吟应觉月光寒", author: "李商隐", dynasty: "唐", tags: ["相思", "月亮", "时间"], difficulty: 3, note: "云鬓:女子美发。"},
 
         {id: 149, up: "天意怜幽草", down: "人间重晚晴", author: "李商隐", dynasty: "唐", tags: ["时间", "感慨"], difficulty: 3,
-         background: "李商隐欣赏晚晴美景，感悟珍惜美好时光。", fullPoem: "深居俯夹城，春去夏犹清。天意怜幽草，人间重晚晴。并添高阁迥，微注小窗明。越鸟巢干后，归飞体更轻。"},
-        {id: 150, up: "夕阳无限好", down: "只是近黄昏", author: "李商隐", dynasty: "唐", tags: ["时间", "感慨"], difficulty: 1, background: "李商隐登乐游原，感叹美好事物短暂。"}
+         background: "李商隐欣赏晚晴美景,感悟珍惜美好时光。", fullPoem: "深居俯夹城,春去夏犹清。天意怜幽草,人间重晚晴。并添高阁迥,微注小窗明。越鸟巢干后,归飞体更轻。"},
+        {id: 150, up: "夕阳无限好", down: "只是近黄昏", author: "李商隐", dynasty: "唐", tags: ["时间", "感慨"], difficulty: 1, background: "李商隐登乐游原,感叹美好事物短暂。"}
     ],
 
     keywords: ["花", "月", "春", "山", "水", "风", "雨", "云", "人", "情", "梦", "酒", "夜", "雪", "秋", "江", "柳", "梅", "愁", "思"],
@@ -1113,7 +1324,7 @@ class PoemGame {
         this.chainState = null;
         this.canvas = null;
         this.ctx = null;
-        // 优化：学习面板相关状态
+        // 优化:学习面板相关状态
         this.learnPanelExpanded = false;
         this.autoTransitionTimer = null;
         this.init();
@@ -1237,7 +1448,7 @@ class PoemGame {
             this.state.addScore(10);
             if (this.state.addStreak()) this.showComboBonus();
             this.showLearnPanel(this.currentQuestion.poem);
-            // 优化：不自动跳转，等待用户关闭学习面板
+            // 优化:不自动跳转,等待用户关闭学习面板
         } else {
             card.classList.add('wrong');
             this.sound.play('wrong');
@@ -1249,15 +1460,15 @@ class PoemGame {
         }
         this.updateUI();
     }
-    
+
     // ==================== 优化后的学习面板 ====================
     showLearnPanel(poem) {
         this.clearAutoTransition(); // 清除任何待定的自动跳转
-        
+
         const panel = document.getElementById('learnPanel');
         const isCollected = this.state.collectedPoems.has(poem.id);
-        const fullPoemText = poem.fullPoem || (poem.up + '，' + poem.down);
-        
+        const fullPoemText = poem.fullPoem || (poem.up + ',' + poem.down);
+
         panel.innerHTML = `
             <div class="learn-panel">
                 <div class="learn-header" onclick="game.toggleLearnPanel()">
@@ -1290,7 +1501,7 @@ class PoemGame {
                 </div>
             </div>
         `;
-        
+
         this.learnPanelExpanded = true;
     }
 
@@ -1300,7 +1511,7 @@ class PoemGame {
         const expandBtn = document.querySelector('.expand-btn');
         const arrow = expandBtn.querySelector('.arrow');
         const text = document.getElementById('expandBtnText');
-        
+
         if (this.learnPanelExpanded) {
             wrapper.classList.remove('expanded');
             arrow.classList.remove('expanded');
@@ -1321,10 +1532,22 @@ class PoemGame {
             panel.innerHTML = '';
         }
         this.learnPanelExpanded = false;
-        // 只有在用户明确关闭学习面板后才进入下一题
+        // 根据当前模式决定是否进入下一题
         setTimeout(() => {
             if (this.state.hearts > 0) {
-                this.generateFillQuestion();
+                if (this.state.mode === 'fill' || this.state.mode === 'match' || this.state.mode === 'feihua' || this.state.mode === 'chain') {
+                    // 这些模式需要进入下一题
+                    if (this.state.mode === 'fill') {
+                        this.generateFillQuestion();
+                    } else if (this.state.mode === 'match') {
+                        this.generateMatchGame();
+                    } else if (this.state.mode === 'feihua') {
+                        this.generateFeihuaQuestion();
+                    } else if (this.state.mode === 'chain') {
+                        this.generateChainQuestion();
+                    }
+                }
+                // challenge 和 learn 模式不自动进入下一题
             }
         }, 300);
     }
@@ -1360,9 +1583,9 @@ class PoemGame {
         const contextType = contextTypes[Math.floor(Math.random() * contextTypes.length)];
         let challengeText = '';
         switch(contextType) {
-            case 'background': challengeText = `📖 背景提示：<br>${poem.background ? poem.background.substring(0, 60) + '...' : '这是一首' + poem.dynasty + '代' + poem.author + '的诗'}`; break;
-            case 'author': challengeText = `👤 作者：${poem.dynasty} · ${poem.author}<br>🏷️ 标签：${poem.tags.join('、')}`; break;
-            case 'tags': challengeText = `🏷️ 主题：${poem.tags.join('、')}<br>提示：上句是"${poem.up.substring(0, 2)}..."`; break;
+            case 'background': challengeText = `📖 背景提示:<br>${poem.background ? poem.background.substring(0, 60) + '...' : '这是一首' + poem.dynasty + '代' + poem.author + '的诗'}`; break;
+            case 'author': challengeText = `👤 作者:${poem.dynasty} · ${poem.author}<br>🏷️ 标签:${poem.tags.join('、')}`; break;
+            case 'tags': challengeText = `🏷️ 主题:${poem.tags.join('、')}<br>提示:上句是"${poem.up.substring(0, 2)}..."`; break;
         }
 
         content.innerHTML = `
@@ -1397,7 +1620,8 @@ class PoemGame {
             this.sound.play('correct');
             this.state.addScore(15);
             if (this.state.addStreak()) this.showComboBonus();
-            this.showLearnPanel(this.currentQuestion.poem);
+            // 挑战模式不显示学习面板,直接进入下一题
+            setTimeout(() => this.generateChallengeQuestion(), 1200);
         } else {
             card.classList.add('wrong');
             this.sound.play('wrong');
@@ -1419,6 +1643,7 @@ class PoemGame {
                     <div class="match-column" id="leftColumn"><div class="column-title">诗句上句</div></div>
                     <div class="match-column" id="rightColumn"><div class="column-title">作者 / 下句</div></div>
                 </div>
+                <div id="learnPanel"></div>
             </div>
         `;
         this.generateMatchGame();
@@ -1439,6 +1664,7 @@ class PoemGame {
             item.className = 'match-item';
             item.textContent = poem.up;
             item.dataset.index = idx;
+            item.dataset.side = 'left'; // 添加 data-side 属性
             item.onclick = () => this.selectMatchItem(item, 'left');
             leftCol.appendChild(item);
         });
@@ -1455,9 +1681,16 @@ class PoemGame {
             div.textContent = item.text;
             div.dataset.index = item.index;
             div.dataset.type = item.type;
+            div.dataset.side = 'right'; // 添加 data-side 属性
             div.onclick = () => this.selectMatchItem(div, 'right');
             rightCol.appendChild(div);
         });
+
+        // 清空学习面板
+        const learnPanel = document.getElementById('learnPanel');
+        if (learnPanel) {
+            learnPanel.innerHTML = '';
+        }
     }
     selectMatchItem(item, side) {
         if (this.matchState.isProcessing || item.classList.contains('matched')) return;
@@ -1479,7 +1712,9 @@ class PoemGame {
             state.matched++;
             if (state.matched >= state.target) {
                 this.sound.play('combo');
-                setTimeout(() => this.generateMatchGame(), 1500);
+                // 配对完成后显示学习面板,允许用户查看诗词详情
+                const lastPoem = state.poems[state.poems.length - 1];
+                this.showLearnPanel(lastPoem);
             } else { state.selectedLeft = null; state.selectedRight = null; state.isProcessing = false; }
         } else {
             state.selectedLeft.classList.add('wrong'); state.selectedRight.classList.add('wrong');
@@ -1518,6 +1753,7 @@ class PoemGame {
             </div>
             <div class="poem-display" style="min-height: 80px;"><div class="poem-text">${displayText}</div></div>
             <div class="options-grid" id="feihuaOptions"></div>
+            <div id="learnPanel"></div>
         `;
 
         const options = [answer];
@@ -1553,7 +1789,8 @@ class PoemGame {
             this.sound.play('correct');
             this.state.addScore(12);
             if (this.state.addStreak()) this.showComboBonus();
-            setTimeout(() => this.generateFeihuaQuestion(), 1200);
+            // 飞花令模式答对后显示学习面板
+            this.showLearnPanel(this.currentQuestion.poem);
         } else {
             card.classList.add('wrong');
             this.sound.play('wrong');
@@ -1576,8 +1813,11 @@ class PoemGame {
                     <button class="action-btn" onclick="game.checkChainAnswer()">提交</button>
                     <button class="action-btn" onclick="game.skipChain()">跳过 (-5分)</button>
                 </div>
+                <div id="learnPanel"></div>
             </div>
         `;
+        // 调用 generateChainQuestion 显示第一题
+        this.generateChainQuestion();
     }
     generateChainQuestion() {
         if (this.state.hearts <= 0) return;
@@ -1587,29 +1827,33 @@ class PoemGame {
         const poem = pool[0];
         this.state.usedPoemIds.push(poem.id);
         this.currentQuestion = {poem, type: 'chain', answer: poem.down};
-        
+
         document.getElementById('chainPoemText').textContent = poem.up;
         document.getElementById('chainInput').value = '';
         document.getElementById('chainInput').focus();
         this.state.isProcessing = false;
+
+        // 清空学习面板
+        const learnPanel = document.getElementById('learnPanel');
+        if (learnPanel) {
+            learnPanel.innerHTML = '';
+        }
     }
     checkChainAnswer() {
         if (this.state.isProcessing) return;
         const input = document.getElementById('chainInput').value.trim();
         if (!input) return;
-        
+
         this.state.isProcessing = true;
         const result = PoemDatabase.fuzzyMatch(input, this.currentQuestion.answer);
-        
+
         if (result.match) {
             this.sound.play('correct');
             this.state.addScore(15);
             if (this.state.addStreak()) this.showComboBonus();
             document.getElementById('chainInput').classList.add('correct');
-            setTimeout(() => {
-                document.getElementById('chainInput').classList.remove('correct');
-                this.generateChainQuestion();
-            }, 1000);
+            // 接龙模式答对后显示学习面板
+            this.showLearnPanel(this.currentQuestion.poem);
         } else {
             this.sound.play('wrong');
             document.getElementById('chainInput').classList.add('wrong');
@@ -1634,18 +1878,19 @@ class PoemGame {
     initLearnMode() {
         const main = document.getElementById('gameMain');
         const collectedPoems = PoemDatabase.poems.filter(p => this.state.collectedPoems.has(p.id));
-        
+
         main.innerHTML = `
             <div style="text-align: center; margin-bottom: 20px;">
                 <div style="font-family: 'Ma Shan Zheng', cursive; font-size: 28px; color: var(--accent);">📚 我的收藏</div>
                 <div style="color: var(--ink-light);">共收藏 ${collectedPoems.length} 首诗词</div>
             </div>
             <div class="collection-grid" id="collectionGrid"></div>
+            <div id="learnPanel"></div>
         `;
 
         const grid = document.getElementById('collectionGrid');
         if (collectedPoems.length === 0) {
-            grid.innerHTML = '<div style="text-align: center; color: var(--ink-light); padding: 40px;">暂无收藏，快去游戏中收集吧！</div>';
+            grid.innerHTML = '<div style="text-align: center; color: var(--ink-light); padding: 40px;">暂无收藏,快去游戏中收集吧!</div>';
             return;
         }
 
@@ -1663,6 +1908,12 @@ class PoemGame {
             };
             grid.appendChild(card);
         });
+
+        // 清空学习面板
+        const learnPanel = document.getElementById('learnPanel');
+        if (learnPanel) {
+            learnPanel.innerHTML = '';
+        }
     }
 
     showComboBonus() {
@@ -1676,7 +1927,7 @@ class PoemGame {
     updateUI() {
         document.getElementById('scoreValue').textContent = this.state.score;
         document.getElementById('collectValue').textContent = this.state.collectedPoems.size;
-        
+
         document.querySelectorAll('.heart').forEach((heart, i) => {
             heart.classList.toggle('lost', i >= this.state.hearts);
         });
@@ -1698,7 +1949,7 @@ class PoemGame {
 
     useHint() {
         if (!this.state.useHint()) return;
-        
+
         const gridId = this.state.mode === 'fill' ? 'optionsGrid' : 'challengeOptions';
         const grid = document.getElementById(gridId);
         if (!grid) return;
@@ -1718,7 +1969,7 @@ class PoemGame {
                 }, 2000);
             }
         });
-        
+
         this.sound.play('correct');
         this.updateUI();
     }
