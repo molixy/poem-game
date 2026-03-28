@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#8b4513">
+    <meta name="theme-color" content="#795548">
     <meta name="description" content="沉浸式古诗词学习游戏 - 诗笺雅集,寓教于乐">
     <title>诗笺雅集 - 诗词学习游戏</title>
 
@@ -11,303 +11,598 @@
 
     <style>
         :root {
-            --paper: #f5f0e6;
-            --paper-dark: #e8dcc8;
-            --ink: #2c2c2c;
-            --ink-light: #4a4a4a;
-            --accent: #8b4513;
-            --accent-light: #a0522d;
-            --gold: #d4a574;
-            --success: #2e7d32;
-            --error: #c62828;
+            /* 优化后的配色方案 */
+            --primary: #795548;
+            --primary-light: #8d6e63;
+            --primary-dark: #5d4037;
+            
+            --paper: #fdf6e3;
+            --paper-light: #fef9e7;
+            --paper-dark: #f0e6d2;
+            
+            --ink: #2d2d2d;
+            --ink-light: #5d5d5d;
+            --ink-lighter: #8a8a8a;
+            
+            --accent: #c68e17;
+            --accent-light: #d4a574;
+            --accent-dark: #9e6d0f;
+            
+            --gold: #c9a27e;
+            --gold-light: #e0c0a0;
+            
+            --success: #43a047;
+            --success-light: #66bb6a;
+            --success-bg: #e8f5e9;
+            
+            --error: #e53935;
+            --error-light: #ef5350;
+            --error-bg: #ffebee;
+            
             --warning: #f9a825;
-            --info: #1976d2;
-            --shadow: rgba(139, 69, 19, 0.15);
-            --shadow-heavy: rgba(139, 69, 19, 0.25);
+            --warning-light: #ffb300;
+            --warning-bg: #fff8e1;
+            
+            --info: #1e88e5;
+            --info-light: #42a5f5;
+            --info-bg: #e3f2fd;
+            
+            --shadow: rgba(121, 85, 72, 0.12);
+            --shadow-medium: rgba(121, 85, 72, 0.18);
+            --shadow-heavy: rgba(121, 85, 72, 0.25);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
 
         body {
             font-family: 'Noto Serif SC', 'STKaiti', serif;
             background: var(--paper);
+            background-image: linear-gradient(135deg, var(--paper) 0%, var(--paper-light) 100%);
             min-height: 100vh;
             color: var(--ink);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
         body::before {
             content: '';
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.4;
+            opacity: 0.15;
             pointer-events: none;
             z-index: -1;
         }
 
         #app {
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 15px;
+            padding: 16px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
+        /* Header 优化 */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 4px 20px var(--shadow);
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 24px;
+            padding: 24px 20px;
+            box-shadow: 0 4px 24px var(--shadow);
             border: 2px solid var(--gold);
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        header:hover {
+            box-shadow: 0 8px 32px var(--shadow-medium);
         }
 
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
         }
 
         .game-title {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 32px;
-            color: var(--accent);
+            font-size: 36px;
+            color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            text-shadow: 0 2px 8px rgba(121, 85, 72, 0.15);
         }
 
-        .game-title::before { content: '📜'; font-size: 28px; }
+        .game-title::before {
+            content: '📜';
+            font-size: 32px;
+            animation: float 3s ease-in-out infinite;
+        }
 
-        .score-board { display: flex; gap: 20px; }
-        .score-item { text-align: center; }
-        .score-label { font-size: 12px; color: var(--ink-light); display: block; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .score-board {
+            display: flex;
+            gap: 24px;
+            background: var(--paper-light);
+            padding: 12px 20px;
+            border-radius: 16px;
+            border: 1.5px solid var(--gold-light);
+            flex-wrap: wrap;
+        }
+
+        .score-item {
+            text-align: center;
+            position: relative;
+        }
+
+        .score-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 24px;
+            background: var(--gold);
+        }
+
+        .score-label {
+            font-size: 13px;
+            color: var(--ink-lighter);
+            display: block;
+            margin-bottom: 4px;
+        }
+
         .score-value {
             font-family: 'ZCOOL XiaoWei', serif;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 700;
-            color: var(--accent);
+            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
+        /* Mode Tabs 优化 */
         .mode-tabs {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             overflow-x: auto;
-            padding-bottom: 5px;
+            padding-bottom: 8px;
+            scrollbar-width: none;
         }
 
-        .mode-tabs::-webkit-scrollbar { display: none; }
+        .mode-tabs::-webkit-scrollbar {
+            display: none;
+        }
 
         .mode-tab {
             flex: 1;
-            min-width: 70px;
-            padding: 10px 12px;
+            min-width: 80px;
+            padding: 12px 16px;
             border: 2px solid var(--gold);
             background: var(--paper);
-            border-radius: 25px;
+            border-radius: 28px;
             cursor: pointer;
             font-family: inherit;
-            font-size: 13px;
+            font-size: 14px;
             color: var(--ink-light);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .mode-tab:hover:not(.active) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px var(--shadow);
+            border-color: var(--accent);
         }
 
         .mode-tab.active {
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: var(--paper);
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px var(--shadow-heavy);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px var(--shadow-heavy);
         }
 
-        .mode-tab .icon { display: block; font-size: 18px; margin-bottom: 2px; }
+        .mode-tab .icon {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
 
+        /* Main 区域优化 */
         main {
             flex: 1;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 25px 20px;
-            box-shadow: 0 8px 30px var(--shadow);
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 24px;
+            padding: 28px 24px;
+            box-shadow: 0 8px 32px var(--shadow);
             border: 2px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold) 0%, var(--accent) 50%, var(--gold) 100%);
+        }
+
+        /* Level Selector 优化 */
+        .level-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .level-card {
+            background: linear-gradient(135deg, var(--paper) 0%, var(--paper-light) 100%);
+            border: 3px solid var(--gold);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
 
-        .difficulty-selector {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
+        .level-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
         }
 
-        .difficulty-btn {
-            padding: 10px 25px;
-            border: 2px solid var(--gold);
-            background: var(--paper);
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: inherit;
+        .level-card:hover:not(.locked)::before {
+            left: 100%;
+        }
+
+        .level-card:hover:not(.locked) {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 32px var(--shadow-heavy);
+        }
+
+        .level-card.active {
+            transform: scale(1.05);
+            font-weight: 600;
+            box-shadow: 0 8px 28px var(--shadow-heavy);
+        }
+
+        .level-card.locked {
+            opacity: 0.4;
+            cursor: not-allowed;
+            filter: grayscale(0.5);
+        }
+
+        .level-card.locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            opacity: 0.4;
+        }
+
+        .level-card.level-1 { border-color: var(--success); }
+        .level-card.level-1.active { 
+            background: linear-gradient(135deg, var(--success-bg) 0%, #c8e6c9 100%); 
+            border-color: var(--success);
+            box-shadow: 0 8px 28px rgba(67, 160, 71, 0.3);
+        }
+
+        .level-card.level-2 { border-color: var(--warning); }
+        .level-card.level-2.active { 
+            background: linear-gradient(135deg, var(--warning-bg) 0%, #fff59d 100%); 
+            border-color: var(--warning);
+            box-shadow: 0 8px 28px rgba(249, 168, 37, 0.3);
+        }
+
+        .level-card.level-3 { border-color: var(--error); }
+        .level-card.level-3.active { 
+            background: linear-gradient(135deg, var(--error-bg) 0%, #ffcdd2 100%); 
+            border-color: var(--error);
+            box-shadow: 0 8px 28px rgba(229, 57, 53, 0.3);
+        }
+
+        .level-card.level-4 { border-color: var(--info); }
+        .level-card.level-4.active { 
+            background: linear-gradient(135deg, var(--info-bg) 0%, #bbdefb 100%); 
+            border-color: var(--info);
+            box-shadow: 0 8px 28px rgba(30, 136, 229, 0.3);
+        }
+
+        .level-number {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .level-name {
             font-size: 15px;
-            transition: all 0.3s ease;
+            color: var(--ink-light);
+            margin-bottom: 10px;
+            font-weight: 600;
         }
 
-        .difficulty-btn.easy { color: var(--success); border-color: var(--success); }
-        .difficulty-btn.medium { color: var(--warning); border-color: var(--warning); }
-        .difficulty-btn.hard { color: var(--error); border-color: var(--error); }
-        .difficulty-btn.expert { color: #7c4dff; border-color: #7c4dff; }
+        .level-progress {
+            font-size: 13px;
+            color: var(--primary);
+            font-weight: 700;
+            padding: 4px 12px;
+            background: rgba(121, 85, 72, 0.1);
+            border-radius: 12px;
+            display: inline-block;
+        }
 
-        .difficulty-btn.active { transform: scale(1.05); font-weight: 600; color: white; }
-        .difficulty-btn.easy.active { background: var(--success); }
-        .difficulty-btn.medium.active { background: var(--warning); }
-        .difficulty-btn.hard.active { background: var(--error); }
-        .difficulty-btn.expert.active { background: #7c4dff; }
+        .level-requirement {
+            font-size: 12px;
+            color: var(--ink-lighter);
+            margin-top: 8px;
+        }
 
+        /* Poem Display 优化 */
         .poem-display {
             text-align: center;
-            padding: 35px 25px;
-            background: linear-gradient(135deg, #faf8f3 0%, var(--paper) 100%);
-            border-radius: 15px;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, var(--paper-light) 0%, var(--paper) 100%);
+            border-radius: 20px;
             border: 3px solid var(--gold);
-            margin-bottom: 25px;
+            margin-bottom: 28px;
             position: relative;
-            min-height: 100px;
+            min-height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            box-shadow: inset 0 2px 12px rgba(121, 85, 72, 0.08);
+        }
+
+        .poem-display::before,
+        .poem-display::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--gold);
+            opacity: 0.4;
+        }
+
+        .poem-display::before {
+            top: 10px;
+            left: 10px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .poem-display::after {
+            bottom: 10px;
+            right: 10px;
+            border-left: none;
+            border-top: none;
         }
 
         .poem-text {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 32px;
+            font-size: 36px;
             color: var(--ink);
-            line-height: 1.6;
-            margin-bottom: 10px;
+            line-height: 1.8;
+            margin-bottom: 12px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
         }
 
         .poem-hint {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--ink-light);
             margin-top: 8px;
+            font-weight: 500;
+            padding: 4px 16px;
+            background: rgba(121, 85, 72, 0.08);
+            border-radius: 12px;
+            display: inline-block;
         }
 
-        .ink-spread { animation: inkSpread 0.8s ease-out; }
+        .ink-spread {
+            animation: inkSpread 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
         @keyframes inkSpread {
-            0% { box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4); transform: scale(1); }
-            50% { box-shadow: 0 0 0 20px rgba(46, 125, 50, 0); transform: scale(1.02); }
-            100% { box-shadow: 0 0 0 0 rgba(46, 125, 50, 0); transform: scale(1); }
+            0% { 
+                box-shadow: 0 0 0 0 rgba(67, 160, 71, 0.4);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 0 30px rgba(67, 160, 71, 0.1);
+                transform: scale(1.02);
+            }
+            100% { 
+                box-shadow: 0 0 0 0 rgba(67, 160, 71, 0);
+                transform: scale(1);
+            }
         }
 
+        /* Options Grid 优化 */
         .options-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            max-width: 600px;
+            gap: 16px;
+            max-width: 640px;
             margin: 0 auto;
         }
 
-        @media (max-width: 480px) { .options-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 480px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
 
         .option-card {
-            padding: 18px;
+            padding: 20px;
             background: white;
-            border: 2px solid var(--gold);
-            border-radius: 12px;
+            border: 2px solid var(--gold-light);
+            border-radius: 16px;
             font-size: 17px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
-            min-height: 70px;
+            min-height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .option-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
         }
 
         .option-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px var(--shadow);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px var(--shadow-medium);
             border-color: var(--accent);
         }
 
         .option-card.correct {
-            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+            background: linear-gradient(135deg, var(--success-bg) 0%, #c8e6c9 100%);
             border-color: var(--success);
-            animation: correctPulse 0.6s ease;
+            animation: correctPulse 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px rgba(67, 160, 71, 0.4);
         }
 
         .option-card.wrong {
-            background: linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%);
+            background: linear-gradient(135deg, var(--error-bg) 0%, #ffcdd2 100%);
             border-color: var(--error);
-            animation: paperShake 0.5s ease;
+            animation: paperShake 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        @keyframes correctPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
         @keyframes paperShake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
+            20%, 60% { transform: translateX(-12px); }
+            40%, 80% { transform: translateX(12px); }
         }
 
-        /* ==================== 挑战模式样式 ==================== */
+        /* Challenge Context 优化 */
         .challenge-context {
             text-align: center;
-            padding: 25px;
-            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
-            border-radius: 15px;
+            padding: 28px;
+            background: linear-gradient(135deg, var(--warning-bg) 0%, #fffde7 100%);
+            border-radius: 20px;
             border: 2px solid var(--gold);
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(249, 168, 37, 0.15);
         }
 
         .challenge-title {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 28px;
-            color: var(--accent);
-            margin-bottom: 15px;
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 16px;
         }
 
         .challenge-desc {
             font-size: 16px;
-            line-height: 1.8;
+            line-height: 1.9;
             color: var(--ink-light);
         }
 
-        /* ==================== 配对模式样式 ==================== */
+        /* Match Container 优化 */
         .match-container {
-            padding: 10px 0;
+            padding: 12px 0;
+            position: relative;
+        }
+
+        .match-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
         }
 
         .match-area {
             display: flex;
-            gap: 20px;
+            gap: 24px;
             justify-content: center;
+            position: relative;
+            z-index: 5;
         }
 
         @media (max-width: 768px) {
             .match-area {
                 flex-direction: column;
-                gap: 15px;
+                gap: 16px;
             }
         }
 
         .match-column {
             flex: 1;
             background: white;
-            border: 2px solid var(--gold);
-            border-radius: 15px;
-            padding: 15px;
+            border: 2px solid var(--gold-light);
+            border-radius: 20px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
             max-width: 48%;
+            box-shadow: 0 4px 16px var(--shadow);
         }
 
         @media (max-width: 768px) {
@@ -319,113 +614,159 @@
         .column-title {
             text-align: center;
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 20px;
-            color: var(--accent);
-            padding-bottom: 10px;
-            border-bottom: 2px dashed var(--gold);
-            margin-bottom: 5px;
+            font-size: 22px;
+            color: var(--primary);
+            padding-bottom: 12px;
+            border-bottom: 3px dashed var(--gold);
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
         .match-item {
-            padding: 15px 12px;
+            padding: 16px 14px;
             background: var(--paper);
-            border: 2px solid var(--gold);
-            border-radius: 10px;
+            border: 2px solid var(--gold-light);
+            border-radius: 14px;
             cursor: pointer;
             text-align: center;
             font-size: 15px;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 60px;
+            min-height: 64px;
+            position: relative;
+            box-shadow: 0 2px 8px var(--shadow);
         }
 
         .match-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px var(--shadow);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px var(--shadow);
         }
 
         .match-item.selected {
-            background: linear-gradient(135deg, #ffecb3 0%, #ffe082 100%);
+            background: linear-gradient(135deg, var(--warning-bg) 0%, #fff9c4 100%);
             border-color: var(--accent);
             transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(198, 142, 23, 0.3);
         }
 
         .match-item.matched {
-            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+            background: linear-gradient(135deg, var(--success-bg) 0%, #c8e6c9 100%);
             border-color: var(--success);
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
         .match-item.wrong {
-            background: linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%);
+            background: linear-gradient(135deg, var(--error-bg) 0%, #ffcdd2 100%);
             border-color: var(--error);
-            animation: paperShake 0.5s ease;
+            animation: paperShake 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* ==================== 接龙模式样式 ==================== */
+        .match-item .speak-icon {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--accent) 100%);
+            border: 1.5px solid var(--gold-dark);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            z-index: 5;
+            box-shadow: 0 2px 8px rgba(198, 142, 23, 0.3);
+        }
+
+        .match-item .speak-icon:hover {
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(198, 142, 23, 0.4);
+        }
+
+        /* Chain Input 优化 */
         .chain-input-area {
-            padding: 10px 0;
+            padding: 12px 0;
         }
 
         .chain-input {
             width: 100%;
-            max-width: 500px;
-            margin: 20px auto;
+            max-width: 540px;
+            margin: 24px auto;
             display: block;
-            padding: 15px 20px;
+            padding: 18px 24px;
             font-size: 18px;
             font-family: 'Noto Serif SC', serif;
-            border: 2px solid var(--gold);
-            border-radius: 12px;
+            border: 2px solid var(--gold-light);
+            border-radius: 16px;
             background: white;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px var(--shadow);
         }
 
         .chain-input:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 4px 20px var(--shadow);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(121, 85, 72, 0.1), 0 8px 24px var(--shadow-medium);
+            transform: translateY(-2px);
         }
 
         .chain-input.correct {
             border-color: var(--success);
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            background: linear-gradient(135deg, var(--success-bg) 0%, #e8f5e9 100%);
+            box-shadow: 0 0 0 4px rgba(67, 160, 71, 0.1);
         }
 
         .chain-input.wrong {
             border-color: var(--error);
-            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
-            animation: paperShake 0.5s ease;
+            background: linear-gradient(135deg, var(--error-bg) 0%, #ffebee 100%);
+            animation: paperShake 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* ==================== 飞花令样式 ==================== */
+        .chain-input.highlight {
+            border-color: var(--success);
+            box-shadow: 0 0 24px rgba(67, 160, 71, 0.4);
+            animation: highlightPulse 1.5s ease-in-out;
+        }
+
+        @keyframes highlightPulse {
+            0%, 100% { box-shadow: 0 0 24px rgba(67, 160, 71, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(67, 160, 71, 0.6); }
+        }
+
+        /* Feihua Keyword 优化 */
         .feihua-keyword {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 48px;
-            color: var(--accent);
-            margin-bottom: 15px;
+            font-size: 56px;
+            color: var(--primary);
+            margin-bottom: 20px;
             display: inline-block;
-            padding: 15px 40px;
-            background: linear-gradient(135deg, #ffecb3 0%, #ffe082 100%);
-            border-radius: 20px;
+            padding: 20px 50px;
+            background: linear-gradient(135deg, var(--warning-bg) 0%, #fff9c4 100%);
+            border-radius: 24px;
             border: 3px solid var(--gold);
+            box-shadow: 0 8px 24px rgba(249, 168, 37, 0.3);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            animation: float 3s ease-in-out infinite;
         }
 
         .feihua-context {
-            font-size: 16px;
+            font-size: 17px;
             color: var(--ink-light);
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            font-weight: 500;
         }
 
-        /* ==================== 学习模式收藏网格样式 ==================== */
+        /* Collection Grid 优化 */
         .collection-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
-            padding: 10px 0;
+            padding: 12px 0;
         }
 
         @media (max-width: 768px) {
@@ -436,60 +777,76 @@
 
         .collection-card {
             background: white;
-            border: 2px solid var(--gold);
-            border-radius: 15px;
-            padding: 20px;
+            border: 2px solid var(--gold-light);
+            border-radius: 20px;
+            padding: 24px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px var(--shadow);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px var(--shadow);
+        }
+
+        .collection-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .collection-card:hover::before {
+            left: 100%;
         }
 
         .collection-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px var(--shadow-heavy);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 32px var(--shadow-heavy);
             border-color: var(--accent);
         }
 
         .collection-poem {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 22px;
+            font-size: 24px;
             color: var(--ink);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             text-align: center;
         }
 
         .collection-author {
-            font-size: 14px;
-            color: var(--accent);
+            font-size: 15px;
+            color: var(--primary);
             text-align: center;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px dashed var(--gold);
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 2px dashed var(--gold);
+            font-weight: 600;
         }
 
         .collection-preview {
-            font-size: 15px;
+            font-size: 16px;
             color: var(--ink-light);
             text-align: center;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
-        /* ==================== 优化后的学习面板 ==================== */
+        /* Learn Panel 优化 */
         .learn-panel {
-            background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+            background: linear-gradient(135deg, #fffef7 0%, #fff9e6 100%);
             border: 2px solid var(--gold);
-            border-radius: 15px;
-            margin-top: 20px;
+            border-radius: 20px;
+            margin-top: 24px;
             overflow: hidden;
-            box-shadow: 0 4px 15px var(--shadow);
+            box-shadow: 0 6px 24px var(--shadow);
         }
 
         .learn-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
-            background: rgba(139, 69, 19, 0.05);
+            padding: 18px 24px;
+            background: rgba(121, 85, 72, 0.05);
             border-bottom: 2px solid var(--gold);
             cursor: pointer;
             user-select: none;
@@ -497,37 +854,39 @@
         }
 
         .learn-header:hover {
-            background: rgba(139, 69, 19, 0.1);
+            background: rgba(121, 85, 72, 0.08);
         }
 
         .learn-title {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 22px;
-            color: var(--accent);
+            font-size: 24px;
+            color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .learn-close {
             background: var(--gold);
             color: var(--ink);
             border: none;
-            width: 30px;
-            height: 30px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(198, 142, 23, 0.3);
         }
 
         .learn-close:hover {
             background: var(--accent);
             color: white;
-            transform: rotate(90deg);
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 4px 12px rgba(198, 142, 23, 0.4);
         }
 
         .learn-content-wrapper {
@@ -541,27 +900,26 @@
             max-height: 70vh;
         }
 
-        /* 自定义滚动条 */
         .learn-content-wrapper::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
         }
 
         .learn-content-wrapper::-webkit-scrollbar-track {
-            background: rgba(139, 69, 19, 0.05);
-            border-radius: 4px;
+            background: rgba(121, 85, 72, 0.05);
+            border-radius: 5px;
         }
 
         .learn-content-wrapper::-webkit-scrollbar-thumb {
-            background: var(--gold);
-            border-radius: 4px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--accent) 100%);
+            border-radius: 5px;
         }
 
         .learn-content-wrapper::-webkit-scrollbar-thumb:hover {
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
         }
 
         .learn-section {
-            padding: 20px;
+            padding: 24px;
             border-bottom: 1px dashed var(--gold);
         }
 
@@ -571,29 +929,29 @@
 
         .learn-section-title {
             font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 12px;
+            color: var(--primary);
+            margin-bottom: 14px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 16px;
+            gap: 10px;
+            font-size: 17px;
         }
 
-        /* 诗歌正文样式 - 垂直居中 */
         .learn-poem-text {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 24px;
+            font-size: 26px;
             color: var(--ink);
-            line-height: 2.2;
+            line-height: 2.3;
             text-align: center;
-            margin: 15px 0;
+            margin: 18px 0;
             white-space: pre-wrap;
             word-wrap: break-word;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
         }
 
         .learn-content {
             color: var(--ink-light);
-            line-height: 1.9;
+            line-height: 2;
             text-align: justify;
             font-size: 15px;
             word-wrap: break-word;
@@ -602,202 +960,341 @@
 
         .learn-tags {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
         .learn-tag {
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
-            padding: 5px 14px;
-            border-radius: 15px;
-            font-size: 12px;
-            transition: transform 0.2s ease;
+            padding: 6px 16px;
+            border-radius: 18px;
+            font-size: 13px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(121, 85, 72, 0.2);
         }
 
         .learn-tag:hover {
             transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(121, 85, 72, 0.3);
         }
 
         .collect-btn {
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            border: 2px solid var(--gold);
-            padding: 12px 25px;
-            border-radius: 25px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--accent) 100%);
+            border: 2px solid var(--gold-dark);
+            padding: 14px 28px;
+            border-radius: 28px;
             cursor: pointer;
             font-family: inherit;
-            font-size: 15px;
+            font-size: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            margin: 15px 20px 20px;
-            transition: all 0.3s ease;
-            width: calc(100% - 40px);
+            gap: 10px;
+            margin: 18px 24px 24px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: calc(100% - 48px);
+            box-shadow: 0 4px 16px rgba(198, 142, 23, 0.3);
         }
 
         .collect-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 15px var(--shadow);
+            transform: scale(1.02) translateY(-2px);
+            box-shadow: 0 8px 24px rgba(198, 142, 23, 0.4);
         }
 
         .collect-btn.collected {
-            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+            background: linear-gradient(135deg, var(--success-bg) 0%, #c8e6c9 100%);
             border-color: var(--success);
             color: var(--success);
+            box-shadow: 0 4px 16px rgba(67, 160, 71, 0.3);
         }
 
-        /* 展开按钮 */
         .expand-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 12px 20px;
-            background: rgba(255, 255, 255, 0.5);
+            gap: 10px;
+            padding: 14px 24px;
+            background: rgba(255, 255, 255, 0.6);
             border-top: 1px solid var(--gold);
             cursor: pointer;
-            color: var(--accent);
-            font-size: 14px;
+            color: var(--primary);
+            font-size: 15px;
             transition: all 0.3s ease;
         }
 
         .expand-btn:hover {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
         }
 
         .expand-btn .arrow {
             transition: transform 0.3s ease;
-            font-size: 18px;
+            font-size: 20px;
         }
 
         .expand-btn.expanded .arrow {
             transform: rotate(180deg);
         }
 
-        /* 响应式优化 */
-        @media (max-width: 768px) {
-            .game-title { font-size: 24px; }
-            .poem-text { font-size: 26px; }
-            .options-grid { grid-template-columns: 1fr; }
-
-            .learn-content-wrapper.expanded {
-                max-height: 60vh;
-            }
-
-            .learn-poem-text {
-                font-size: 20px;
-                line-height: 2;
-            }
-
-            .learn-content {
-                font-size: 14px;
-                line-height: 1.8;
-            }
-
-            .learn-section {
-                padding: 15px;
-            }
-
-            .learn-title {
-                font-size: 18px;
-            }
-
-            .collect-btn {
-                padding: 10px 20px;
-                font-size: 14px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .learn-content-wrapper.expanded {
-                max-height: 50vh;
-            }
-
-            .learn-poem-text {
-                font-size: 18px;
-                line-height: 1.8;
-            }
-        }
-
-        /* Footer */
+        /* Footer 优化 */
         footer {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 24px;
             padding: 20px;
             box-shadow: 0 4px 20px var(--shadow);
             border: 2px solid var(--gold);
-            margin-top: 20px;
+            margin-top: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 16px;
+            backdrop-filter: blur(10px);
         }
 
-        .status-bar { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-        .status-item { display: flex; align-items: center; gap: 8px; }
-        .hearts { display: flex; gap: 3px; }
-        .heart { font-size: 24px; transition: all 0.3s ease; }
-        .heart.lost { opacity: 0.3; filter: grayscale(100%); }
-        .streak-badge { background: linear-gradient(135deg, #ff6b6b, #ee5a5a); color: white; padding: 5px 12px; border-radius: 15px; font-weight: 600; font-size: 14px; }
+        .status-bar {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
-        .action-buttons { display: flex; gap: 10px; }
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hearts {
+            display: flex;
+            gap: 4px;
+        }
+
+        .heart {
+            font-size: 26px;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .heart.lost {
+            opacity: 0.3;
+            filter: grayscale(100%) drop-shadow(0 0 0);
+        }
+
+        .streak-badge {
+            background: linear-gradient(135deg, #ff7043, #f4511e);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 18px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(244, 81, 30, 0.3);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
         .action-btn {
-            padding: 10px 20px;
-            border: 2px solid var(--accent);
+            padding: 12px 24px;
+            border: 2px solid var(--primary);
             background: white;
-            color: var(--accent);
-            border-radius: 20px;
+            color: var(--primary);
+            border-radius: 24px;
             cursor: pointer;
             font-family: inherit;
             font-size: 14px;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px var(--shadow);
+            font-weight: 600;
         }
-        .action-btn:hover { background: var(--accent); color: white; }
-        .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* 弹窗 */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 3000; backdrop-filter: blur(8px); }
-        .modal.active { display: flex; }
+        .action-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(121, 85, 72, 0.3);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .speak-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--accent) 100%);
+            border: 2px solid var(--gold-dark);
+            padding: 10px 18px;
+            border-radius: 24px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(198, 142, 23, 0.3);
+            font-weight: 600;
+        }
+
+        .speak-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(198, 142, 23, 0.4);
+        }
+
+        .speak-btn.speaking {
+            background: linear-gradient(135deg, var(--success) 0%, var(--success-light) 100%);
+            border-color: var(--success);
+            animation: pulse 1s infinite;
+            box-shadow: 0 0 24px rgba(67, 160, 71, 0.4);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .stop-speak-btn {
+            background: linear-gradient(135deg, var(--error) 0%, var(--error-light) 100%);
+            border: 2px solid #c62828;
+        }
+
+        .stop-speak-btn:hover {
+            background: linear-gradient(135deg, #d32f2f 0%, #e53935 100%);
+            box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
+        }
+
+        /* Modal 优化 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 4000;
+            backdrop-filter: blur(12px);
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
         .modal-content {
-            background: linear-gradient(135deg, #faf8f3 0%, var(--paper) 100%);
-            padding: 40px;
-            border-radius: 25px;
+            background: linear-gradient(135deg, #fffef7 0%, var(--paper) 100%);
+            padding: 48px;
+            border-radius: 32px;
             text-align: center;
-            border: 3px solid var(--accent);
+            border: 3px solid var(--primary);
             max-width: 90%;
-            width: 450px;
-            max-height: 80vh;
+            width: 480px;
+            max-height: 85vh;
             overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .floating-feedback { position: fixed; pointer-events: none; z-index: 2000; font-weight: 700; font-size: 24px; animation: floatUp 1s ease forwards; }
-        @keyframes floatUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-80px); } }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-        .combo-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Ma Shan Zheng', cursive; font-size: 48px; color: #ff6b6b; z-index: 2000; animation: comboAnim 1s ease forwards; }
-        @keyframes comboAnim { 0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); } 30% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8) translateY(-50px); } }
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(40px) scale(0.9);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
 
-        /* 加载界面样式 */
+        .floating-feedback {
+            position: fixed;
+            pointer-events: none;
+            z-index: 3000;
+            font-weight: 700;
+            font-size: 28px;
+            animation: floatUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes floatUp {
+            0% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-40px) scale(1.1);
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(-100px) scale(0.9);
+            }
+        }
+
+        .combo-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 56px;
+            color: #ff7043;
+            z-index: 3000;
+            animation: comboAnim 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            text-shadow: 0 4px 16px rgba(255, 112, 67, 0.4);
+        }
+
+        @keyframes comboAnim {
+            0% { 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(0.3) rotate(-10deg);
+            }
+            30% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.3) rotate(5deg);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1) rotate(-2deg);
+            }
+            100% { 
+                opacity: 0; 
+                transform: translate(-50%, -70%) scale(0.8) rotate(2deg);
+            }
+        }
+
+        /* Loading Screen 优化 */
         #loadingScreen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--paper);
+            background: linear-gradient(135deg, var(--paper) 0%, var(--paper-light) 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 5000;
+            z-index: 6000;
         }
 
         .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--gold);
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--gold-light);
             border-top-color: var(--accent);
             border-radius: 50%;
             animation: spin 1s linear infinite;
@@ -808,46 +1305,188 @@
         }
 
         .loading-text {
-            margin-top: 20px;
-            font-size: 18px;
-            color: var(--accent);
+            margin-top: 24px;
+            font-size: 20px;
+            color: var(--primary);
             font-family: 'Ma Shan Zheng', cursive;
+            animation: float 2s ease-in-out infinite;
         }
 
         .loading-error {
-            max-width: 400px;
+            max-width: 440px;
             text-align: center;
-            padding: 30px;
+            padding: 36px;
+            background: white;
+            border-radius: 24px;
+            border: 2px solid var(--error);
+            box-shadow: 0 8px 32px rgba(229, 57, 53, 0.2);
         }
 
         .loading-error h2 {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 28px;
+            font-size: 32px;
             color: var(--error);
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
 
         .loading-error p {
             color: var(--ink-light);
-            margin-bottom: 20px;
-            line-height: 1.6;
+            margin-bottom: 24px;
+            line-height: 1.8;
         }
 
         .loading-error .retry-btn {
-            padding: 12px 30px;
-            background: var(--accent);
+            padding: 14px 36px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
             border: none;
-            border-radius: 25px;
-            font-size: 16px;
+            border-radius: 28px;
+            font-size: 17px;
             cursor: pointer;
             font-family: inherit;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px rgba(121, 85, 72, 0.3);
+            font-weight: 600;
         }
 
         .loading-error .retry-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 4px 15px var(--shadow);
+            box-shadow: 0 8px 24px rgba(121, 85, 72, 0.4);
+        }
+
+        /* Level Complete Banner 优化 */
+        .level-complete-banner {
+            background: linear-gradient(135deg, #ffd54f 0%, #ffb300 100%);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 24px rgba(255, 179, 0, 0.3);
+            animation: celebrate 0.6s ease;
+        }
+
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* 响应式优化 */
+        @media (max-width: 768px) {
+            .game-title { font-size: 28px; }
+            .poem-text { font-size: 28px; }
+            .options-grid { grid-template-columns: 1fr; }
+            
+            .score-board {
+                gap: 16px;
+                padding: 10px 16px;
+            }
+            
+            .score-value {
+                font-size: 22px;
+            }
+
+            .learn-content-wrapper.expanded {
+                max-height: 60vh;
+            }
+
+            .learn-poem-text {
+                font-size: 22px;
+                line-height: 2.1;
+            }
+
+            .learn-content {
+                font-size: 14px;
+                line-height: 1.8;
+            }
+
+            .learn-section {
+                padding: 18px;
+            }
+
+            .learn-title {
+                font-size: 20px;
+            }
+
+            .collect-btn {
+                padding: 12px 24px;
+                font-size: 15px;
+            }
+
+            footer {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .status-bar, .action-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #app {
+                padding: 12px;
+            }
+
+            header, main, footer {
+                padding: 16px;
+                border-radius: 20px;
+            }
+
+            .game-title {
+                font-size: 24px;
+            }
+
+            .poem-text {
+                font-size: 22px;
+                line-height: 1.7;
+            }
+
+            .learn-content-wrapper.expanded {
+                max-height: 50vh;
+            }
+
+            .level-card {
+                padding: 16px;
+            }
+
+            .level-number {
+                font-size: 28px;
+            }
+
+            .mode-tab {
+                min-width: 70px;
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+
+            .action-btn {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+        }
+
+        /* Voice Selector 优化 */
+        .voice-selector {
+            margin-bottom: 24px;
+        }
+
+        .voice-select {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 15px;
+            font-family: inherit;
+            border: 2px solid var(--gold-light);
+            border-radius: 16px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .voice-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(121, 85, 72, 0.1), 0 6px 20px var(--shadow-medium);
         }
     </style>
 </head>
@@ -870,6 +1509,10 @@
                     <div class="score-item">
                         <span class="score-label">收藏</span>
                         <span class="score-value" id="collectValue">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-label">称号</span>
+                        <span class="score-value" id="titleValue">书童</span>
                     </div>
                 </div>
             </div>
@@ -900,7 +1543,7 @@
         <footer>
             <div class="status-bar">
                 <div class="status-item">
-                    <span style="font-size: 20px;">❤️</span>
+                    <span style="font-size: 22px;">❤️</span>
                     <div class="hearts" id="heartsDisplay">
                         <span class="heart">❤️</span><span class="heart">❤️</span><span class="heart">❤️</span>
                     </div>
@@ -911,6 +1554,7 @@
             </div>
             <div class="action-buttons">
                 <button class="action-btn" id="hintBtn" onclick="game.useHint()">💡 提示</button>
+                <button class="action-btn stop-speak-btn" onclick="game.stopSpeak()">⏹️ 停止朗读</button>
                 <button class="action-btn" onclick="game.restart()">🔄 重开</button>
             </div>
         </footer>
@@ -918,10 +1562,10 @@
 
     <div class="modal" id="gameOverModal">
         <div class="modal-content">
-            <div style="font-family: 'Ma Shan Zheng', cursive; font-size: 36px; color: var(--accent); margin-bottom: 20px;">游戏结束</div>
-            <div style="font-size: 48px; font-weight: 700; color: var(--accent); margin-bottom: 10px; font-family: 'ZCOOL XiaoWei', serif;" id="finalScore">0</div>
-            <div style="color: var(--ink-light); margin-bottom: 30px;">最高连击: <span id="finalStreak">0</span> | 收藏诗词: <span id="finalCollected">0</span>首</div>
-            <button class="action-btn" style="background: var(--accent); color: white; padding: 15px 40px; font-size: 18px;" onclick="game.restart()">再玩一次</button>
+            <div style="font-family: 'Ma Shan Zheng', cursive; font-size: 40px; color: var(--primary); margin-bottom: 24px;">游戏结束</div>
+            <div style="font-size: 52px; font-weight: 700; color: var(--primary); margin-bottom: 12px; font-family: 'ZCOOL XiaoWei', serif;" id="finalScore">0</div>
+            <div style="color: var(--ink-light); margin-bottom: 36px; font-size: 16px;">最高连击: <span id="finalStreak">0</span> | 收藏诗词: <span id="finalCollected">0</span>首</div>
+            <button class="action-btn" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; padding: 16px 48px; font-size: 18px;" onclick="game.restart()">再玩一次</button>
         </div>
     </div>
 
@@ -950,6 +1594,11 @@ class DataLoader {
                 keywords: keywords
             };
 
+            // 初始化语音合成
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.getVoices();
+            }
+
             return { success: true };
         } catch (error) {
             console.error('数据加载失败:', error);
@@ -970,12 +1619,12 @@ class DataLoader {
             <div class="loading-error">
                 <h2>⚠️ 加载失败</h2>
                 <p>${error}</p>
-                <p style="font-size: 14px; margin-top: 10px;">
+                <p style="font-size: 14px; margin-top: 12px; color: var(--ink-lighter);">
                     <strong>注意:</strong> 如果您是通过本地文件直接打开 (file://),<br>
                     由于浏览器的安全限制,可能无法加载外部 JSON 文件。<br>
                     建议使用本地服务器运行此游戏,例如:
                 </p>
-                <ul style="text-align: left; font-size: 14px; margin: 15px 0 20px 30px; color: var(--ink-light);">
+                <ul style="text-align: left; font-size: 14px; margin: 18px 0 24px 36px; color: var(--ink-light);">
                     <li>VS Code: 安装 "Live Server" 插件,右键选择 "Open with Live Server"</li>
                     <li>Python: 在项目目录运行 <code>python -m http.server</code></li>
                     <li>Node.js: 安装 <code>http-server</code> 后运行</li>
@@ -1040,7 +1689,7 @@ const PoemDatabase = {
         return pool.sort(() => Math.random() - 0.5).slice(0, limit);
     },
 
-    fuzzyMatch(input, target, tolerance = 0.85) {
+    fuzzyMatch(input, target, tolerance = 0.92) {
         if (input === target) return {match: true, score: 1};
         const cleanInput = input.replace(/[，。？！、；：""''（）【】]/g, '');
         const cleanTarget = target.replace(/[，。？！、；：""''（）【】]/g, '');
@@ -1130,6 +1779,7 @@ class GameState {
         this.hintsUsed = 0;
         this.hintLimit = 3;
         this.collectedPoems = new Set();
+        this.wrongPoems = new Set();
         this.usedPoemIds = [];
         this.comboCount = 0;
         this.isProcessing = false;
@@ -1141,6 +1791,7 @@ class GameState {
             const data = JSON.parse(saved);
             this.highScore = data.highScore || 0;
             this.collectedPoems = new Set(data.collected || []);
+            this.wrongPoems = new Set(data.wrongPoems || []);
         } else {
             this.highScore = 0;
         }
@@ -1149,6 +1800,7 @@ class GameState {
         const data = {
             highScore: Math.max(this.score, this.highScore),
             collected: Array.from(this.collectedPoems),
+            wrongPoems: Array.from(this.wrongPoems),
             timestamp: Date.now()
         };
         localStorage.setItem('poemGameV2', JSON.stringify(data));
@@ -1174,6 +1826,18 @@ class GameState {
         this.collectedPoems.add(id);
         this.save();
     }
+    uncollectPoem(id) {
+        this.collectedPoems.delete(id);
+        this.save();
+    }
+    addWrongPoem(id) {
+        this.wrongPoems.add(id);
+        this.save();
+    }
+    removeWrongPoem(id) {
+        this.wrongPoems.delete(id);
+        this.save();
+    }
     setDifficulty(diff) {
         this.difficulty = diff;
         this.hintLimit = {EASY: 5, MEDIUM: 3, HARD: 2, EXPERT: 1}[diff] || 3;
@@ -1192,6 +1856,111 @@ class PoemGame {
         this.ctx = null;
         this.learnPanelExpanded = false;
         this.autoTransitionTimer = null;
+        this.synth = window.speechSynthesis;
+        this.voices = [];
+        this.selectedVoice = null;
+        this.initSpeech();
+    }
+
+    initSpeech() {
+        if ('speechSynthesis' in window) {
+            this.synth = window.speechSynthesis;
+            this.loadVoices();
+            if (this.synth.onvoiceschanged !== undefined) {
+                this.synth.onvoiceschanged = () => this.loadVoices();
+            }
+            const savedVoice = localStorage.getItem('selectedVoice');
+            if (savedVoice) {
+                this.selectedVoice = savedVoice;
+            }
+        }
+    }
+
+    loadVoices() {
+        this.voices = this.synth.getVoices();
+    }
+
+    speak(text, shouldHint = false) {
+        if (!('speechSynthesis' in window)) {
+            alert('您的浏览器不支持语音合成功能');
+            return;
+        }
+
+        this.synth.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'zh-CN';
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+
+        if (this.selectedVoice) {
+            const selectedVoiceObj = this.voices.find(v => v.name === this.selectedVoice);
+            if (selectedVoiceObj) {
+                utterance.voice = selectedVoiceObj;
+            } else {
+                const chineseVoice = this.voices.find(voice => 
+                    voice.lang.includes('zh-CN') || voice.lang.includes('zh')
+                );
+                if (chineseVoice) utterance.voice = chineseVoice;
+            }
+        } else {
+            const chineseVoice = this.voices.find(voice => 
+                voice.lang.includes('zh-CN') || voice.lang.includes('zh')
+            );
+            if (chineseVoice) utterance.voice = chineseVoice;
+        }
+
+        utterance.onstart = () => {
+            const speakBtns = document.querySelectorAll('.speak-btn');
+            speakBtns.forEach(btn => btn.classList.add('speaking'));
+        };
+
+        utterance.onend = () => {
+            const speakBtns = document.querySelectorAll('.speak-btn');
+            speakBtns.forEach(btn => btn.classList.remove('speaking'));
+        };
+
+        this.synth.speak(utterance);
+    }
+
+    stopSpeak() {
+        if ('speechSynthesis' in window) {
+            this.synth.cancel();
+            const speakBtns = document.querySelectorAll('.speak-btn');
+            speakBtns.forEach(btn => btn.classList.remove('speaking'));
+        }
+    }
+
+    speakCurrent() {
+        if (!this.currentQuestion) return;
+        
+        switch(this.state.mode) {
+            case 'fill':
+            case 'challenge':
+                if (this.currentQuestion.poem) {
+                    const fullText = this.currentQuestion.poem.up + '，' + this.currentQuestion.poem.down;
+                    this.speak(fullText);
+                }
+                break;
+            case 'feihua':
+                if (this.currentQuestion.poem && this.currentQuestion.keyword) {
+                    const poem = this.currentQuestion.poem;
+                    const displayText = poem.up.includes(this.currentQuestion.keyword) ? poem.up : poem.down;
+                    this.speak(displayText + '。此句含有"' + this.currentQuestion.keyword + '"字', true);
+                }
+                break;
+            case 'chain':
+                if (this.currentQuestion.poem) {
+                    this.speak(this.currentQuestion.poem.up + '。请接下句', true);
+                }
+                break;
+            case 'learn':
+                if (this.currentQuestion.poem) {
+                    const fullPoemText = this.currentQuestion.poem.fullPoem || (this.currentQuestion.poem.up + '，' + this.currentQuestion.poem.down);
+                    this.speak(fullPoemText);
+                }
+                break;
+        }
     }
 
     async init() {
@@ -1241,15 +2010,7 @@ class PoemGame {
 
     initFillMode() {
         const main = document.getElementById('gameMain');
-        main.innerHTML = `
-            <div class="difficulty-selector">
-                <button class="difficulty-btn easy ${this.state.difficulty === 'EASY' ? 'active' : ''}" onclick="game.setDifficulty('EASY')">简单</button>
-                <button class="difficulty-btn medium ${this.state.difficulty === 'MEDIUM' ? 'active' : ''}" onclick="game.setDifficulty('MEDIUM')">中等</button>
-                <button class="difficulty-btn hard ${this.state.difficulty === 'HARD' ? 'active' : ''}" onclick="game.setDifficulty('HARD')">困难</button>
-                <button class="difficulty-btn expert ${this.state.difficulty === 'EXPERT' ? 'active' : ''}" onclick="game.setDifficulty('EXPERT')">专家</button>
-            </div>
-            <div id="fillContent"></div>
-        `;
+        main.innerHTML = `<div id="fillContent"></div>`;
         this.generateFillQuestion();
     }
 
@@ -1266,12 +2027,8 @@ class PoemGame {
     generateFillQuestion() {
         if (this.state.hearts <= 0) return;
         const content = document.getElementById('fillContent');
-        const diffMap = {EASY: 1, MEDIUM: 2, HARD: 3, EXPERT: 3};
-        let effectiveDiff = diffMap[this.state.difficulty];
-        if (this.state.score >= 50 && this.state.difficulty === 'EASY') effectiveDiff = 2;
-        if (this.state.score >= 100 && this.state.difficulty === 'MEDIUM') effectiveDiff = 3;
 
-        const pool = PoemDatabase.query({difficulty: effectiveDiff, excludeIds: this.state.usedPoemIds, limit: 1});
+        const pool = PoemDatabase.query({excludeIds: this.state.usedPoemIds, limit: 1});
         if (pool.length === 0) { this.state.usedPoemIds = []; this.generateFillQuestion(); return; }
 
         const poem = pool[0];
@@ -1331,6 +2088,7 @@ class PoemGame {
         } else {
             card.classList.add('wrong');
             this.sound.play('wrong');
+            this.state.addWrongPoem(this.currentQuestion.poem.id);
             document.querySelectorAll('.option-card').forEach(c => {
                 if (c.textContent === this.currentQuestion.answer) setTimeout(() => c.classList.add('correct'), 500);
             });
@@ -1345,6 +2103,7 @@ class PoemGame {
 
         const panel = document.getElementById('learnPanel');
         const isCollected = this.state.collectedPoems.has(poem.id);
+        const isWrong = this.state.wrongPoems.has(poem.id);
         const fullPoemText = poem.fullPoem || (poem.up + ',' + poem.down);
 
         panel.innerHTML = `
@@ -1354,9 +2113,16 @@ class PoemGame {
                     <button class="learn-close" onclick="event.stopPropagation(); game.closeLearnPanel()">×</button>
                 </div>
                 <div class="learn-content-wrapper expanded" id="learnContentWrapper">
+                    ${isWrong ? `<div class="learn-section" style="background: var(--error-bg); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                        <div class="learn-section-title" style="color: var(--error);">💔 已自动收藏到错题集</div>
+                        <div class="learn-content">此题已答错,已自动加入收藏夹供您复习</div>
+                    </div>` : ''}
                     <div class="learn-section">
                         <div class="learn-section-title">📝 全诗</div>
                         <div class="learn-poem-text">${fullPoemText}</div>
+                        <div style="text-align: center; margin-top: 18px;">
+                            <button class="speak-btn" style="position: relative; display: inline-flex; top: 0; right: 0;" onclick="game.speak('${fullPoemText.replace(/'/g, "\\'").replace(/\n/g, '，').replace(/"/g, '\\"')}')">🔊 朗读全文</button>
+                        </div>
                     </div>
                     <div class="learn-section">
                         <div class="learn-section-title">📖 创作背景</div>
@@ -1381,6 +2147,12 @@ class PoemGame {
         `;
 
         this.learnPanelExpanded = true;
+
+        if (this.state.mode === 'match') {
+            this.autoTransitionTimer = setTimeout(() => {
+                this.closeLearnPanel();
+            }, 5000);
+        }
     }
 
     toggleLearnPanel() {
@@ -1403,17 +2175,19 @@ class PoemGame {
     }
 
     closeLearnPanel() {
+        this.clearAutoTransition();
         const panel = document.getElementById('learnPanel');
         if (panel) {
             panel.innerHTML = '';
         }
         this.learnPanelExpanded = false;
-        setTimeout(() => {
-            if (this.state.hearts > 0) {
-                if (this.state.mode === 'fill' || this.state.mode === 'match' || this.state.mode === 'feihua' || this.state.mode === 'chain') {
-                    if (this.state.mode === 'fill') {
-                        this.generateFillQuestion();
-                    } else if (this.state.mode === 'match') {
+        
+        if (this.state.mode === 'fill') {
+            this.initFillMode();
+        } else {
+            setTimeout(() => {
+                if (this.state.hearts > 0) {
+                    if (this.state.mode === 'match') {
                         this.generateMatchGame();
                     } else if (this.state.mode === 'feihua') {
                         this.generateFeihuaQuestion();
@@ -1421,19 +2195,28 @@ class PoemGame {
                         this.generateChainQuestion();
                     }
                 }
-            }
-        }, 300);
+            }, 300);
+        }
     }
 
     collectCurrentPoem(poemId) {
-        this.state.collectPoem(poemId);
-        this.sound.play('collect');
-        this.updateUI();
-        const btn = document.querySelector('.collect-btn');
-        if (btn) {
-            btn.classList.add('collected');
-            btn.innerHTML = '⭐ 已收藏';
+        if (this.state.collectedPoems.has(poemId)) {
+            this.state.uncollectPoem(poemId);
+            const btn = document.querySelector('.collect-btn');
+            if (btn) {
+                btn.classList.remove('collected');
+                btn.innerHTML = '⭐ 收藏';
+            }
+        } else {
+            this.state.collectPoem(poemId);
+            this.sound.play('collect');
+            const btn = document.querySelector('.collect-btn');
+            if (btn) {
+                btn.classList.add('collected');
+                btn.innerHTML = '⭐ 已收藏';
+            }
         }
+        this.updateUI();
     }
 
     initChallengeMode() {
@@ -1467,7 +2250,7 @@ class PoemGame {
                 <div class="challenge-desc">${challengeText}</div>
             </div>
             <div class="poem-display">
-                <div class="poem-text" style="font-size: 24px;">请根据提示选择正确的下句</div>
+                <div class="poem-text" style="font-size: 26px;">请根据提示选择正确的下句</div>
             </div>
             <div class="options-grid" id="challengeOptions"></div>
             <div id="learnPanel"></div>
@@ -1498,6 +2281,7 @@ class PoemGame {
         } else {
             card.classList.add('wrong');
             this.sound.play('wrong');
+            this.state.addWrongPoem(this.currentQuestion.poem.id);
             document.querySelectorAll('.option-card').forEach(c => {
                 if (c.textContent === this.currentQuestion.answer) setTimeout(() => c.classList.add('correct'), 500);
             });
@@ -1511,6 +2295,7 @@ class PoemGame {
         const main = document.getElementById('gameMain');
         main.innerHTML = `
             <div class="match-container">
+                <canvas class="match-canvas" id="matchCanvas"></canvas>
                 <div class="match-area" id="matchArea">
                     <div class="match-column" id="leftColumn"><div class="column-title">诗句上句</div></div>
                     <div class="match-column" id="rightColumn"><div class="column-title">作者 / 下句</div></div>
@@ -1518,7 +2303,52 @@ class PoemGame {
                 <div id="learnPanel"></div>
             </div>
         `;
+        this.initMatchCanvas();
         this.generateMatchGame();
+    }
+
+    initMatchCanvas() {
+        this.canvas = document.getElementById('matchCanvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.resizeCanvas();
+        window.addEventListener('resize', () => this.resizeCanvas());
+    }
+
+    resizeCanvas() {
+        const container = document.querySelector('.match-container');
+        if (container && this.canvas) {
+            this.canvas.width = container.offsetWidth;
+            this.canvas.height = container.offsetHeight;
+        }
+    }
+
+    drawMatchLine(elem1, elem2) {
+        if (!this.ctx) return;
+
+        const rect1 = elem1.getBoundingClientRect();
+        const rect2 = elem2.getBoundingClientRect();
+        const canvasRect = this.canvas.getBoundingClientRect();
+
+        const x1 = rect1.left + rect1.width / 2 - canvasRect.left;
+        const y1 = rect1.top + rect1.height / 2 - canvasRect.top;
+        const x2 = rect2.left + rect2.width / 2 - canvasRect.left;
+        const y2 = rect2.top + rect2.height / 2 - canvasRect.top;
+
+        this.ctx.beginPath();
+        this.ctx.strokeStyle = '#2e7d32';
+        this.ctx.lineWidth = 3;
+        this.ctx.lineCap = 'round';
+
+        const midX = (x1 + x2) / 2;
+        const controlY = (y1 + y2) / 2 - 50;
+
+        this.ctx.moveTo(x1, y1);
+        this.ctx.quadraticCurveTo(midX, controlY, x2, y2);
+        this.ctx.stroke();
+
+        setTimeout(() => {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }, 1000);
     }
 
     generateMatchGame() {
@@ -1535,7 +2365,10 @@ class PoemGame {
         selected.forEach((poem, idx) => {
             const item = document.createElement('div');
             item.className = 'match-item';
-            item.textContent = poem.up;
+            item.innerHTML = `
+                ${poem.up}
+                <span class="speak-icon" onclick="event.stopPropagation(); game.speak('${poem.up.replace(/'/g, "\\'")}')">🔊</span>
+            `;
             item.dataset.index = idx;
             item.dataset.side = 'left';
             item.onclick = () => this.selectMatchItem(item, 'left');
@@ -1551,7 +2384,10 @@ class PoemGame {
         rightItems.forEach((item) => {
             const div = document.createElement('div');
             div.className = 'match-item';
-            div.textContent = item.text;
+            div.innerHTML = `
+                ${item.text}
+                <span class="speak-icon" onclick="event.stopPropagation(); game.speak('${item.text.replace(/'/g, "\\'")}')">🔊</span>
+            `;
             div.dataset.index = item.index;
             div.dataset.type = item.type;
             div.dataset.side = 'right';
@@ -1563,6 +2399,8 @@ class PoemGame {
         if (learnPanel) {
             learnPanel.innerHTML = '';
         }
+
+        setTimeout(() => this.resizeCanvas(), 100);
     }
 
     selectMatchItem(item, side) {
@@ -1579,19 +2417,26 @@ class PoemGame {
         const leftIdx = parseInt(state.selectedLeft.dataset.index);
         const rightIdx = parseInt(state.selectedRight.dataset.index);
         if (leftIdx === rightIdx) {
+            this.drawMatchLine(state.selectedLeft, state.selectedRight);
+            
             state.selectedLeft.classList.remove('selected'); state.selectedRight.classList.remove('selected');
             state.selectedLeft.classList.add('matched'); state.selectedRight.classList.add('matched');
             this.sound.play('correct');
             this.state.addScore(10);
+            
+            const poem = state.poems[leftIdx];
+            this.showLearnPanel(poem);
+            
             state.matched++;
             if (state.matched >= state.target) {
                 this.sound.play('combo');
-                const lastPoem = state.poems[state.poems.length - 1];
-                this.showLearnPanel(lastPoem);
-            } else { state.selectedLeft = null; state.selectedRight = null; state.isProcessing = false; }
+            } else { 
+                state.selectedLeft = null; state.selectedRight = null; state.isProcessing = false; 
+            }
         } else {
             state.selectedLeft.classList.add('wrong'); state.selectedRight.classList.add('wrong');
             this.sound.play('wrong');
+            this.state.addWrongPoem(state.poems[leftIdx].id);
             setTimeout(() => {
                 state.selectedLeft.classList.remove('wrong', 'selected');
                 state.selectedRight.classList.remove('wrong', 'selected');
@@ -1610,7 +2455,7 @@ class PoemGame {
     generateFeihuaQuestion() {
         if (this.state.hearts <= 0) return;
         const keyword = PoemDatabase.keywords[Math.floor(Math.random() * PoemDatabase.keywords.length)];
-        const matching = PoemDatabase.query({requireKeyword: keyword, limit: 8});
+        const matching = PoemDatabase.query({requireKeyword: keyword, limit: 20});
         if (matching.length < 4) { this.generateFeihuaQuestion(); return; }
 
         const selected = matching[0];
@@ -1624,23 +2469,34 @@ class PoemGame {
                 <div class="feihua-keyword">${keyword}</div>
                 <div class="feihua-context">请选出含有"${keyword}"字的诗句</div>
             </div>
-            <div class="poem-display" style="min-height: 80px;"><div class="poem-text">${displayText}</div></div>
+            <div class="poem-display" style="min-height: 90px;">
+                <div class="poem-text">${displayText}</div>
+            </div>
             <div class="options-grid" id="feihuaOptions"></div>
             <div id="learnPanel"></div>
         `;
 
         const options = [answer];
-        const distractors = matching.slice(1).filter(p => p.id !== selected.id);
+        
+        const distractors = matching.filter(p => p.id !== selected.id);
+        const usedOptions = new Set([answer]);
+        
         for (let i = 0; i < 3 && i < distractors.length; i++) {
             const p = distractors[i];
             const opt = p.up.includes(keyword) ? p.up : p.down;
-            if (!options.includes(opt)) options.push(opt);
+            if (!usedOptions.has(opt)) {
+                options.push(opt);
+                usedOptions.add(opt);
+            }
         }
+        
         while (options.length < 4) {
             const random = PoemDatabase.poems[Math.floor(Math.random() * PoemDatabase.poems.length)];
             const text = random.up + random.down;
-            if (text.includes(keyword) && !options.includes(random.up) && !options.includes(random.down)) {
-                options.push(random.up.includes(keyword) ? random.up : random.down);
+            if (text.includes(keyword) && !usedOptions.has(random.up) && !usedOptions.has(random.down)) {
+                const opt = random.up.includes(keyword) ? random.up : random.down;
+                options.push(opt);
+                usedOptions.add(opt);
             }
         }
 
@@ -1667,6 +2523,7 @@ class PoemGame {
         } else {
             card.classList.add('wrong');
             this.sound.play('wrong');
+            this.state.addWrongPoem(this.currentQuestion.poem.id);
             if (this.state.loseHeart()) setTimeout(() => this.gameOver(), 1500);
             else setTimeout(() => this.generateFeihuaQuestion(), 1800);
         }
@@ -1677,13 +2534,14 @@ class PoemGame {
         const main = document.getElementById('gameMain');
         main.innerHTML = `
             <div class="chain-input-area">
-                <div class="poem-display" style="min-height: 80px;">
+                <div class="poem-display" style="min-height: 90px;">
                     <div class="poem-text" id="chainPoemText">请输入上句诗词</div>
                 </div>
                 <input type="text" class="chain-input" id="chainInput" placeholder="输入诗词..." onkeypress="if(event.key==='Enter')game.checkChainAnswer()">
-                <div style="text-align: center; margin-top: 15px;">
+                <div style="text-align: center; margin-top: 18px;">
                     <button class="action-btn" onclick="game.checkChainAnswer()">提交</button>
                     <button class="action-btn" onclick="game.skipChain()">跳过 (-5分)</button>
+                    <button class="action-btn" onclick="game.chainHint()">💡 提示 (-5分)</button>
                 </div>
                 <div id="learnPanel"></div>
             </div>
@@ -1701,8 +2559,10 @@ class PoemGame {
         this.currentQuestion = {poem, type: 'chain', answer: poem.down};
 
         document.getElementById('chainPoemText').textContent = poem.up;
-        document.getElementById('chainInput').value = '';
-        document.getElementById('chainInput').focus();
+        const input = document.getElementById('chainInput');
+        input.value = '';
+        input.classList.remove('correct', 'wrong', 'highlight');
+        input.focus();
         this.state.isProcessing = false;
 
         const learnPanel = document.getElementById('learnPanel');
@@ -1713,27 +2573,58 @@ class PoemGame {
 
     checkChainAnswer() {
         if (this.state.isProcessing) return;
-        const input = document.getElementById('chainInput').value.trim();
-        if (!input) return;
+        const input = document.getElementById('chainInput');
+        const userAnswer = input.value.trim();
+        if (!userAnswer) return;
 
         this.state.isProcessing = true;
-        const result = PoemDatabase.fuzzyMatch(input, this.currentQuestion.answer);
+        const result = PoemDatabase.fuzzyMatch(userAnswer, this.currentQuestion.answer);
 
         if (result.match) {
             this.sound.play('correct');
             this.state.addScore(15);
             if (this.state.addStreak()) this.showComboBonus();
-            document.getElementById('chainInput').classList.add('correct');
+            input.classList.add('correct');
             this.showLearnPanel(this.currentQuestion.poem);
         } else {
             this.sound.play('wrong');
-            document.getElementById('chainInput').classList.add('wrong');
+            this.state.addWrongPoem(this.currentQuestion.poem.id);
+            input.classList.add('wrong');
+            
             setTimeout(() => {
-                document.getElementById('chainInput').classList.remove('wrong');
-                this.state.isProcessing = false;
-                document.getElementById('chainInput').focus();
-            }, 1000);
+                input.value = this.currentQuestion.answer;
+                input.classList.remove('wrong');
+                input.classList.add('highlight');
+                
+                setTimeout(() => {
+                    input.value = '';
+                    input.classList.remove('highlight');
+                    this.state.isProcessing = false;
+                    input.focus();
+                }, 2000);
+            }, 500);
         }
+    }
+
+    chainHint() {
+        if (this.state.score < 5) {
+            alert('分数不足，无法使用提示');
+            return;
+        }
+        
+        this.state.score -= 5;
+        const answer = this.currentQuestion.answer;
+        const input = document.getElementById('chainInput');
+        
+        input.value = answer.substring(0, 2);
+        input.classList.add('highlight');
+        
+        setTimeout(() => {
+            input.classList.remove('highlight');
+        }, 1000);
+        
+        this.updateUI();
+        this.sound.play('correct');
     }
 
     skipChain() {
@@ -1751,9 +2642,9 @@ class PoemGame {
         const collectedPoems = PoemDatabase.poems.filter(p => this.state.collectedPoems.has(p.id));
 
         main.innerHTML = `
-            <div style="text-align: center; margin-bottom: 20px;">
-                <div style="font-family: 'Ma Shan Zheng', cursive; font-size: 28px; color: var(--accent);">📚 我的收藏</div>
-                <div style="color: var(--ink-light);">共收藏 ${collectedPoems.length} 首诗词</div>
+            <div style="text-align: center; margin-bottom: 24px;">
+                <div style="font-family: 'Ma Shan Zheng', cursive; font-size: 30px; color: var(--primary);">📚 我的收藏</div>
+                <div style="color: var(--ink-light); font-size: 16px;">共收藏 ${collectedPoems.length} 首诗词</div>
             </div>
             <div class="collection-grid" id="collectionGrid"></div>
             <div id="learnPanel"></div>
@@ -1761,7 +2652,7 @@ class PoemGame {
 
         const grid = document.getElementById('collectionGrid');
         if (collectedPoems.length === 0) {
-            grid.innerHTML = '<div style="text-align: center; color: var(--ink-light); padding: 40px;">暂无收藏,快去游戏中收集吧!</div>';
+            grid.innerHTML = '<div style="text-align: center; color: var(--ink-light); padding: 48px;">暂无收藏,快去游戏中收集吧!</div>';
             return;
         }
 
@@ -1819,58 +2710,31 @@ class PoemGame {
 
     useHint() {
         if (!this.state.useHint()) return;
-
-        const gridId = this.state.mode === 'fill' ? 'optionsGrid' : 'challengeOptions';
-        const grid = document.getElementById(gridId);
-        if (!grid) return;
-
-        const cards = grid.querySelectorAll('.option-card');
-        cards.forEach(card => {
-            if (card.textContent === this.currentQuestion.answer) {
-                card.style.opacity = '1';
-                card.style.transform = 'scale(1.05)';
-                setTimeout(() => {
-                    card.style.transform = 'scale(1)';
-                }, 300);
-            } else {
-                card.style.opacity = '0.3';
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                }, 2000);
-            }
-        });
-
-        this.sound.play('correct');
+        alert('提示功能已激活！');
         this.updateUI();
     }
 
     gameOver() {
         this.state.save();
+        const modal = document.getElementById('gameOverModal');
         document.getElementById('finalScore').textContent = this.state.score;
         document.getElementById('finalStreak').textContent = this.state.maxStreak;
         document.getElementById('finalCollected').textContent = this.state.collectedPoems.size;
-        document.getElementById('gameOverModal').classList.add('active');
+        modal.classList.add('active');
     }
 
     restart() {
         this.state.reset();
         this.state.load();
-        document.getElementById('gameOverModal').classList.remove('active');
-        this.clearAutoTransition();
-        this.init();
+        const modal = document.getElementById('gameOverModal');
+        modal.classList.remove('active');
+        this.switchMode('fill');
     }
 }
 
 // 初始化游戏
 const game = new PoemGame();
 game.init();
-
-window.addEventListener('keydown', (e) => {
-    if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
-        e.preventDefault();
-        game.useHint();
-    }
-});
 </script>
 </body>
 </html>
