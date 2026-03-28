@@ -257,14 +257,17 @@
             75% { transform: translateX(10px); }
         }
 
-        /* 学习面板 */
+        /* 学习面板 - 优化版本 */
         .learn-panel {
             background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
             border: 2px solid var(--gold);
             border-radius: 15px;
-            padding: 25px;
+            padding: 0;
             margin-top: 20px;
             animation: slideDown 0.5s ease;
+            overflow: hidden;
+            max-height: none;
+            transition: max-height 0.3s ease;
         }
 
         @keyframes slideDown {
@@ -276,65 +279,210 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
+            padding: 20px 25px;
+            background: rgba(139, 69, 19, 0.05);
             border-bottom: 2px solid var(--gold);
+            cursor: pointer;
+            user-select: none;
         }
 
-        .learn-title {
-            font-family: 'Ma Shan Zheng', cursive;
-            font-size: 24px;
-            color: var(--accent);
+        .learn-header:hover {
+            background: rgba(139, 69, 19, 0.08);
         }
 
-        .learn-section { margin-bottom: 20px; }
+        .learn-header .expand-icon {
+            transition: transform 0.3s ease;
+            font-size: 20px;
+        }
+
+        .learn-header.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .learn-content-wrapper {
+            padding: 25px;
+            overflow-y: auto;
+            max-height: 70vh;
+            overflow-x: hidden;
+        }
+
+        /* 自定义滚动条 */
+        .learn-content-wrapper::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .learn-content-wrapper::-webkit-scrollbar-track {
+            background: rgba(139, 69, 19, 0.05);
+            border-radius: 4px;
+        }
+
+        .learn-content-wrapper::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 4px;
+        }
+
+        .learn-content-wrapper::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        .learn-section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed var(--gold);
+        }
+
+        .learn-section:last-child {
+            border-bottom: none;
+            margin-bottom: 15px;
+        }
+
         .learn-section-title {
             font-weight: 700;
             color: var(--accent);
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 16px;
         }
 
         .learn-content {
             color: var(--ink-light);
-            line-height: 1.8;
+            line-height: 1.9;
             text-align: justify;
+            font-size: 15px;
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+
+        /* 诗歌正文特殊样式 */
+        .learn-content.poem-text {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 22px;
+            line-height: 2.2;
+            text-align: center;
+            color: var(--ink);
+            padding: 15px 0;
+            word-break: keep-all;
+        }
+
+        .learn-content.poem-text br {
+            content: '';
+            display: block;
+            margin: 10px 0;
         }
 
         .learn-tags {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         .learn-tag {
             background: var(--accent);
             color: white;
-            padding: 4px 12px;
+            padding: 6px 14px;
             border-radius: 15px;
-            font-size: 12px;
+            font-size: 13px;
+            transition: transform 0.2s ease;
+        }
+
+        .learn-tag:hover {
+            transform: translateY(-2px);
         }
 
         .collect-btn {
             background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
             border: 2px solid var(--gold);
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 20px;
             cursor: pointer;
             font-family: inherit;
-            font-size: 14px;
+            font-size: 15px;
             display: flex;
             align-items: center;
             gap: 5px;
-            margin-top: 15px;
+            margin-top: 20px;
             transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
         }
 
-        .collect-btn:hover { transform: scale(1.05); }
-        .collect-btn.collected { background: #c8e6c9; border-color: var(--success); }
+        .collect-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.4);
+        }
+
+        .collect-btn.collected {
+            background: #c8e6c9;
+            border-color: var(--success);
+        }
+
+        /* 预览模式（默认） */
+        .learn-panel.collapsed .learn-content-wrapper {
+            display: none;
+        }
+
+        /* 响应式优化 */
+        @media (max-width: 768px) {
+            .learn-panel {
+                margin-top: 15px;
+                border-radius: 12px;
+            }
+
+            .learn-header {
+                padding: 15px 18px;
+            }
+
+            .learn-content-wrapper {
+                padding: 18px;
+                max-height: 60vh;
+            }
+
+            .learn-section {
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+            }
+
+            .learn-content {
+                font-size: 14px;
+                line-height: 1.8;
+            }
+
+            .learn-content.poem-text {
+                font-size: 18px;
+                line-height: 2;
+            }
+
+            .learn-section-title {
+                font-size: 15px;
+                margin-bottom: 10px;
+            }
+
+            .collect-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            /* 移动端横向滚动优化 */
+            .learn-content {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .learn-content-wrapper {
+                max-height: 55vh;
+                padding: 15px;
+            }
+
+            .learn-content.poem-text {
+                font-size: 16px;
+            }
+        }
 
         /* 挑战模式 */
         .challenge-context {
