@@ -257,53 +257,71 @@
             75% { transform: translateX(10px); }
         }
 
-        /* 学习面板 - 优化版本 */
+        /* ==================== 优化后的学习面板 ==================== */
         .learn-panel {
             background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
             border: 2px solid var(--gold);
             border-radius: 15px;
-            padding: 0;
             margin-top: 20px;
-            animation: slideDown 0.5s ease;
             overflow: hidden;
-            max-height: none;
-            transition: max-height 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            box-shadow: 0 4px 15px var(--shadow);
         }
 
         .learn-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 25px;
+            padding: 15px 20px;
             background: rgba(139, 69, 19, 0.05);
             border-bottom: 2px solid var(--gold);
             cursor: pointer;
             user-select: none;
+            transition: background 0.3s ease;
         }
 
         .learn-header:hover {
-            background: rgba(139, 69, 19, 0.08);
+            background: rgba(139, 69, 19, 0.1);
         }
 
-        .learn-header .expand-icon {
-            transition: transform 0.3s ease;
+        .learn-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 22px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .learn-close {
+            background: var(--gold);
+            color: var(--ink);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
             font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
         }
 
-        .learn-header.expanded .expand-icon {
-            transform: rotate(180deg);
+        .learn-close:hover {
+            background: var(--accent);
+            color: white;
+            transform: rotate(90deg);
         }
 
         .learn-content-wrapper {
-            padding: 25px;
+            max-height: 0;
             overflow-y: auto;
-            max-height: 70vh;
             overflow-x: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .learn-content-wrapper.expanded {
+            max-height: 70vh;
         }
 
         /* 自定义滚动条 */
@@ -326,14 +344,12 @@
         }
 
         .learn-section {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
+            padding: 20px;
             border-bottom: 1px dashed var(--gold);
         }
 
         .learn-section:last-child {
             border-bottom: none;
-            margin-bottom: 15px;
         }
 
         .learn-section-title {
@@ -346,6 +362,18 @@
             font-size: 16px;
         }
 
+        /* 诗歌正文样式 - 垂直居中 */
+        .learn-poem-text {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 24px;
+            color: var(--ink);
+            line-height: 2.2;
+            text-align: center;
+            margin: 15px 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
         .learn-content {
             color: var(--ink-light);
             line-height: 1.9;
@@ -353,97 +381,97 @@
             font-size: 15px;
             word-wrap: break-word;
             word-break: break-all;
-            white-space: pre-wrap;
-        }
-
-        /* 诗歌正文特殊样式 */
-        .learn-content.poem-text {
-            font-family: 'Ma Shan Zheng', cursive;
-            font-size: 22px;
-            line-height: 2.2;
-            text-align: center;
-            color: var(--ink);
-            padding: 15px 0;
-            word-break: keep-all;
-        }
-
-        .learn-content.poem-text br {
-            content: '';
-            display: block;
-            margin: 10px 0;
         }
 
         .learn-tags {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         .learn-tag {
             background: var(--accent);
             color: white;
-            padding: 6px 14px;
+            padding: 5px 14px;
             border-radius: 15px;
-            font-size: 13px;
+            font-size: 12px;
             transition: transform 0.2s ease;
         }
 
         .learn-tag:hover {
-            transform: translateY(-2px);
+            transform: scale(1.05);
         }
 
         .collect-btn {
             background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
             border: 2px solid var(--gold);
-            padding: 12px 24px;
-            border-radius: 20px;
+            padding: 12px 25px;
+            border-radius: 25px;
             cursor: pointer;
             font-family: inherit;
             font-size: 15px;
             display: flex;
             align-items: center;
-            gap: 5px;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-            width: 100%;
             justify-content: center;
+            gap: 8px;
+            margin: 15px 20px 20px;
+            transition: all 0.3s ease;
+            width: calc(100% - 40px);
         }
 
         .collect-btn:hover {
-            transform: scale(1.03);
-            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.4);
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px var(--shadow);
         }
 
         .collect-btn.collected {
-            background: #c8e6c9;
+            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
             border-color: var(--success);
+            color: var(--success);
         }
 
-        /* 预览模式（默认） */
-        .learn-panel.collapsed .learn-content-wrapper {
-            display: none;
+        /* 展开按钮 */
+        .expand-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-top: 1px solid var(--gold);
+            cursor: pointer;
+            color: var(--accent);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .expand-btn .arrow {
+            transition: transform 0.3s ease;
+            font-size: 18px;
+        }
+
+        .expand-btn.expanded .arrow {
+            transform: rotate(180deg);
         }
 
         /* 响应式优化 */
         @media (max-width: 768px) {
-            .learn-panel {
-                margin-top: 15px;
-                border-radius: 12px;
-            }
-
-            .learn-header {
-                padding: 15px 18px;
-            }
-
-            .learn-content-wrapper {
-                padding: 18px;
+            .game-title { font-size: 24px; }
+            .poem-text { font-size: 26px; }
+            .options-grid { grid-template-columns: 1fr; }
+            
+            .learn-content-wrapper.expanded {
                 max-height: 60vh;
             }
 
-            .learn-section {
-                margin-bottom: 20px;
-                padding-bottom: 15px;
+            .learn-poem-text {
+                font-size: 20px;
+                line-height: 2;
             }
 
             .learn-content {
@@ -451,113 +479,30 @@
                 line-height: 1.8;
             }
 
-            .learn-content.poem-text {
-                font-size: 18px;
-                line-height: 2;
+            .learn-section {
+                padding: 15px;
             }
 
-            .learn-section-title {
-                font-size: 15px;
-                margin-bottom: 10px;
+            .learn-title {
+                font-size: 18px;
             }
 
             .collect-btn {
                 padding: 10px 20px;
                 font-size: 14px;
             }
-
-            /* 移动端横向滚动优化 */
-            .learn-content {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
         }
 
         @media (max-width: 480px) {
-            .learn-content-wrapper {
-                max-height: 55vh;
-                padding: 15px;
+            .learn-content-wrapper.expanded {
+                max-height: 50vh;
             }
 
-            .learn-content.poem-text {
-                font-size: 16px;
+            .learn-poem-text {
+                font-size: 18px;
+                line-height: 1.8;
             }
         }
-
-        /* 挑战模式 */
-        .challenge-context {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            border: 2px solid var(--info);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .challenge-title {
-            font-weight: 700;
-            color: var(--info);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* 配对模式 */
-        .match-container { position: relative; min-height: 400px; }
-        #matchCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; }
-        .match-area { display: flex; gap: 20px; justify-content: space-between; position: relative; z-index: 5; }
-        .match-column { flex: 1; max-width: 48%; }
-        .column-title { text-align: center; font-size: 16px; font-weight: 600; color: var(--accent); margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--gold); font-family: 'Ma Shan Zheng', cursive; }
-        .match-item { padding: 16px; background: white; border: 2px solid var(--gold); border-radius: 10px; margin-bottom: 10px; font-size: 15px; cursor: pointer; transition: all 0.3s ease; text-align: center; }
-        .match-item:hover { transform: translateX(5px); border-color: var(--accent); }
-        .match-column:last-child .match-item:hover { transform: translateX(-5px); }
-        .match-item.selected { background: #fff9c4; border-color: var(--warning); }
-        .match-item.matched { background: #c8e6c9; border-color: var(--success); opacity: 0.7; }
-        .match-item.wrong { background: #ffcdd2; border-color: var(--error); animation: paperShake 0.5s ease; }
-
-        /* 飞花令 */
-        .feihua-keyword { font-family: 'Ma Shan Zheng', cursive; font-size: 64px; color: var(--accent); text-align: center; margin-bottom: 15px; }
-        .feihua-context { text-align: center; font-size: 18px; color: var(--ink-light); margin-bottom: 25px; font-style: italic; }
-
-        /* 接龙 */
-        .chain-input-area { max-width: 500px; margin: 0 auto; }
-        .chain-input {
-            width: 100%;
-            padding: 18px;
-            font-size: 22px;
-            font-family: 'Ma Shan Zheng', cursive;
-            border: 3px solid var(--gold);
-            border-radius: 15px;
-            background: white;
-            text-align: center;
-            outline: none;
-            margin-bottom: 15px;
-        }
-        .chain-input:focus { border-color: var(--accent); }
-        .chain-input.correct { border-color: var(--success); background: #e8f5e9; }
-        .chain-input.wrong { border-color: var(--error); animation: paperShake 0.5s ease; }
-
-        /* 收藏夹 */
-        .collection-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .collection-card {
-            background: white;
-            border: 2px solid var(--gold);
-            border-radius: 12px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .collection-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px var(--shadow); }
-        .collection-poem { font-family: 'Ma Shan Zheng', cursive; font-size: 22px; margin-bottom: 8px; color: var(--ink); }
-        .collection-author { font-size: 14px; color: var(--ink-light); margin-bottom: 10px; }
-        .collection-preview { font-size: 13px; color: var(--ink-light); line-height: 1.6; }
 
         /* Footer */
         footer {
@@ -618,17 +563,10 @@
         @keyframes comboAnim { 0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); } 30% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8) translateY(-50px); } }
 
         @media (max-width: 768px) {
-            .game-title { font-size: 24px; }
-            .poem-text { font-size: 26px; }
-            .options-grid { grid-template-columns: 1fr; }
-            .match-area { flex-direction: column; }
-            .match-column { max-width: 100%; }
-            #matchCanvas { display: none; }
             footer { flex-direction: column; text-align: center; }
             .collection-grid { grid-template-columns: 1fr; }
         }
     </style>
-<base target="_blank">
 </head>
 <body>
     <div id="app">
@@ -699,7 +637,6 @@
     </div>
 
 <script>
-
 
 // ==================== 诗词数据库（150首精选）====================
 const PoemDatabase = {
@@ -1176,6 +1113,9 @@ class PoemGame {
         this.chainState = null;
         this.canvas = null;
         this.ctx = null;
+        // 优化：学习面板相关状态
+        this.learnPanelExpanded = false;
+        this.autoTransitionTimer = null;
         this.init();
     }
     init() {
@@ -1187,6 +1127,8 @@ class PoemGame {
         this.state.mode = mode;
         this.state.isProcessing = false;
         if (this.state.timer) { clearInterval(this.state.timer); this.state.timer = null; }
+        // 清除自动跳转定时器
+        this.clearAutoTransition();
         document.querySelectorAll('.mode-tab').forEach(tab => tab.classList.toggle('active', tab.dataset.mode === mode));
         const main = document.getElementById('gameMain');
         main.innerHTML = '';
@@ -1199,6 +1141,14 @@ class PoemGame {
             case 'learn': this.initLearnMode(); break;
         }
         this.updateUI();
+    }
+
+    // 清除自动跳转定时器
+    clearAutoTransition() {
+        if (this.autoTransitionTimer) {
+            clearTimeout(this.autoTransitionTimer);
+            this.autoTransitionTimer = null;
+        }
     }
 
     // 填空模式
@@ -1287,7 +1237,7 @@ class PoemGame {
             this.state.addScore(10);
             if (this.state.addStreak()) this.showComboBonus();
             this.showLearnPanel(this.currentQuestion.poem);
-            setTimeout(() => this.generateFillQuestion(), 3000);
+            // 优化：不自动跳转，等待用户关闭学习面板
         } else {
             card.classList.add('wrong');
             this.sound.play('wrong');
@@ -1299,40 +1249,94 @@ class PoemGame {
         }
         this.updateUI();
     }
+    
+    // ==================== 优化后的学习面板 ====================
     showLearnPanel(poem) {
+        this.clearAutoTransition(); // 清除任何待定的自动跳转
+        
         const panel = document.getElementById('learnPanel');
         const isCollected = this.state.collectedPoems.has(poem.id);
+        const fullPoemText = poem.fullPoem || (poem.up + '，' + poem.down);
+        
         panel.innerHTML = `
             <div class="learn-panel">
-                <div class="learn-header">
+                <div class="learn-header" onclick="game.toggleLearnPanel()">
                     <div class="learn-title">📚 诗词赏析</div>
-                    <button class="learn-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                    <button class="learn-close" onclick="event.stopPropagation(); game.closeLearnPanel()">×</button>
                 </div>
-                <div class="learn-section">
-                    <div class="learn-section-title">📝 全诗</div>
-                    <div class="learn-content" style="font-family: 'Ma Shan Zheng', cursive; font-size: 20px;">${poem.fullPoem || poem.up + '，' + poem.down}</div>
+                <div class="learn-content-wrapper expanded" id="learnContentWrapper">
+                    <div class="learn-section">
+                        <div class="learn-section-title">📝 全诗</div>
+                        <div class="learn-poem-text">${fullPoemText}</div>
+                    </div>
+                    <div class="learn-section">
+                        <div class="learn-section-title">📖 创作背景</div>
+                        <div class="learn-content">${poem.background || '暂无背景介绍'}</div>
+                    </div>
+                    ${poem.note ? `<div class="learn-section"><div class="learn-section-title">💡 注释</div><div class="learn-content">${poem.note}</div></div>` : ''}
+                    <div class="learn-section">
+                        <div class="learn-section-title">🏷️ 标签</div>
+                        <div class="learn-tags">
+                            ${poem.tags.map(tag => `<span class="learn-tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    <button class="collect-btn ${isCollected ? 'collected' : ''}" onclick="game.collectCurrentPoem(${poem.id})">
+                        ${isCollected ? '⭐ 已收藏' : '⭐ 收藏'}
+                    </button>
                 </div>
-                <div class="learn-section">
-                    <div class="learn-section-title">📖 创作背景</div>
-                    <div class="learn-content">${poem.background || '暂无背景介绍'}</div>
+                <div class="expand-btn" onclick="game.toggleLearnPanel()">
+                    <span class="arrow">▼</span>
+                    <span id="expandBtnText">收起</span>
                 </div>
-                ${poem.note ? `<div class="learn-section"><div class="learn-section-title">💡 注释</div><div class="learn-content">${poem.note}</div></div>` : ''}
-                <div class="learn-tags">
-                    ${poem.tags.map(tag => `<span class="learn-tag">${tag}</span>`).join('')}
-                </div>
-                <button class="collect-btn ${isCollected ? 'collected' : ''}" onclick="game.collectCurrentPoem()">
-                    ${isCollected ? '⭐ 已收藏' : '⭐ 收藏'}
-                </button>
             </div>
         `;
+        
+        this.learnPanelExpanded = true;
     }
-    collectCurrentPoem() {
-        if (this.currentQuestion && this.currentQuestion.poem) {
-            this.state.collectPoem(this.currentQuestion.poem.id);
-            this.sound.play('collect');
-            this.updateUI();
-            const btn = document.querySelector('.collect-btn');
-            if (btn) { btn.classList.add('collected'); btn.innerHTML = '⭐ 已收藏'; }
+
+    // 切换学习面板展开/收起
+    toggleLearnPanel() {
+        const wrapper = document.getElementById('learnContentWrapper');
+        const expandBtn = document.querySelector('.expand-btn');
+        const arrow = expandBtn.querySelector('.arrow');
+        const text = document.getElementById('expandBtnText');
+        
+        if (this.learnPanelExpanded) {
+            wrapper.classList.remove('expanded');
+            arrow.classList.remove('expanded');
+            text.textContent = '展开查看赏析';
+            this.learnPanelExpanded = false;
+        } else {
+            wrapper.classList.add('expanded');
+            arrow.classList.add('expanded');
+            text.textContent = '收起';
+            this.learnPanelExpanded = true;
+        }
+    }
+
+    // 关闭学习面板并进入下一题
+    closeLearnPanel() {
+        const panel = document.getElementById('learnPanel');
+        if (panel) {
+            panel.innerHTML = '';
+        }
+        this.learnPanelExpanded = false;
+        // 只有在用户明确关闭学习面板后才进入下一题
+        setTimeout(() => {
+            if (this.state.hearts > 0) {
+                this.generateFillQuestion();
+            }
+        }, 300);
+    }
+
+    collectCurrentPoem(poemId) {
+        this.state.collectPoem(poemId);
+        this.sound.play('collect');
+        this.updateUI();
+        const btn = document.querySelector('.collect-btn');
+        if (btn) {
+            btn.classList.add('collected');
+            btn.innerHTML = '⭐ 已收藏';
         }
     }
 
@@ -1394,7 +1398,6 @@ class PoemGame {
             this.state.addScore(15);
             if (this.state.addStreak()) this.showComboBonus();
             this.showLearnPanel(this.currentQuestion.poem);
-            setTimeout(() => this.generateChallengeQuestion(), 3000);
         } else {
             card.classList.add('wrong');
             this.sound.play('wrong');
@@ -1412,28 +1415,13 @@ class PoemGame {
         const main = document.getElementById('gameMain');
         main.innerHTML = `
             <div class="match-container">
-                <canvas id="matchCanvas"></canvas>
                 <div class="match-area" id="matchArea">
                     <div class="match-column" id="leftColumn"><div class="column-title">诗句上句</div></div>
                     <div class="match-column" id="rightColumn"><div class="column-title">作者 / 下句</div></div>
                 </div>
             </div>
         `;
-        this.initCanvas();
         this.generateMatchGame();
-    }
-    initCanvas() {
-        const canvas = document.getElementById('matchCanvas');
-        if (!canvas) return;
-        this.canvas = canvas;
-        this.ctx = canvas.getContext('2d');
-        this.resizeCanvas();
-        window.addEventListener('resize', () => this.resizeCanvas());
-    }
-    resizeCanvas() {
-        if (!this.canvas) return;
-        const container = document.querySelector('.match-container');
-        if (container) { this.canvas.width = container.offsetWidth; this.canvas.height = container.offsetHeight; }
     }
     generateMatchGame() {
         let pairCount = Math.min(3 + Math.floor(this.state.score / 50), 5);
@@ -1486,7 +1474,6 @@ class PoemGame {
         if (leftIdx === rightIdx) {
             state.selectedLeft.classList.remove('selected'); state.selectedRight.classList.remove('selected');
             state.selectedLeft.classList.add('matched'); state.selectedRight.classList.add('matched');
-            if (window.innerWidth > 768) this.drawMatchLine(state.selectedLeft, state.selectedRight);
             this.sound.play('correct');
             this.state.addScore(10);
             state.matched++;
@@ -1504,23 +1491,6 @@ class PoemGame {
             }, 800);
         }
         this.updateUI();
-    }
-    drawMatchLine(leftItem, rightItem) {
-        if (!this.ctx) return;
-        const container = document.querySelector('.match-container').getBoundingClientRect();
-        const leftRect = leftItem.getBoundingClientRect();
-        const rightRect = rightItem.getBoundingClientRect();
-        const startX = leftRect.right - container.left;
-        const startY = leftRect.top + leftRect.height / 2 - container.top;
-        const endX = rightRect.left - container.left;
-        const endY = rightRect.top + rightRect.height / 2 - container.top;
-        const cpX = (startX + endX) / 2;
-        this.ctx.beginPath();
-        this.ctx.moveTo(startX, startY);
-        this.ctx.quadraticCurveTo(cpX, startY, cpX, (startY + endY) / 2);
-        this.ctx.quadraticCurveTo(cpX, endY, endX, endY);
-        this.ctx.strokeStyle = '#2e7d32'; this.ctx.lineWidth = 3; this.ctx.stroke();
-        setTimeout(() => this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height), 1000);
     }
 
     // 飞花令
@@ -1587,9 +1557,6 @@ class PoemGame {
         } else {
             card.classList.add('wrong');
             this.sound.play('wrong');
-            document.querySelectorAll('.option-card').forEach(c => {
-                if (c.textContent === this.currentQuestion.answer) setTimeout(() => c.classList.add('correct'), 500);
-            });
             if (this.state.loseHeart()) setTimeout(() => this.gameOver(), 1500);
             else setTimeout(() => this.generateFeihuaQuestion(), 1800);
         }
@@ -1600,154 +1567,162 @@ class PoemGame {
     initChainMode() {
         const main = document.getElementById('gameMain');
         main.innerHTML = `
-            <div id="chainContent">
-                <div class="poem-display" style="margin-bottom: 20px;">
-                    <div class="poem-text" id="chainPrompt">准备开始...</div>
+            <div class="chain-input-area">
+                <div class="poem-display" style="min-height: 80px;">
+                    <div class="poem-text" id="chainPoemText">请输入上句诗词</div>
                 </div>
-                <div class="chain-input-area">
-                    <div class="chain-hint">输入下句完成接龙 | 支持同音字容错</div>
-                    <input type="text" class="chain-input" id="chainInput" placeholder="请输入下句..." autocomplete="off">
-                    <div style="display: flex; gap: 10px; justify-content: center;">
-                        <button class="action-btn" onclick="game.submitChain()" style="background: var(--accent); color: white;">提交</button>
-                        <button class="action-btn" onclick="game.skipChain()">跳过 (-5分)</button>
-                    </div>
+                <input type="text" class="chain-input" id="chainInput" placeholder="输入诗词..." onkeypress="if(event.key==='Enter')game.checkChainAnswer()">
+                <div style="text-align: center; margin-top: 15px;">
+                    <button class="action-btn" onclick="game.checkChainAnswer()">提交</button>
+                    <button class="action-btn" onclick="game.skipChain()">跳过 (-5分)</button>
                 </div>
             </div>
         `;
-        document.getElementById('chainInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') this.submitChain(); });
-        this.generateChainQuestion();
     }
     generateChainQuestion() {
         if (this.state.hearts <= 0) return;
         const pool = PoemDatabase.query({excludeIds: this.state.usedPoemIds, limit: 1});
         if (pool.length === 0) { this.state.usedPoemIds = []; this.generateChainQuestion(); return; }
+
         const poem = pool[0];
         this.state.usedPoemIds.push(poem.id);
-        this.chainState = {poem, answer: poem.down};
-        document.getElementById('chainPrompt').textContent = poem.up;
-        const input = document.getElementById('chainInput');
-        input.value = '';
-        input.classList.remove('correct', 'wrong');
-        input.disabled = false;
-        input.focus();
+        this.currentQuestion = {poem, type: 'chain', answer: poem.down};
+        
+        document.getElementById('chainPoemText').textContent = poem.up;
+        document.getElementById('chainInput').value = '';
+        document.getElementById('chainInput').focus();
+        this.state.isProcessing = false;
     }
-    submitChain() {
+    checkChainAnswer() {
         if (this.state.isProcessing) return;
-        const input = document.getElementById('chainInput');
-        const userAnswer = input.value.trim();
-        if (!userAnswer) return;
+        const input = document.getElementById('chainInput').value.trim();
+        if (!input) return;
+        
         this.state.isProcessing = true;
-        const result = PoemDatabase.fuzzyMatch(userAnswer, this.chainState.answer);
+        const result = PoemDatabase.fuzzyMatch(input, this.currentQuestion.answer);
+        
         if (result.match) {
-            input.classList.add('correct');
-            input.disabled = true;
             this.sound.play('correct');
-            let points = result.score < 1 ? 12 : 15;
-            this.state.addScore(points);
+            this.state.addScore(15);
             if (this.state.addStreak()) this.showComboBonus();
-            setTimeout(() => { this.state.isProcessing = false; this.generateChainQuestion(); }, 1500);
+            document.getElementById('chainInput').classList.add('correct');
+            setTimeout(() => {
+                document.getElementById('chainInput').classList.remove('correct');
+                this.generateChainQuestion();
+            }, 1000);
         } else {
-            input.classList.add('wrong');
             this.sound.play('wrong');
-            setTimeout(() => { input.classList.remove('wrong'); this.state.isProcessing = false; }, 500);
+            document.getElementById('chainInput').classList.add('wrong');
+            setTimeout(() => {
+                document.getElementById('chainInput').classList.remove('wrong');
+                this.state.isProcessing = false;
+                document.getElementById('chainInput').focus();
+            }, 1000);
         }
-        this.updateUI();
     }
     skipChain() {
-        if (this.state.score < 5) return;
-        this.state.score -= 5;
-        this.generateChainQuestion();
-        this.updateUI();
+        if (this.state.score >= 5) {
+            this.state.score -= 5;
+            this.state.breakStreak();
+            document.getElementById('chainInput').value = '';
+            this.generateChainQuestion();
+            this.updateUI();
+        }
     }
 
-    // 学习模式 - 收藏夹
+    // 学习模式
     initLearnMode() {
         const main = document.getElementById('gameMain');
-        const collected = Array.from(this.state.collectedPoems).map(id => PoemDatabase.poems.find(p => p.id === id)).filter(Boolean);
-
+        const collectedPoems = PoemDatabase.poems.filter(p => this.state.collectedPoems.has(p.id));
+        
         main.innerHTML = `
             <div style="text-align: center; margin-bottom: 20px;">
-                <div style="font-family: 'Ma Shan Zheng', cursive; font-size: 28px; color: var(--accent); margin-bottom: 10px;">📚 我的收藏</div>
-                <div style="color: var(--ink-light);">共收藏 ${collected.length} 首诗词</div>
+                <div style="font-family: 'Ma Shan Zheng', cursive; font-size: 28px; color: var(--accent);">📚 我的收藏</div>
+                <div style="color: var(--ink-light);">共收藏 ${collectedPoems.length} 首诗词</div>
             </div>
             <div class="collection-grid" id="collectionGrid"></div>
         `;
 
         const grid = document.getElementById('collectionGrid');
-        if (collected.length === 0) {
-            grid.innerHTML = '<div style="text-align: center; color: var(--ink-light); padding: 40px;">暂无收藏，去游戏中发现喜欢的诗词吧！</div>';
-        } else {
-            collected.forEach(poem => {
-                const card = document.createElement('div');
-                card.className = 'collection-card';
-                card.innerHTML = `
-                    <div class="collection-poem">${poem.up}</div>
-                    <div class="collection-author">${poem.dynasty} · ${poem.author}</div>
-                    <div class="collection-preview">${poem.down}</div>
-                `;
-                card.onclick = () => this.showPoemDetail(poem);
-                grid.appendChild(card);
-            });
+        if (collectedPoems.length === 0) {
+            grid.innerHTML = '<div style="text-align: center; color: var(--ink-light); padding: 40px;">暂无收藏，快去游戏中收集吧！</div>';
+            return;
         }
-    }
-    showPoemDetail(poem) {
-        const main = document.getElementById('gameMain');
-        main.innerHTML = `
-            <div class="learn-panel" style="margin: 0;">
-                <div class="learn-header">
-                    <div class="learn-title">${poem.up}</div>
-                    <button class="learn-close" onclick="game.initLearnMode()">← 返回</button>
-                </div>
-                <div class="learn-section">
-                    <div class="learn-section-title">📝 全诗</div>
-                    <div class="learn-content" style="font-family: 'Ma Shan Zheng', cursive; font-size: 24px; line-height: 2;">${poem.fullPoem || poem.up + '，' + poem.down}</div>
-                </div>
-                <div class="learn-section">
-                    <div class="learn-section-title">👤 作者</div>
-                    <div class="learn-content">${poem.dynasty} · ${poem.author}</div>
-                </div>
-                <div class="learn-section">
-                    <div class="learn-section-title">📖 创作背景</div>
-                    <div class="learn-content">${poem.background || '暂无背景介绍'}</div>
-                </div>
-                ${poem.note ? `<div class="learn-section"><div class="learn-section-title">💡 注释</div><div class="learn-content">${poem.note}</div></div>` : ''}
-                <div class="learn-tags">
-                    ${poem.tags.map(tag => `<span class="learn-tag">${tag}</span>`).join('')}
-                </div>
-            </div>
-        `;
+
+        collectedPoems.forEach(poem => {
+            const card = document.createElement('div');
+            card.className = 'collection-card';
+            card.innerHTML = `
+                <div class="collection-poem">${poem.up}</div>
+                <div class="collection-author">${poem.dynasty} · ${poem.author}</div>
+                <div class="collection-preview">${poem.down}</div>
+            `;
+            card.onclick = () => {
+                this.currentQuestion = {poem, type: 'learn'};
+                this.showLearnPanel(poem);
+            };
+            grid.appendChild(card);
+        });
     }
 
-    // 通用功能
     showComboBonus() {
-        this.sound.play('combo');
         const popup = document.createElement('div');
         popup.className = 'combo-popup';
-        popup.textContent = `🔥 ${this.state.streak}连击! +5分!`;
+        popup.textContent = `🔥 连击 x${this.state.streak}!`;
         document.body.appendChild(popup);
         setTimeout(() => popup.remove(), 1000);
     }
-    useHint() {
-        if (this.state.mode === 'fill' && this.currentQuestion) {
-            if (!this.state.useHint()) { this.showFloatingText('提示次数已用完', '#c62828'); return; }
-            document.querySelectorAll('#optionsGrid .option-card, #challengeOptions .option-card').forEach(card => {
-                if (card.textContent === this.currentQuestion.answer) {
-                    card.classList.add('correct');
-                    setTimeout(() => card.classList.remove('correct'), 2000);
-                }
-            });
-            this.updateUI();
+
+    updateUI() {
+        document.getElementById('scoreValue').textContent = this.state.score;
+        document.getElementById('collectValue').textContent = this.state.collectedPoems.size;
+        
+        document.querySelectorAll('.heart').forEach((heart, i) => {
+            heart.classList.toggle('lost', i >= this.state.hearts);
+        });
+
+        const streakContainer = document.getElementById('streakContainer');
+        const streakBadge = document.getElementById('streakBadge');
+        if (this.state.streak > 0) {
+            streakContainer.style.display = 'flex';
+            streakBadge.textContent = `连击 x${this.state.streak}`;
+        } else {
+            streakContainer.style.display = 'none';
+        }
+
+        const hintBtn = document.getElementById('hintBtn');
+        if (hintBtn) {
+            hintBtn.disabled = this.state.hintsUsed >= this.state.hintLimit || this.state.score < 5;
         }
     }
-    showFloatingText(text, color) {
-        const el = document.createElement('div');
-        el.className = 'floating-feedback';
-        el.style.color = color;
-        el.textContent = text;
-        el.style.left = '50%'; el.style.top = '40%';
-        document.body.appendChild(el);
-        setTimeout(() => el.remove(), 1000);
+
+    useHint() {
+        if (!this.state.useHint()) return;
+        
+        const gridId = this.state.mode === 'fill' ? 'optionsGrid' : 'challengeOptions';
+        const grid = document.getElementById(gridId);
+        if (!grid) return;
+
+        const cards = grid.querySelectorAll('.option-card');
+        cards.forEach(card => {
+            if (card.textContent === this.currentQuestion.answer) {
+                card.style.opacity = '1';
+                card.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    card.style.transform = 'scale(1)';
+                }, 300);
+            } else {
+                card.style.opacity = '0.3';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                }, 2000);
+            }
+        });
+        
+        this.sound.play('correct');
+        this.updateUI();
     }
+
     gameOver() {
         this.state.save();
         document.getElementById('finalScore').textContent = this.state.score;
@@ -1755,31 +1730,24 @@ class PoemGame {
         document.getElementById('finalCollected').textContent = this.state.collectedPoems.size;
         document.getElementById('gameOverModal').classList.add('active');
     }
+
     restart() {
         this.state.reset();
+        this.state.load();
         document.getElementById('gameOverModal').classList.remove('active');
-        if (this.ctx) this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.switchMode(this.state.mode);
-        this.updateUI();
-    }
-    updateUI() {
-        document.getElementById('scoreValue').textContent = this.state.score;
-        document.getElementById('collectValue').textContent = this.state.collectedPoems.size;
-        document.querySelectorAll('.heart').forEach((h, i) => h.classList.toggle('lost', i >= this.state.hearts));
-        const streakContainer = document.getElementById('streakContainer');
-        const streakBadge = document.getElementById('streakBadge');
-        if (this.state.streak > 0) { streakContainer.style.display = 'flex'; streakBadge.textContent = `连击 x${this.state.streak}`; }
-        else streakContainer.style.display = 'none';
-        const hintBtn = document.getElementById('hintBtn');
-        if (this.state.mode === 'fill' || this.state.mode === 'challenge') {
-            hintBtn.style.display = 'block';
-            hintBtn.disabled = this.state.hintsUsed >= this.state.hintLimit || this.state.score < 5;
-        } else hintBtn.style.display = 'none';
+        this.clearAutoTransition();
+        this.init();
     }
 }
 
 const game = new PoemGame();
-window.addEventListener('keydown', (e) => { if (e.code === 'Space' && e.target.tagName !== 'INPUT') e.preventDefault(); });
+
+window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
+        e.preventDefault();
+        game.useHint();
+    }
+});
 </script>
 </body>
 </html>
