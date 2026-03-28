@@ -479,7 +479,9 @@
             footer { flex-direction: column; text-align: center; }
             .collection-grid { grid-template-columns: 1fr; }
         }
-
+    </style>
+<base target="_blank">
+</head>
 <body>
     <div id="app">
         <header>
@@ -490,15 +492,10 @@
                         <span class="score-label">得分</span>
                         <span class="score-value" id="scoreValue">0</span>
                     </div>
-                <div class="score-item">
-                    <span class="score-label">收藏</span>
-                    <span class="score-value" id="collectValue">0</span>
-                </div>
-                <div class="status-item">
-                    <button class="action-btn" id="soundBtn" onclick="game.sound.toggle()" style="padding: 5px 10px; font-size: 12px;">
-                        🔊 音效
-                    </button>
-                </div>
+                    <div class="score-item">
+                        <span class="score-label">收藏</span>
+                        <span class="score-value" id="collectValue">0</span>
+                    </div>
                 </div>
             </div>
             <nav class="mode-tabs">
@@ -519,9 +516,6 @@
                 </button>
                 <button class="mode-tab" data-mode="learn" onclick="game.switchMode('learn')">
                     <span class="icon">📚</span><span>学习</span>
-                </button>
-                <button class="mode-tab" data-mode="achievements" onclick="game.switchMode('achievements')">
-                    <span class="icon">🏆</span><span>成就</span>
                 </button>
             </nav>
         </header>
@@ -566,15 +560,15 @@ const PoemDatabase = {
         {id: 1, up: "床前明月光", down: "疑是地上霜", author: "李白", dynasty: "唐", tags: ["思乡", "月亮"], difficulty: 1,
          background: "此诗为李白漫游扬州时所作。诗人客居他乡，秋夜难眠，见明月而思乡。", note: "床：指井边栏杆。疑：怀疑。",
          fullPoem: "床前明月光，疑是地上霜。举头望明月，低头思故乡。"},
-        {id: 2, up: "举头望明月", down: "低头思故乡", author: "李白", dynasty: "唐", tags: ["思乡", "月亮"], difficulty: 1, background: "《静夜思》后两句，直接抒发思乡之情。", fullPoem: "床前明月光，疑是地上霜。举头望明月，低头思故乡。", note: "暂无详细资料，欢迎补充。"},
+        {id: 2, up: "举头望明月", down: "低头思故乡", author: "李白", dynasty: "唐", tags: ["思乡", "月亮"], difficulty: 1, background: "《静夜思》后两句，直接抒发思乡之情。"},
         {id: 3, up: "朝辞白帝彩云间", down: "千里江陵一日还", author: "李白", dynasty: "唐", tags: ["山水", "行旅"], difficulty: 2,
          background: "唐肃宗乾元二年，李白流放夜郎，行至白帝城遇赦，乘舟东归所作。", note: "白帝城：在今重庆奉节。江陵：今湖北荆州。"},
-        {id: 4, up: "两岸猿声啼不住", down: "轻舟已过万重山", author: "李白", dynasty: "唐", tags: ["山水", "行旅"], difficulty: 2, background: "写舟行如飞，长江三峡的壮丽景色。", fullPoem: "朝辞白帝彩云间，千里江陵一日还。两岸猿声啼不住，轻舟已过万重山。", note: "暂无详细资料，欢迎补充。"},
+        {id: 4, up: "两岸猿声啼不住", down: "轻舟已过万重山", author: "李白", dynasty: "唐", tags: ["山水", "行旅"], difficulty: 2, background: "写舟行如飞，长江三峡的壮丽景色。"},
         {id: 5, up: "桃花潭水深千尺", down: "不及汪伦送我情", author: "李白", dynasty: "唐", tags: ["友情", "离别"], difficulty: 1,
          background: "李白游泾县桃花潭，村民汪伦常酿美酒款待，李白临行作诗相赠。", note: "桃花潭：在今安徽泾县。"},
         {id: 6, up: "天门中断楚江开", down: "碧水东流至此回", author: "李白", dynasty: "唐", tags: ["山水"], difficulty: 2,
          background: "唐玄宗开元十三年，李白出蜀途中，舟行长江，望天门山所作。", note: "天门山：在今安徽当涂。"},
-        {id: 7, up: "两岸青山相对出", down: "孤帆一片日边来", author: "李白", dynasty: "唐", tags: ["山水"], difficulty: 2, background: "望天门山后两句，写长江两岸青山相对而出的壮丽景象。", fullPoem: "天门中断楚江开，碧水东流至此回。两岸青山相对出，孤帆一片日边来。", note: "暂无详细资料，欢迎补充。"},
+        {id: 7, up: "两岸青山相对出", down: "孤帆一片日边来", author: "李白", dynasty: "唐", tags: ["山水"], difficulty: 2},
         {id: 8, up: "长风破浪会有时", down: "直挂云帆济沧海", author: "李白", dynasty: "唐", tags: ["壮志", "励志"], difficulty: 2,
          background: "李白被赐金放还后，在长安所作，抒发虽遭挫折但仍怀壮志。", note: "长风破浪：比喻志向远大。"},
         {id: 9, up: "天生我材必有用", down: "千金散尽还复来", author: "李白", dynasty: "唐", tags: ["励志", "豪放"], difficulty: 2,
@@ -881,7 +875,7 @@ const PoemDatabase = {
         return pool.sort(() => Math.random() - 0.5).slice(0, limit);
     },
 
-    fuzzyMatch(input, target, tolerance = 0.92) {
+    fuzzyMatch(input, target, tolerance = 0.85) {
         if (input === target) return {match: true, score: 1};
         const cleanInput = input.replace(/[，。？！、；：""''（）【】]/g, '');
         const cleanTarget = target.replace(/[，。？！、；：""''（）【】]/g, '');
@@ -918,31 +912,13 @@ class SoundEngine {
         this.ctx = null;
         this.enabled = true;
         this.init();
-        // 页面首次点击时唤醒AudioContext
-        document.addEventListener('click', () => this.ensureContext(), {once: true});
     }
     init() {
         try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
     }
     ensureContext() {
         if (!this.ctx) this.init();
-        if (this.ctx && this.ctx.state === 'suspended') {
-            this.ctx.resume().then(() => {
-                this.showNotification('🔊 音效已启用');
-            }).catch(() => {});
-        }
-    }
-    showNotification(msg) {
-        const el = document.createElement('div');
-        el.style.cssText = 'position:fixed;top:20px;right:20px;background:rgba(46,125,50,0.9);color:white;padding:10px 20px;border-radius:10px;z-index:9999;animation:slideDown 0.3s ease;';
-        el.textContent = msg;
-        document.body.appendChild(el);
-        setTimeout(() => el.remove(), 2000);
-    }
-    toggle() {
-        this.enabled = !this.enabled;
-        this.showNotification(this.enabled ? '🔊 音效已开启' : '🔇 音效已关闭');
-        return this.enabled;
+        if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
     }
     play(type) {
         if (!this.enabled || !this.ctx) return;
@@ -976,86 +952,11 @@ class SoundEngine {
     }
 }
 
-// ==================== 成就系统 ====================
-class AchievementSystem {
-    constructor() {
-        this.achievements = {
-            collector: {id: 'collector', name: '收藏家', desc: '收藏10首诗词', icon: '⭐', target: 10, unlocked: false},
-            streaker: {id: 'streaker', name: '连击高手', desc: '连续答对10题', icon: '🔥', target: 10, unlocked: false},
-            master: {id: 'master', name: '百诗斩', desc: '累计答对100题', icon: '📜', target: 100, unlocked: false},
-            explorer: {id: 'explorer', name: '全模式通关', desc: '每种模式完成10题', icon: '🎯', target: 10, unlocked: false},
-        };
-        this.progress = {
-            collector: 0,
-            streaker: 0,
-            master: 0,
-            explorer: {fill: 0, challenge: 0, match: 0, feihua: 0, chain: 0}
-        };
-        this.load();
-    }
-    load() {
-        const saved = localStorage.getItem('poemAchievements');
-        if (saved) {
-            const data = JSON.parse(saved);
-            this.achievements = data.achievements || this.achievements;
-            this.progress = data.progress || this.progress;
-        }
-    }
-    save() {
-        localStorage.setItem('poemAchievements', JSON.stringify({
-            achievements: this.achievements,
-            progress: this.progress
-        }));
-    }
-    check(collectedCount, streak, correctCount, modeProgress) {
-        let newUnlock = false;
-        // 收藏家成就
-        if (!this.achievements.collector.unlocked && collectedCount >= this.achievements.collector.target) {
-            this.achievements.collector.unlocked = true;
-            newUnlock = true;
-        }
-        this.progress.collector = collectedCount;
-        // 连击高手成就
-        if (!this.achievements.streaker.unlocked && streak >= this.achievements.streaker.target) {
-            this.achievements.streaker.unlocked = true;
-            newUnlock = true;
-        }
-        this.progress.streaker = streak;
-        // 百诗斩成就
-        if (!this.achievements.master.unlocked && correctCount >= this.achievements.master.target) {
-            this.achievements.master.unlocked = true;
-            newUnlock = true;
-        }
-        this.progress.master = correctCount;
-        // 全模式通关成就
-        if (modeProgress) {
-            Object.keys(modeProgress).forEach(mode => {
-                if (!this.progress.explorer[mode]) this.progress.explorer[mode] = 0;
-                if (modeProgress[mode] > this.progress.explorer[mode]) {
-                    this.progress.explorer[mode] = modeProgress[mode];
-                }
-            });
-            const allReached = Object.values(this.progress.explorer).every(count => count >= this.achievements.explorer.target);
-            if (!this.achievements.explorer.unlocked && allReached) {
-                this.achievements.explorer.unlocked = true;
-                newUnlock = true;
-            }
-        }
-        if (newUnlock) this.save();
-        return newUnlock;
-    }
-    getUnlocked() {
-        return Object.values(this.achievements).filter(a => a.unlocked);
-    }
-}
-
 // ==================== 游戏状态 ====================
 class GameState {
     constructor() {
         this.reset();
         this.load();
-        this.modeProgress = {fill: 0, challenge: 0, match: 0, feihua: 0, chain: 0};
-        this.correctCount = 0;
     }
     reset() {
         this.mode = 'fill';
@@ -1071,8 +972,6 @@ class GameState {
         this.comboCount = 0;
         this.isProcessing = false;
         this.timer = null;
-        this.modeProgress = {fill: 0, challenge: 0, match: 0, feihua: 0, chain: 0};
-        this.correctCount = 0;
     }
     load() {
         const saved = localStorage.getItem('poemGameV2');
@@ -1080,15 +979,6 @@ class GameState {
             const data = JSON.parse(saved);
             this.highScore = data.highScore || 0;
             this.collectedPoems = new Set(data.collected || []);
-            // 恢复游戏状态
-            if (data.gameState) {
-                this.mode = data.gameState.mode || 'fill';
-                this.score = data.gameState.score || 0;
-                this.streak = data.gameState.streak || 0;
-                this.maxStreak = data.gameState.maxStreak || 0;
-                this.hearts = data.gameState.hearts || 3;
-                this.usedPoemIds = data.gameState.usedPoemIds || [];
-            }
         } else {
             this.highScore = 0;
         }
@@ -1097,15 +987,7 @@ class GameState {
         const data = {
             highScore: Math.max(this.score, this.highScore),
             collected: Array.from(this.collectedPoems),
-            timestamp: Date.now(),
-            gameState: {
-                mode: this.mode,
-                score: this.score,
-                streak: this.streak,
-                maxStreak: this.maxStreak,
-                hearts: this.hearts,
-                usedPoemIds: this.usedPoemIds
-            }
+            timestamp: Date.now()
         };
         localStorage.setItem('poemGameV2', JSON.stringify(data));
     }
@@ -1141,7 +1023,6 @@ class PoemGame {
     constructor() {
         this.state = new GameState();
         this.sound = new SoundEngine();
-        this.achievements = new AchievementSystem();
         this.currentQuestion = null;
         this.matchState = null;
         this.chainState = null;
@@ -1155,14 +1036,9 @@ class PoemGame {
         window.addEventListener('beforeunload', () => this.state.save());
     }
     switchMode(mode) {
-        const prevMode = this.state.mode;
         this.state.mode = mode;
         this.state.isProcessing = false;
         if (this.state.timer) { clearInterval(this.state.timer); this.state.timer = null; }
-        // 退出配对模式时清除画布
-        if (prevMode === 'match' && this.ctx) {
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        }
         document.querySelectorAll('.mode-tab').forEach(tab => tab.classList.toggle('active', tab.dataset.mode === mode));
         const main = document.getElementById('gameMain');
         main.innerHTML = '';
@@ -1173,7 +1049,6 @@ class PoemGame {
             case 'feihua': this.initFeihuaMode(); break;
             case 'chain': this.initChainMode(); break;
             case 'learn': this.initLearnMode(); break;
-            case 'achievements': this.initAchievementsMode(); break;
         }
         this.updateUI();
     }
@@ -1220,7 +1095,6 @@ class PoemGame {
             <div class="poem-display" id="poemDisplay">
                 <div class="poem-text">${poem.up}</div>
                 <div class="poem-hint">${poem.dynasty} · ${poem.author}</div>
-                <button class="action-btn" onclick="game.showLearnPanel(game.currentQuestion.poem)" style="margin-top:10px;font-size:12px;padding:5px 10px;">📖 赏析</button>
             </div>
             <div class="options-grid" id="optionsGrid"></div>
             <div id="learnPanel"></div>
@@ -1263,10 +1137,8 @@ class PoemGame {
             document.getElementById('poemDisplay').classList.add('ink-spread');
             this.sound.play('correct');
             this.state.addScore(10);
-            this.state.correctCount++;
-            this.state.modeProgress.fill++;
-            this.checkAchievements();
             if (this.state.addStreak()) this.showComboBonus();
+            this.showLearnPanel(this.currentQuestion.poem);
             setTimeout(() => this.generateFillQuestion(), 3000);
         } else {
             card.classList.add('wrong');
@@ -1286,7 +1158,7 @@ class PoemGame {
             <div class="learn-panel">
                 <div class="learn-header">
                     <div class="learn-title">📚 诗词赏析</div>
-                    <button class="learn-close" onclick="game.closeLearnPanel()">×</button>
+                    <button class="learn-close" onclick="this.parentElement.parentElement.remove()">×</button>
                 </div>
                 <div class="learn-section">
                     <div class="learn-section-title">📝 全诗</div>
@@ -1305,10 +1177,6 @@ class PoemGame {
                 </button>
             </div>
         `;
-    }
-    closeLearnPanel() {
-        const panel = document.getElementById('learnPanel');
-        if (panel) panel.innerHTML = '';
     }
     collectCurrentPoem() {
         if (this.currentQuestion && this.currentQuestion.poem) {
@@ -1349,7 +1217,6 @@ class PoemGame {
             <div class="challenge-context">
                 <div class="challenge-title">🎯 挑战模式</div>
                 <div class="challenge-desc">${challengeText}</div>
-                <button class="action-btn" onclick="game.showLearnPanel(game.currentQuestion.poem)" style="margin-top:10px;font-size:12px;padding:5px 10px;">📖 赏析</button>
             </div>
             <div class="poem-display">
                 <div class="poem-text" style="font-size: 24px;">请根据提示选择正确的下句</div>
@@ -1377,10 +1244,8 @@ class PoemGame {
             card.classList.add('correct');
             this.sound.play('correct');
             this.state.addScore(15);
-            this.state.correctCount++;
-            this.state.modeProgress.challenge++;
-            this.checkAchievements();
             if (this.state.addStreak()) this.showComboBonus();
+            this.showLearnPanel(this.currentQuestion.poem);
             setTimeout(() => this.generateChallengeQuestion(), 3000);
         } else {
             card.classList.add('wrong');
@@ -1407,11 +1272,6 @@ class PoemGame {
             </div>
         `;
         this.initCanvas();
-        // 清除画布并重置matchState
-        if (this.ctx) {
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        }
-        this.matchState = null;
         this.generateMatchGame();
     }
     initCanvas() {
@@ -1428,13 +1288,9 @@ class PoemGame {
         if (container) { this.canvas.width = container.offsetWidth; this.canvas.height = container.offsetHeight; }
     }
     generateMatchGame() {
-        let pairCount = Math.min(3 + Math.floor(this.state.score / 50), 6);
+        let pairCount = Math.min(3 + Math.floor(this.state.score / 50), 5);
         const pool = PoemDatabase.query({limit: pairCount * 2});
         const selected = pool.slice(0, pairCount);
-        // 清除画布并重置matchState
-        if (this.ctx) {
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        }
         this.matchState = {poems: selected, selectedLeft: null, selectedRight: null, matched: 0, target: pairCount, isProcessing: false};
 
         const leftCol = document.getElementById('leftColumn');
@@ -1485,9 +1341,6 @@ class PoemGame {
             if (window.innerWidth > 768) this.drawMatchLine(state.selectedLeft, state.selectedRight);
             this.sound.play('correct');
             this.state.addScore(10);
-            this.state.correctCount++;
-            this.state.modeProgress.match++;
-            this.checkAchievements();
             state.matched++;
             if (state.matched >= state.target) {
                 this.sound.play('combo');
@@ -1544,7 +1397,6 @@ class PoemGame {
             <div style="text-align: center;">
                 <div class="feihua-keyword">${keyword}</div>
                 <div class="feihua-context">请选出含有"${keyword}"字的诗句</div>
-                <button class="action-btn" onclick="game.showLearnPanel(game.currentQuestion.poem)" style="margin:10px auto;font-size:12px;padding:5px 10px;">📖 赏析</button>
             </div>
             <div class="poem-display" style="min-height: 80px;"><div class="poem-text">${displayText}</div></div>
             <div class="options-grid" id="feihuaOptions"></div>
@@ -1582,9 +1434,6 @@ class PoemGame {
             card.classList.add('correct');
             this.sound.play('correct');
             this.state.addScore(12);
-            this.state.correctCount++;
-            this.state.modeProgress.feihua++;
-            this.checkAchievements();
             if (this.state.addStreak()) this.showComboBonus();
             setTimeout(() => this.generateFeihuaQuestion(), 1200);
         } else {
@@ -1640,28 +1489,19 @@ class PoemGame {
         const userAnswer = input.value.trim();
         if (!userAnswer) return;
         this.state.isProcessing = true;
-        input.disabled = true; // 提交后立即禁用输入框
         const result = PoemDatabase.fuzzyMatch(userAnswer, this.chainState.answer);
         if (result.match) {
             input.classList.add('correct');
+            input.disabled = true;
             this.sound.play('correct');
             let points = result.score < 1 ? 12 : 15;
             this.state.addScore(points);
-            this.state.correctCount++;
-            this.state.modeProgress.chain++;
-            this.checkAchievements();
             if (this.state.addStreak()) this.showComboBonus();
             setTimeout(() => { this.state.isProcessing = false; this.generateChainQuestion(); }, 1500);
         } else {
             input.classList.add('wrong');
             this.sound.play('wrong');
-            // 答错时显示标准答案提示
-            setTimeout(() => {
-                input.classList.remove('wrong');
-                input.value = this.chainState.answer;
-                input.classList.add('correct');
-                setTimeout(() => { this.state.isProcessing = false; this.generateChainQuestion(); }, 1200);
-            }, 1500);
+            setTimeout(() => { input.classList.remove('wrong'); this.state.isProcessing = false; }, 500);
         }
         this.updateUI();
     }
@@ -1728,58 +1568,6 @@ class PoemGame {
                 </div>
             </div>
         `;
-    }
-
-    // 成就模式
-    initAchievementsMode() {
-        const main = document.getElementById('gameMain');
-        const achievements = this.achievements.achievements;
-        const progress = this.achievements.progress;
-        const unlocked = this.achievements.getUnlocked();
-
-        main.innerHTML = `
-            <div style="text-align: center; margin-bottom: 20px;">
-                <div style="font-family: 'Ma Shan Zheng', cursive; font-size: 28px; color: var(--accent); margin-bottom: 10px;">🏆 成就系统</div>
-                <div style="color: var(--ink-light);">已解锁 ${unlocked.length}/${Object.keys(achievements).length} 个成就</div>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;" id="achievementGrid"></div>
-        `;
-
-        const grid = document.getElementById('achievementGrid');
-        Object.values(achievements).forEach(a => {
-            const card = document.createElement('div');
-            const currentProgress = a.id === 'explorer' ? Math.min(...Object.values(progress.explorer)) : progress[a.id];
-            const percentage = Math.min((currentProgress / a.target) * 100, 100);
-            card.className = 'collection-card';
-            card.style.background = a.unlocked ? 'linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%)' : '#f5f5f5';
-            card.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                    <span style="font-size: 32px; ${a.unlocked ? '' : 'filter: grayscale(100%);'}">${a.icon}</span>
-                    <div style="flex: 1;">
-                        <div style="font-weight: 700; color: ${a.unlocked ? 'var(--accent)' : 'var(--ink-light)'}">${a.name}</div>
-                        <div style="font-size: 12px; color: var(--ink-light);">${a.desc}</div>
-                    </div>
-                </div>
-                <div style="background: #e0e0e0; border-radius: 10px; height: 8px; overflow: hidden;">
-                    <div style="background: ${a.unlocked ? 'var(--success)' : 'var(--warning)'}; height: 100%; transition: width 0.3s ease; width: ${percentage}%"></div>
-                </div>
-                <div style="font-size: 12px; color: var(--ink-light); margin-top: 5px;">${currentProgress}/${a.target}</div>
-            `;
-            grid.appendChild(card);
-        });
-    }
-
-    checkAchievements() {
-        const newUnlock = this.achievements.check(
-            this.state.collectedPoems.size,
-            this.state.streak,
-            this.state.correctCount,
-            this.state.modeProgress
-        );
-        if (newUnlock) {
-            this.sound.play('combo');
-            this.showFloatingText('🏆 新成就解锁！', '#d4a574');
-        }
     }
 
     // 通用功能

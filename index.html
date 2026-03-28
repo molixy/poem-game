@@ -897,13 +897,13 @@ class SoundEngine {
         if (!this.enabled || !this.ctx) return;
         this.ensureContext();
         const t = this.ctx.currentTime;
-        switch(type) {
-            case 'correct': this.playChord([523.25, 659.25, 783.99], 0.3, 'sine', 0.5); break;
-            case 'wrong': this.playTone(200, 0.3, 'sawtooth', 0.25, 150); break;
-            case 'combo': this.playSequence([523.25, 659.25, 783.99, 1046.50], 0.1, 'triangle'); break;
-            case 'collect': this.playChord([392, 523.25, 659.25], 0.2, 'sine', 0.6); break;
-            case 'achievement': this.playSequence([523.25, 659.25, 783.99, 1046.50, 1318.51], 0.08, 'triangle'); break;
-        }
+            switch(type) {
+                case 'correct': this.playChord([523.25, 659.25, 783.99], 0.3, 'sine', 0.5); break;
+                case 'wrong': this.playTone(200, 0.3, 'sawtooth', 0.25, 150); break;
+                case 'combo': this.playSequence([523.25, 659.25, 783.99, 1046.50], 0.1, 'triangle'); break;
+                case 'collect': this.playChord([392, 523.25, 659.25], 0.2, 'sine', 0.6); break;
+                case 'achievement': this.playSequence([523.25, 659.25, 783.99, 1046.50, 1318.51], 0.08, 'triangle'); break;
+            }
     }
     playTone(freq, duration, type, vol, freqEnd = null) {
         const osc = this.ctx.createOscillator();
