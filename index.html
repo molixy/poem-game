@@ -15,38 +15,38 @@
             --primary: #795548;
             --primary-light: #8d6e63;
             --primary-dark: #5d4037;
-            
+
             --paper: #fdf6e3;
             --paper-light: #fef9e7;
             --paper-dark: #f0e6d2;
-            
+
             --ink: #2d2d2d;
             --ink-light: #5d5d5d;
             --ink-lighter: #8a8a8a;
-            
+
             --accent: #c68e17;
             --accent-light: #d4a574;
             --accent-dark: #9e6d0f;
-            
+
             --gold: #c9a27e;
             --gold-light: #e0c0a0;
-            
+
             --success: #43a047;
             --success-light: #66bb6a;
             --success-bg: #e8f5e9;
-            
+
             --error: #e53935;
             --error-light: #ef5350;
             --error-bg: #ffebee;
-            
+
             --warning: #f9a825;
             --warning-light: #ffb300;
             --warning-bg: #fff8e1;
-            
+
             --info: #1e88e5;
             --info-light: #42a5f5;
             --info-bg: #e3f2fd;
-            
+
             --shadow: rgba(121, 85, 72, 0.12);
             --shadow-medium: rgba(121, 85, 72, 0.18);
             --shadow-heavy: rgba(121, 85, 72, 0.25);
@@ -68,6 +68,7 @@
             color: var(--ink);
             overflow-x: hidden;
             line-height: 1.6;
+            font-size: 16px;
         }
 
         body::before {
@@ -84,9 +85,9 @@
         }
 
         #app {
-            max-width: 960px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 16px;
+            padding: 20px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -96,7 +97,7 @@
         header {
             background: rgba(255, 255, 255, 0.98);
             border-radius: 24px;
-            padding: 24px 20px;
+            padding: 28px 24px;
             box-shadow: 0 4px 24px var(--shadow);
             border: 2px solid var(--gold);
             margin-bottom: 24px;
@@ -112,14 +113,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 16px;
         }
 
         .game-title {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 36px;
+            font-size: clamp(28px, 4vw, 42px);
             color: var(--primary);
             display: flex;
             align-items: center;
@@ -165,7 +166,7 @@
         }
 
         .score-label {
-            font-size: 13px;
+            font-size: clamp(12px, 1.5vw, 15px);
             color: var(--ink-lighter);
             display: block;
             margin-bottom: 4px;
@@ -173,7 +174,7 @@
 
         .score-value {
             font-family: 'ZCOOL XiaoWei', serif;
-            font-size: 26px;
+            font-size: clamp(20px, 3vw, 28px);
             font-weight: 700;
             color: var(--primary);
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
@@ -197,14 +198,14 @@
 
         .mode-tab {
             flex: 1;
-            min-width: 80px;
-            padding: 12px 16px;
+            min-width: 85px;
+            padding: 14px 18px;
             border: 2px solid var(--gold);
             background: var(--paper);
             border-radius: 28px;
             cursor: pointer;
             font-family: inherit;
-            font-size: 14px;
+            font-size: clamp(13px, 1.8vw, 15px);
             color: var(--ink-light);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap;
@@ -212,7 +213,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
         }
 
         .mode-tab:hover:not(.active) {
@@ -231,7 +232,7 @@
 
         .mode-tab .icon {
             display: block;
-            font-size: 20px;
+            font-size: clamp(18px, 2.5vw, 22px);
             margin-bottom: 2px;
         }
 
@@ -240,7 +241,7 @@
             flex: 1;
             background: rgba(255, 255, 255, 0.98);
             border-radius: 24px;
-            padding: 28px 24px;
+            padding: clamp(20px, 3vw, 32px) clamp(16px, 2vw, 28px);
             box-shadow: 0 8px 32px var(--shadow);
             border: 2px solid var(--gold);
             position: relative;
@@ -384,7 +385,7 @@
         /* Poem Display 优化 */
         .poem-display {
             text-align: center;
-            padding: 40px 30px;
+            padding: clamp(28px, 4vw, 48px) clamp(20px, 3vw, 36px);
             background: linear-gradient(135deg, var(--paper-light) 0%, var(--paper) 100%);
             border-radius: 20px;
             border: 3px solid var(--gold);
@@ -424,7 +425,7 @@
 
         .poem-text {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 36px;
+            font-size: clamp(24px, 4vw, 38px);
             color: var(--ink);
             line-height: 1.8;
             margin-bottom: 12px;
@@ -432,7 +433,7 @@
         }
 
         .poem-hint {
-            font-size: 15px;
+            font-size: clamp(13px, 1.8vw, 16px);
             color: var(--ink-light);
             margin-top: 8px;
             font-weight: 500;
@@ -477,11 +478,11 @@
         }
 
         .option-card {
-            padding: 20px;
+            padding: clamp(16px, 2.5vw, 24px);
             background: white;
             border: 2px solid var(--gold-light);
             border-radius: 16px;
-            font-size: 17px;
+            font-size: clamp(15px, 2vw, 18px);
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
@@ -540,7 +541,7 @@
         /* Challenge Context 优化 */
         .challenge-context {
             text-align: center;
-            padding: 28px;
+            padding: clamp(20px, 3vw, 32px);
             background: linear-gradient(135deg, var(--warning-bg) 0%, #fffde7 100%);
             border-radius: 20px;
             border: 2px solid var(--gold);
@@ -550,13 +551,13 @@
 
         .challenge-title {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 32px;
+            font-size: clamp(24px, 4vw, 36px);
             color: var(--primary);
             margin-bottom: 16px;
         }
 
         .challenge-desc {
-            font-size: 16px;
+            font-size: clamp(14px, 2vw, 17px);
             line-height: 1.9;
             color: var(--ink-light);
         }
@@ -614,7 +615,7 @@
         .column-title {
             text-align: center;
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 22px;
+            font-size: clamp(18px, 3vw, 24px);
             color: var(--primary);
             padding-bottom: 12px;
             border-bottom: 3px dashed var(--gold);
@@ -623,13 +624,13 @@
         }
 
         .match-item {
-            padding: 16px 14px;
+            padding: clamp(12px, 2vw, 18px) clamp(10px, 1.5vw, 16px);
             background: var(--paper);
             border: 2px solid var(--gold-light);
             border-radius: 14px;
             cursor: pointer;
             text-align: center;
-            font-size: 15px;
+            font-size: clamp(13px, 1.8vw, 16px);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
@@ -698,8 +699,8 @@
             max-width: 540px;
             margin: 24px auto;
             display: block;
-            padding: 18px 24px;
-            font-size: 18px;
+            padding: clamp(14px, 2vw, 20px) clamp(18px, 2.5vw, 28px);
+            font-size: clamp(16px, 2vw, 20px);
             font-family: 'Noto Serif SC', serif;
             border: 2px solid var(--gold-light);
             border-radius: 16px;
@@ -741,11 +742,11 @@
         /* Feihua Keyword 优化 */
         .feihua-keyword {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 56px;
+            font-size: clamp(40px, 8vw, 64px);
             color: var(--primary);
             margin-bottom: 20px;
             display: inline-block;
-            padding: 20px 50px;
+            padding: clamp(16px, 3vw, 24px) clamp(30px, 5vw, 60px);
             background: linear-gradient(135deg, var(--warning-bg) 0%, #fff9c4 100%);
             border-radius: 24px;
             border: 3px solid var(--gold);
@@ -755,7 +756,7 @@
         }
 
         .feihua-context {
-            font-size: 17px;
+            font-size: clamp(14px, 2vw, 18px);
             color: var(--ink-light);
             margin-bottom: 24px;
             font-weight: 500;
@@ -779,7 +780,7 @@
             background: white;
             border: 2px solid var(--gold-light);
             border-radius: 20px;
-            padding: 24px;
+            padding: clamp(18px, 3vw, 28px);
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 16px var(--shadow);
@@ -808,14 +809,14 @@
 
         .collection-poem {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 24px;
+            font-size: clamp(20px, 3vw, 26px);
             color: var(--ink);
             margin-bottom: 12px;
             text-align: center;
         }
 
         .collection-author {
-            font-size: 15px;
+            font-size: clamp(13px, 1.8vw, 16px);
             color: var(--primary);
             text-align: center;
             margin-bottom: 12px;
@@ -825,7 +826,7 @@
         }
 
         .collection-preview {
-            font-size: 16px;
+            font-size: clamp(14px, 2vw, 17px);
             color: var(--ink-light);
             text-align: center;
             line-height: 1.7;
@@ -845,7 +846,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 24px;
+            padding: clamp(16px, 2.5vw, 22px) clamp(20px, 3vw, 28px);
             background: rgba(121, 85, 72, 0.05);
             border-bottom: 2px solid var(--gold);
             cursor: pointer;
@@ -859,7 +860,7 @@
 
         .learn-title {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 24px;
+            font-size: clamp(20px, 3vw, 26px);
             color: var(--primary);
             display: flex;
             align-items: center;
@@ -894,6 +895,454 @@
             overflow-y: auto;
             overflow-x: hidden;
             transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ==================== 诗词赏析模态框 ==================== */
+        .analysis-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 5000;
+            padding: 20px;
+        }
+
+        .analysis-modal-content {
+            background: linear-gradient(135deg, #fffef7 0%, #fff9e6 100%);
+            border-radius: 24px;
+            border: 3px solid var(--gold);
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            animation: modalSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .analysis-modal.active {
+            display: flex;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .analysis-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 28px;
+            background: rgba(121, 85, 72, 0.08);
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .analysis-modal-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 28px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .analysis-modal-close {
+            background: var(--gold);
+            color: var(--ink);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(198, 142, 23, 0.3);
+        }
+
+        .analysis-modal-close:hover {
+            background: var(--accent);
+            color: white;
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 4px 12px rgba(198, 142, 23, 0.4);
+        }
+
+        .analysis-modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 28px;
+        }
+
+        .analysis-section {
+            margin-bottom: 24px;
+        }
+
+        .analysis-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .analysis-section-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--gold-light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analysis-section-content {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--gold-light);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            line-height: 1.8;
+            color: var(--ink);
+            font-size: 16px;
+        }
+
+        /* 语音朗诵区域 */
+        .speech-section {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 2px solid var(--info-light);
+        }
+
+        .speech-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .speech-btn {
+            background: linear-gradient(135deg, var(--success) 0%, var(--success-light) 100%);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(67, 160, 71, 0.3);
+        }
+
+        .speech-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(67, 160, 71, 0.4);
+        }
+
+        .speech-btn:active {
+            transform: translateY(0);
+        }
+
+        .speech-btn.playing {
+            background: linear-gradient(135deg, var(--warning) 0%, var(--warning-light) 100%);
+            box-shadow: 0 4px 12px rgba(249, 168, 37, 0.3);
+        }
+
+        .speech-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .speech-progress {
+            flex: 1;
+            min-width: 200px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .speech-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success) 0%, var(--success-light) 100%);
+            width: 0%;
+            transition: width 0.1s linear;
+            border-radius: 4px;
+        }
+
+        .speech-status {
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 600;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        /* 诗词全文展示 */
+        .poem-full-display {
+            text-align: center;
+            padding: 24px;
+            background: var(--paper-light);
+            border-radius: 16px;
+            border: 2px solid var(--gold);
+            margin-bottom: 16px;
+        }
+
+        .poem-full-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .poem-full-author {
+            font-size: 16px;
+            color: var(--ink-light);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .poem-full-content {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 24px;
+            line-height: 2;
+            color: var(--ink);
+            letter-spacing: 2px;
+        }
+
+        /* 作者生平 */
+        .author-biography {
+            display: grid;
+            gap: 12px;
+        }
+
+        .biography-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(121, 85, 72, 0.03);
+            border-radius: 12px;
+        }
+
+        .biography-label {
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 80px;
+            flex-shrink: 0;
+        }
+
+        .biography-value {
+            flex: 1;
+            color: var(--ink);
+        }
+
+        /* 关键字解析 */
+        .keyword-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(198, 142, 23, 0.08) 0%, rgba(198, 142, 23, 0.04) 100%);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--gold);
+        }
+
+        .keyword-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .keyword-word {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 60px;
+            text-align: center;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+
+        .keyword-details {
+            flex: 1;
+        }
+
+        .keyword-pinyin {
+            font-size: 14px;
+            color: var(--ink-lighter);
+            margin-bottom: 4px;
+        }
+
+        .keyword-meaning {
+            color: var(--ink);
+            line-height: 1.6;
+        }
+
+        .keyword-context {
+            font-size: 14px;
+            color: var(--ink-light);
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* 标签 */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag-item {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, var(--info-bg) 0%, #e3f2fd 100%);
+            color: var(--info);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid var(--info-light);
+        }
+
+        /* 收藏按钮 */
+        .collect-button {
+            width: 100%;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .collect-button.not-collected {
+            background: white;
+            border: 2px solid var(--gold);
+            color: var(--primary);
+        }
+
+        .collect-button.not-collected:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(198, 142, 23, 0.3);
+        }
+
+        .collect-button.collected {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 12px rgba(198, 142, 23, 0.3);
+        }
+
+        .collect-button.collected:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(198, 142, 23, 0.4);
+        }
+
+        /* 模态框底部 */
+        .analysis-modal-footer {
+            padding: 16px 28px;
+            background: rgba(121, 85, 72, 0.05);
+            border-top: 2px solid var(--gold);
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .modal-action-btn {
+            padding: 12px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .modal-action-btn.primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(121, 85, 72, 0.3);
+        }
+
+        .modal-action-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(121, 85, 72, 0.4);
+        }
+
+        .modal-action-btn.secondary {
+            background: white;
+            border: 2px solid var(--gold-light);
+            color: var(--ink);
+        }
+
+        .modal-action-btn.secondary:hover {
+            background: var(--paper-light);
+            border-color: var(--gold);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .analysis-modal {
+                padding: 10px;
+            }
+
+            .analysis-modal-content {
+                max-height: 95vh;
+            }
+
+            .analysis-modal-body {
+                padding: 20px;
+            }
+
+            .analysis-section-title {
+                font-size: 20px;
+            }
+
+            .poem-full-content {
+                font-size: 20px;
+            }
+
+            .speech-controls {
+                flex-direction: column;
+            }
+
+            .speech-progress {
+                width: 100%;
+            }
         }
 
         .learn-content-wrapper.expanded {
@@ -934,12 +1383,12 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 17px;
+            font-size: clamp(15px, 2.2vw, 18px);
         }
 
         .learn-poem-text {
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 26px;
+            font-size: clamp(20px, 3.5vw, 28px);
             color: var(--ink);
             line-height: 2.3;
             text-align: center;
@@ -953,7 +1402,7 @@
             color: var(--ink-light);
             line-height: 2;
             text-align: justify;
-            font-size: 15px;
+            font-size: clamp(13px, 1.8vw, 16px);
             word-wrap: break-word;
             word-break: break-all;
         }
@@ -970,7 +1419,7 @@
             color: white;
             padding: 6px 16px;
             border-radius: 18px;
-            font-size: 13px;
+            font-size: clamp(11px, 1.5vw, 14px);
             transition: all 0.2s ease;
             box-shadow: 0 2px 8px rgba(121, 85, 72, 0.2);
         }
@@ -1372,17 +1821,23 @@
 
         /* 响应式优化 */
         @media (max-width: 768px) {
-            .game-title { font-size: 28px; }
-            .poem-text { font-size: 28px; }
+            #app {
+                padding: 16px;
+            }
+
+            .game-title { font-size: clamp(24px, 4vw, 32px); }
+            .poem-text { font-size: clamp(20px, 3.5vw, 28px); }
             .options-grid { grid-template-columns: 1fr; }
-            
+
             .score-board {
                 gap: 16px;
                 padding: 10px 16px;
+                width: 100%;
+                justify-content: center;
             }
-            
+
             .score-value {
-                font-size: 22px;
+                font-size: clamp(18px, 2.5vw, 24px);
             }
 
             .learn-content-wrapper.expanded {
@@ -1390,35 +1845,41 @@
             }
 
             .learn-poem-text {
-                font-size: 22px;
+                font-size: clamp(18px, 3vw, 24px);
                 line-height: 2.1;
             }
 
             .learn-content {
-                font-size: 14px;
+                font-size: clamp(12px, 1.8vw, 15px);
                 line-height: 1.8;
             }
 
             .learn-section {
-                padding: 18px;
+                padding: 16px;
             }
 
             .learn-title {
-                font-size: 20px;
+                font-size: clamp(18px, 2.5vw, 22px);
             }
 
             .collect-btn {
                 padding: 12px 24px;
-                font-size: 15px;
+                font-size: clamp(13px, 1.8vw, 16px);
             }
 
             footer {
                 flex-direction: column;
                 align-items: stretch;
+                gap: 12px;
             }
 
             .status-bar, .action-buttons {
                 justify-content: center;
+            }
+
+            .action-btn {
+                padding: 10px 20px;
+                font-size: clamp(12px, 1.6vw, 15px);
             }
         }
 
@@ -1428,16 +1889,16 @@
             }
 
             header, main, footer {
-                padding: 16px;
+                padding: clamp(12px, 2.5vw, 18px);
                 border-radius: 20px;
             }
 
             .game-title {
-                font-size: 24px;
+                font-size: clamp(22px, 4vw, 28px);
             }
 
             .poem-text {
-                font-size: 22px;
+                font-size: clamp(18px, 3vw, 24px);
                 line-height: 1.7;
             }
 
@@ -1446,22 +1907,83 @@
             }
 
             .level-card {
-                padding: 16px;
+                padding: clamp(12px, 2vw, 16px);
             }
 
             .level-number {
-                font-size: 28px;
+                font-size: clamp(24px, 4vw, 28px);
             }
 
             .mode-tab {
-                min-width: 70px;
-                padding: 10px 12px;
-                font-size: 13px;
+                min-width: 65px;
+                padding: clamp(8px, 1.5vw, 12px) clamp(10px, 1.8vw, 14px);
+                font-size: clamp(11px, 1.5vw, 13px);
             }
 
             .action-btn {
-                padding: 10px 20px;
-                font-size: 13px;
+                padding: clamp(8px, 1.5vw, 12px) clamp(16px, 2.5vw, 20px);
+                font-size: clamp(11px, 1.6vw, 14px);
+            }
+
+            .option-card {
+                padding: clamp(12px, 2vw, 18px);
+                font-size: clamp(13px, 2vw, 16px);
+            }
+
+            .challenge-title {
+                font-size: clamp(20px, 3.5vw, 28px);
+            }
+
+            .challenge-desc {
+                font-size: clamp(12px, 2vw, 15px);
+            }
+
+            .feihua-keyword {
+                font-size: clamp(32px, 6vw, 48px);
+            }
+
+            .feihua-context {
+                font-size: clamp(12px, 2vw, 16px);
+            }
+        }
+
+        /* 平板设备优化 */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            #app {
+                padding: 24px;
+            }
+
+            .mode-tabs {
+                gap: 12px;
+            }
+
+            .mode-tab {
+                min-width: 90px;
+            }
+
+            .options-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .collection-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* 大屏幕优化 */
+        @media (min-width: 1200px) {
+            #app {
+                max-width: 1400px;
+            }
+
+            .options-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+
+            .collection-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
@@ -1473,7 +1995,7 @@
         .voice-select {
             width: 100%;
             padding: 14px 18px;
-            font-size: 15px;
+            font-size: clamp(13px, 1.8vw, 16px);
             font-family: inherit;
             border: 2px solid var(--gold-light);
             border-radius: 16px;
@@ -1487,6 +2009,128 @@
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 4px rgba(121, 85, 72, 0.1), 0 6px 20px var(--shadow-medium);
+        }
+
+        /* 语音设置面板 */
+        .voice-settings {
+            background: linear-gradient(135deg, var(--paper-light) 0%, var(--paper) 100%);
+            border: 2px solid var(--gold);
+            border-radius: 16px;
+            padding: clamp(16px, 2.5vw, 24px);
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px var(--shadow);
+        }
+
+        .voice-settings-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: clamp(18px, 3vw, 24px);
+            color: var(--primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .voice-control-group {
+            margin-bottom: 20px;
+        }
+
+        .voice-control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .voice-control-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: clamp(13px, 1.8vw, 15px);
+            color: var(--ink-light);
+            font-weight: 600;
+        }
+
+        .voice-control-value {
+            background: var(--gold-light);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-family: 'ZCOOL XiaoWei', serif;
+            font-size: clamp(12px, 1.6vw, 14px);
+            color: var(--primary);
+        }
+
+        .voice-slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--gold-light);
+            border-radius: 4px;
+            outline: none;
+            transition: background 0.3s ease;
+        }
+
+        .voice-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(121, 85, 72, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .voice-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .voice-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(121, 85, 72, 0.3);
+        }
+
+        .voice-slider::-moz-range-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .voice-presets {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .voice-preset-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid var(--gold-light);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: clamp(12px, 1.6vw, 14px);
+            font-family: inherit;
+            color: var(--ink-light);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .voice-preset-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(121, 85, 72, 0.3);
+        }
+
+        .voice-preset-btn.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-color: var(--primary);
         }
     </style>
 </head>
@@ -1515,7 +2159,59 @@
                         <span class="score-value" id="titleValue">书童</span>
                     </div>
                 </div>
+                <button class="action-btn" onclick="game.toggleVoiceSettings()" style="padding: 10px 16px;">🎤 语音设置</button>
             </div>
+
+            <div id="voiceSettingsPanel" style="display: none;">
+                <div class="voice-settings">
+                    <div class="voice-settings-title">🎤 语音设置</div>
+
+                    <div class="voice-control-group">
+                        <div class="voice-control-label">
+                            <span>语速</span>
+                            <span class="voice-control-value" id="rateValue">0.88</span>
+                        </div>
+                        <input type="range" class="voice-slider" data-type="rate" min="0.5" max="2" step="0.01" value="0.88"
+                            oninput="game.updateVoiceSetting('rate', this.value); document.getElementById('rateValue').textContent = this.value;">
+                    </div>
+
+                    <div class="voice-control-group">
+                        <div class="voice-control-label">
+                            <span>语调</span>
+                            <span class="voice-control-value" id="pitchValue">1.08</span>
+                        </div>
+                        <input type="range" class="voice-slider" data-type="pitch" min="0.5" max="2" step="0.01" value="1.08"
+                            oninput="game.updateVoiceSetting('pitch', this.value); document.getElementById('pitchValue').textContent = this.value;">
+                    </div>
+
+                    <div class="voice-control-group">
+                        <div class="voice-control-label">
+                            <span>音量</span>
+                            <span class="voice-control-value" id="volumeValue">0.95</span>
+                        </div>
+                        <input type="range" class="voice-slider" data-type="volume" min="0" max="1" step="0.01" value="0.95"
+                            oninput="game.updateVoiceSetting('volume', this.value); document.getElementById('volumeValue').textContent = this.value;">
+                    </div>
+
+                    <div class="voice-control-group">
+                        <div class="voice-control-label">
+                            <span>语音</span>
+                        </div>
+                        <select class="voice-select" id="voiceSelect" onchange="game.selectVoice(this.value)">
+                            <option value="">默认语音</option>
+                        </select>
+                    </div>
+
+                    <div class="voice-presets">
+                        <button class="voice-preset-btn active" data-preset="natural" onclick="game.applyVoicePreset('natural')">自然</button>
+                        <button class="voice-preset-btn" data-preset="slow" onclick="game.applyVoicePreset('slow')">舒缓</button>
+                        <button class="voice-preset-btn" data-preset="fast" onclick="game.applyVoicePreset('fast')">快速</button>
+                        <button class="voice-preset-btn" data-preset="deep" onclick="game.applyVoicePreset('deep')">深沉</button>
+                        <button class="voice-preset-btn" data-preset="bright" onclick="game.applyVoicePreset('bright')">明亮</button>
+                    </div>
+                </div>
+            </div>
+
             <nav class="mode-tabs">
                 <button class="mode-tab active" data-mode="fill" onclick="game.switchMode('fill')">
                     <span class="icon">✏️</span><span>填空</span>
@@ -1566,6 +2262,22 @@
             <div style="font-size: 52px; font-weight: 700; color: var(--primary); margin-bottom: 12px; font-family: 'ZCOOL XiaoWei', serif;" id="finalScore">0</div>
             <div style="color: var(--ink-light); margin-bottom: 36px; font-size: 16px;">最高连击: <span id="finalStreak">0</span> | 收藏诗词: <span id="finalCollected">0</span>首</div>
             <button class="action-btn" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; padding: 16px 48px; font-size: 18px;" onclick="game.restart()">再玩一次</button>
+        </div>
+    </div>
+
+    <!-- 诗词赏析模态框 -->
+    <div class="analysis-modal" id="analysisModal" onclick="game.handleModalOverlayClick(event)">
+        <div class="analysis-modal-content">
+            <div class="analysis-modal-header">
+                <div class="analysis-modal-title">📚 诗词赏析</div>
+                <button class="analysis-modal-close" onclick="game.closeAnalysisModalAndNext()">×</button>
+            </div>
+            <div class="analysis-modal-body" id="analysisModalBody">
+                <!-- 内容由JavaScript动态生成 -->
+            </div>
+            <div class="analysis-modal-footer">
+                <button class="modal-action-btn primary" onclick="game.closeAnalysisModalAndNext()">继续下一题</button>
+            </div>
         </div>
     </div>
 
@@ -1763,6 +2475,117 @@ class SoundEngine {
     }
 }
 
+// ==================== 语音播放器 ====================
+class SpeechPlayer {
+    constructor() {
+        this.synthesis = window.speechSynthesis;
+        this.utterance = null;
+        this.isPlaying = false;
+        this.isPaused = false;
+        this.currentText = '';
+        this.progressInterval = null;
+        this.duration = 0;
+        this.elapsed = 0;
+    }
+
+    speak(text, onProgress, onComplete) {
+        if (this.synthesis.speaking) {
+            this.stop();
+        }
+
+        this.currentText = text;
+        this.onProgress = onProgress;
+        this.onComplete = onComplete;
+
+        this.utterance = new SpeechSynthesisUtterance(text);
+        this.utterance.lang = 'zh-CN';
+        this.utterance.rate = 0.9;
+        this.utterance.pitch = 1.0;
+        this.utterance.volume = 1.0;
+
+        // 选择中文语音包
+        const voices = this.synthesis.getVoices();
+        const chineseVoice = voices.find(v => v.lang.includes('zh-CN') || v.lang.includes('zh'));
+        if (chineseVoice) {
+            this.utterance.voice = chineseVoice;
+        }
+
+        // 估算播放时长 (每秒约4-5个字)
+        this.duration = text.length / 4.5;
+        this.elapsed = 0;
+
+        this.utterance.onstart = () => {
+            this.isPlaying = true;
+            this.isPaused = false;
+            this.startProgressTracking();
+        };
+
+        this.utterance.onend = () => {
+            this.isPlaying = false;
+            this.isPaused = false;
+            this.stopProgressTracking();
+            if (this.onProgress) this.onProgress(100);
+            if (this.onComplete) this.onComplete();
+        };
+
+        this.utterance.onerror = (e) => {
+            console.error('Speech synthesis error:', e);
+            this.isPlaying = false;
+            this.isPaused = false;
+            this.stopProgressTracking();
+        };
+
+        this.synthesis.speak(this.utterance);
+    }
+
+    pause() {
+        if (this.synthesis.speaking && !this.synthesis.paused) {
+            this.synthesis.pause();
+            this.isPaused = true;
+            this.stopProgressTracking();
+        }
+    }
+
+    resume() {
+        if (this.synthesis.paused) {
+            this.synthesis.resume();
+            this.isPaused = false;
+            this.startProgressTracking();
+        }
+    }
+
+    stop() {
+        this.synthesis.cancel();
+        this.isPlaying = false;
+        this.isPaused = false;
+        this.stopProgressTracking();
+    }
+
+    startProgressTracking() {
+        this.stopProgressTracking();
+        this.progressInterval = setInterval(() => {
+            if (!this.isPlaying || this.isPaused) return;
+            
+            this.elapsed += 0.1;
+            const progress = Math.min((this.elapsed / this.duration) * 100, 100);
+            if (this.onProgress) {
+                this.onProgress(progress);
+            }
+
+            if (this.elapsed >= this.duration) {
+                this.stopProgressTracking();
+            }
+        }, 100);
+    }
+
+    stopProgressTracking() {
+        if (this.progressInterval) {
+            clearInterval(this.progressInterval);
+            this.progressInterval = null;
+        }
+    }
+}
+
 // ==================== 游戏状态 ====================
 class GameState {
     constructor() {
@@ -1849,6 +2672,7 @@ class PoemGame {
     constructor() {
         this.state = new GameState();
         this.sound = new SoundEngine();
+        this.speechPlayer = new SpeechPlayer();
         this.currentQuestion = null;
         this.matchState = null;
         this.chainState = null;
@@ -1859,7 +2683,14 @@ class PoemGame {
         this.synth = window.speechSynthesis;
         this.voices = [];
         this.selectedVoice = null;
+        this.voiceSettings = {
+            rate: 0.88,
+            pitch: 1.08,
+            volume: 0.95,
+            preset: 'natural'
+        };
         this.initSpeech();
+        this.loadVoiceSettings();
     }
 
     initSpeech() {
@@ -1878,6 +2709,93 @@ class PoemGame {
 
     loadVoices() {
         this.voices = this.synth.getVoices();
+        this.populateVoiceSelect();
+    }
+
+    populateVoiceSelect() {
+        const voiceSelect = document.getElementById('voiceSelect');
+        if (!voiceSelect) return;
+
+        voiceSelect.innerHTML = '<option value="">默认语音</option>';
+
+        // 优先显示中文语音
+        const chineseVoices = this.voices.filter(voice =>
+            voice.lang.includes('zh-CN') || voice.lang.includes('zh')
+        );
+
+        const otherVoices = this.voices.filter(voice =>
+            !voice.lang.includes('zh-CN') && !voice.lang.includes('zh')
+        );
+
+        [...chineseVoices, ...otherVoices].forEach(voice => {
+            const option = document.createElement('option');
+            option.value = voice.name;
+            option.textContent = `${voice.name} (${voice.lang})`;
+            if (voice.name === this.selectedVoice) {
+                option.selected = true;
+            }
+            voiceSelect.appendChild(option);
+        });
+    }
+
+    selectVoice(voiceName) {
+        this.selectedVoice = voiceName;
+        localStorage.setItem('selectedVoice', voiceName);
+    }
+
+    // 语音设置
+    voiceSettings = {
+        rate: 0.88,
+        pitch: 1.08,
+        volume: 0.95,
+        preset: 'natural'
+    };
+
+    updateVoiceSetting(type, value) {
+        this.voiceSettings[type] = parseFloat(value);
+        localStorage.setItem('voiceSettings', JSON.stringify(this.voiceSettings));
+    }
+
+    applyVoicePreset(preset) {
+        const presets = {
+            natural: { rate: 0.88, pitch: 1.08, volume: 0.95 },
+            slow: { rate: 0.7, pitch: 1.0, volume: 0.95 },
+            fast: { rate: 1.2, pitch: 1.08, volume: 0.95 },
+            deep: { rate: 0.85, pitch: 0.9, volume: 0.95 },
+            bright: { rate: 0.9, pitch: 1.2, volume: 0.95 }
+        };
+
+        if (presets[preset]) {
+            this.voiceSettings = { ...presets[preset], preset };
+            localStorage.setItem('voiceSettings', JSON.stringify(this.voiceSettings));
+
+            // 更新滑块显示
+            document.querySelectorAll('.voice-slider').forEach(slider => {
+                const type = slider.dataset.type;
+                slider.value = this.voiceSettings[type];
+            });
+
+            // 更新预设按钮状态
+            document.querySelectorAll('.voice-preset-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.preset === preset);
+            });
+        }
+    }
+
+    loadVoiceSettings() {
+        const saved = localStorage.getItem('voiceSettings');
+        if (saved) {
+            this.voiceSettings = JSON.parse(saved);
+        }
+    }
+
+    toggleVoiceSettings() {
+        const panel = document.getElementById('voiceSettingsPanel');
+        if (panel.style.display === 'none') {
+            panel.style.display = 'block';
+        } else {
+            panel.style.display = 'none';
+        }
     }
 
     speak(text, shouldHint = false) {
@@ -1890,25 +2808,50 @@ class PoemGame {
 
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'zh-CN';
-        utterance.rate = 0.9;
-        utterance.pitch = 1;
+
+        // 使用保存的语音设置
+        utterance.rate = this.voiceSettings.rate;
+        utterance.pitch = this.voiceSettings.pitch;
+        utterance.volume = this.voiceSettings.volume;
+
+        // 根据文本类型微调语音参数
+        if (shouldHint) {
+            // 提示类文本: 稍快,语调上扬
+            utterance.rate *= 1.05;
+            utterance.pitch *= 1.04;
+        } else if (text.includes('？')) {
+            // 疑问句: 语调上扬
+            utterance.pitch *= 1.06;
+        } else if (text.includes('！')) {
+            // 感叹句: 语调更高
+            utterance.pitch *= 1.04;
+        }
 
         if (this.selectedVoice) {
             const selectedVoiceObj = this.voices.find(v => v.name === this.selectedVoice);
             if (selectedVoiceObj) {
                 utterance.voice = selectedVoiceObj;
             } else {
-                const chineseVoice = this.voices.find(voice => 
+                const chineseVoice = this.voices.find(voice =>
                     voice.lang.includes('zh-CN') || voice.lang.includes('zh')
                 );
                 if (chineseVoice) utterance.voice = chineseVoice;
             }
         } else {
-            const chineseVoice = this.voices.find(voice => 
+            // 优先选择更自然的中文语音
+            const chineseVoice = this.voices.find(voice =>
                 voice.lang.includes('zh-CN') || voice.lang.includes('zh')
             );
             if (chineseVoice) utterance.voice = chineseVoice;
         }
+
+        // 添加韵律效果 - 在逗号和句号处停顿
+        const modifiedText = text
+            .replace(/，/g, '，,')
+            .replace(/。/g, '。,')
+            .replace(/？/g, '？,')
+            .replace(/！/g, '！,');
+        utterance.text = modifiedText;
 
         utterance.onstart = () => {
             const speakBtns = document.querySelectorAll('.speak-btn');
@@ -1918,6 +2861,14 @@ class PoemGame {
         utterance.onend = () => {
             const speakBtns = document.querySelectorAll('.speak-btn');
             speakBtns.forEach(btn => btn.classList.remove('speaking'));
+        };
+
+        utterance.onboundary = (event) => {
+            // 在边界处调整语调,创造起伏感
+            if (event.name === 'word' || event.name === 'sentence') {
+                // 微调语调增加自然感
+                utterance.pitch = this.voiceSettings.pitch * (0.98 + Math.random() * 0.04);
+            }
         };
 
         this.synth.speak(utterance);
@@ -2100,58 +3051,529 @@ class PoemGame {
 
     showLearnPanel(poem) {
         this.clearAutoTransition();
+        this.showAnalysisModal(poem);
+    }
 
-        const panel = document.getElementById('learnPanel');
+    // ==================== 诗词赏析模态框 ====================
+    showAnalysisModal(poem) {
+        const modal = document.getElementById('analysisModal');
+        const modalBody = document.getElementById('analysisModalBody');
         const isCollected = this.state.collectedPoems.has(poem.id);
         const isWrong = this.state.wrongPoems.has(poem.id);
-        const fullPoemText = poem.fullPoem || (poem.up + ',' + poem.down);
+        const fullPoemText = this.getFullPoemText(poem);
 
-        panel.innerHTML = `
-            <div class="learn-panel">
-                <div class="learn-header" onclick="game.toggleLearnPanel()">
-                    <div class="learn-title">📚 诗词赏析</div>
-                    <button class="learn-close" onclick="event.stopPropagation(); game.closeLearnPanel()">×</button>
-                </div>
-                <div class="learn-content-wrapper expanded" id="learnContentWrapper">
-                    ${isWrong ? `<div class="learn-section" style="background: var(--error-bg); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
-                        <div class="learn-section-title" style="color: var(--error);">💔 已自动收藏到错题集</div>
-                        <div class="learn-content">此题已答错,已自动加入收藏夹供您复习</div>
-                    </div>` : ''}
-                    <div class="learn-section">
-                        <div class="learn-section-title">📝 全诗</div>
-                        <div class="learn-poem-text">${fullPoemText}</div>
-                        <div style="text-align: center; margin-top: 18px;">
-                            <button class="speak-btn" style="position: relative; display: inline-flex; top: 0; right: 0;" onclick="game.speak('${fullPoemText.replace(/'/g, "\\'").replace(/\n/g, '，').replace(/"/g, '\\"')}')">🔊 朗读全文</button>
-                        </div>
-                    </div>
-                    <div class="learn-section">
-                        <div class="learn-section-title">📖 创作背景</div>
-                        <div class="learn-content">${poem.background || '暂无背景介绍'}</div>
-                    </div>
-                    ${poem.note ? `<div class="learn-section"><div class="learn-section-title">💡 注释</div><div class="learn-content">${poem.note}</div></div>` : ''}
-                    <div class="learn-section">
-                        <div class="learn-section-title">🏷️ 标签</div>
-                        <div class="learn-tags">
-                            ${poem.tags.map(tag => `<span class="learn-tag">${tag}</span>`).join('')}
-                        </div>
-                    </div>
-                    <button class="collect-btn ${isCollected ? 'collected' : ''}" onclick="game.collectCurrentPoem(${poem.id})">
-                        ${isCollected ? '⭐ 已收藏' : '⭐ 收藏'}
+        // 生成作者生平
+        const biography = this.generateAuthorBiography(poem);
+        
+        // 生成关键字解析
+        const keywords = this.generateKeywordAnalysis(poem);
+        
+        // 生成美术风格解析
+        const artStyle = this.generateArtStyleAnalysis(poem);
+        
+        // 生成音乐赏析
+        const musicAppreciation = this.generateMusicAppreciation(poem);
+
+        modalBody.innerHTML = `
+            <!-- 错题提示 -->
+            ${isWrong ? `
+            <div class="analysis-section" style="background: var(--error-bg); border-radius: 16px; padding: 20px; margin-bottom: 24px; border: 2px solid var(--error-light);">
+                <div style="color: var(--error); font-weight: 700; font-size: 18px; margin-bottom: 8px;">💔 此题已加入错题集</div>
+                <div style="color: var(--ink);">继续加油,掌握这首诗后可以标记为已复习</div>
+                <button onclick="game.markAsReviewed(${poem.id})" style="margin-top: 12px; padding: 10px 20px; background: var(--success); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">✓ 标记为已复习</button>
+            </div>
+            ` : ''}
+
+            <!-- 语音朗诵区域 -->
+            <div class="speech-section">
+                <div class="speech-controls">
+                    <button class="speech-btn" id="speechPlayBtn" onclick="game.toggleSpeech()">
+                        <span id="speechPlayIcon">▶</span>
+                        <span id="speechPlayText">播放全文</span>
                     </button>
-                </div>
-                <div class="expand-btn" onclick="game.toggleLearnPanel()">
-                    <span class="arrow">▼</span>
-                    <span id="expandBtnText">收起</span>
+                    <div class="speech-progress">
+                        <div class="speech-progress-bar" id="speechProgressBar"></div>
+                    </div>
+                    <div class="speech-status" id="speechStatus">准备就绪</div>
                 </div>
             </div>
+
+            <!-- 诗词全文 -->
+            <div class="analysis-section">
+                <div class="analysis-section-title">📝 诗词全文</div>
+                <div class="analysis-section-content">
+                    <div class="poem-full-display">
+                        <div class="poem-full-title">《${this.getPoemTitle(poem, fullPoemText)}》</div>
+                        <div class="poem-full-author">${poem.dynasty} · ${poem.author}</div>
+                        <div class="poem-full-content">${fullPoemText.replace(/[,，]/g, '<br>')}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 作者生平 -->
+            <div class="analysis-section">
+                <div class="analysis-section-title">👤 作者生平</div>
+                <div class="analysis-section-content">
+                    <div class="author-biography">
+                        ${biography}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 创作背景 -->
+            <div class="analysis-section">
+                <div class="analysis-section-title">📖 创作背景</div>
+                <div class="analysis-section-content">
+                    ${poem.background || '暂无背景介绍'}
+                </div>
+            </div>
+
+            <!-- 关键字解析 -->
+            ${keywords.length > 0 ? `
+            <div class="analysis-section">
+                <div class="analysis-section-title">🎯 关键字解析</div>
+                <div class="analysis-section-content">
+                    ${keywords.map(kw => `
+                    <div class="keyword-item">
+                        <div class="keyword-word">${kw.word}</div>
+                        <div class="keyword-details">
+                            <div class="keyword-pinyin">拼音: ${kw.pinyin}</div>
+                            <div class="keyword-meaning">${kw.meaning}</div>
+                            ${kw.context ? `<div class="keyword-context">${kw.context}</div>` : ''}
+                        </div>
+                    </div>
+                    `).join('')}
+                </div>
+            </div>
+            ` : ''}
+
+            ${poem.note ? `
+            <div class="analysis-section">
+                <div class="analysis-section-title">💡 注释</div>
+                <div class="analysis-section-content">
+                    ${poem.note}
+                </div>
+            </div>
+            ` : ''}
+
+            <!-- 美术风格解析 -->
+            <div class="analysis-section">
+                <div class="analysis-section-title">🎨 美术风格解析</div>
+                <div class="analysis-section-content">
+                    ${artStyle}
+                </div>
+            </div>
+
+            <!-- 音乐赏析 -->
+            <div class="analysis-section">
+                <div class="analysis-section-title">🎵 音乐赏析</div>
+                <div class="analysis-section-content">
+                    ${musicAppreciation}
+                </div>
+            </div>
+
+            <!-- 标签 -->
+            <div class="analysis-section">
+                <div class="analysis-section-title">🏷️ 标签</div>
+                <div class="analysis-section-content">
+                    <div class="tags-container">
+                        ${poem.tags.map(tag => `<span class="tag-item">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 收藏按钮 -->
+            <button class="collect-button ${isCollected ? 'collected' : 'not-collected'}" onclick="game.collectCurrentPoem(${poem.id})">
+                ${isCollected ? '⭐ 已收藏' : '⭐ 收藏这首诗'}
+            </button>
         `;
 
-        this.learnPanelExpanded = true;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
 
-        if (this.state.mode === 'match') {
-            this.autoTransitionTimer = setTimeout(() => {
-                this.closeLearnPanel();
-            }, 5000);
+        // 保存当前诗词ID,用于语音播放
+        this.currentAnalysisPoem = poem;
+    }
+
+    closeAnalysisModal() {
+        const modal = document.getElementById('analysisModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        
+        // 停止语音播放
+        this.speechPlayer.stop();
+    }
+
+    // 点击遮罩层关闭模态框
+    handleModalOverlayClick(event) {
+        if (event.target.classList.contains('analysis-modal')) {
+            this.closeAnalysisModalAndNext();
+        }
+    }
+
+    closeAnalysisModalAndNext() {
+        this.closeAnalysisModal();
+        
+        // 填空模式下自动进入下一题
+        if (this.state.mode === 'fill') {
+            setTimeout(() => {
+                this.generateFillQuestion();
+            }, 300);
+        } else if (this.state.mode === 'challenge') {
+            setTimeout(() => {
+                this.generateChallengeQuestion();
+            }, 300);
+        } else if (this.state.mode === 'match') {
+            setTimeout(() => {
+                this.generateMatchGame();
+            }, 300);
+        } else if (this.state.mode === 'feihua') {
+            setTimeout(() => {
+                this.generateFeihuaQuestion();
+            }, 300);
+        } else if (this.state.mode === 'chain') {
+            setTimeout(() => {
+                this.generateChainQuestion();
+            }, 300);
+        }
+    }
+
+    // 语音播放控制
+    toggleSpeech() {
+        if (!this.currentAnalysisPoem) return;
+
+        const playBtn = document.getElementById('speechPlayBtn');
+        const playIcon = document.getElementById('speechPlayIcon');
+        const playText = document.getElementById('speechPlayText');
+        const statusText = document.getElementById('speechStatus');
+
+        if (this.speechPlayer.isPlaying) {
+            if (this.speechPlayer.isPaused) {
+                this.speechPlayer.resume();
+                playIcon.textContent = '⏸';
+                playText.textContent = '暂停播放';
+                statusText.textContent = '播放中...';
+                playBtn.classList.add('playing');
+            } else {
+                this.speechPlayer.pause();
+                playIcon.textContent = '▶';
+                playText.textContent = '继续播放';
+                statusText.textContent = '已暂停';
+                playBtn.classList.remove('playing');
+            }
+        } else {
+            const fullPoemText = this.currentAnalysisPoem.fullPoem || 
+                                  (this.currentAnalysisPoem.up + '，' + this.currentAnalysisPoem.down);
+            
+            this.speechPlayer.speak(fullPoemText.replace(/\n/g, '，'), 
+                (progress) => {
+                    const progressBar = document.getElementById('speechProgressBar');
+                    if (progressBar) {
+                        progressBar.style.width = progress + '%';
+                    }
+                },
+                () => {
+                    playIcon.textContent = '▶';
+                    playText.textContent = '播放全文';
+                    statusText.textContent = '播放完成';
+                    playBtn.classList.remove('playing');
+                    const progressBar = document.getElementById('speechProgressBar');
+                    if (progressBar) {
+                        progressBar.style.width = '100%';
+                    }
+                    setTimeout(() => {
+                        if (progressBar) {
+                            progressBar.style.width = '0%';
+                        }
+                    }, 1000);
+                }
+            );
+            
+            playIcon.textContent = '⏸';
+            playText.textContent = '暂停播放';
+            statusText.textContent = '播放中...';
+            playBtn.classList.add('playing');
+        }
+    }
+
+    // 生成作者生平
+    generateAuthorBiography(poem) {
+        const biographies = {
+            '李白': {
+                '姓名': '李白',
+                '字号': '字太白,号青莲居士',
+                '生卒': '701年 - 762年',
+                '籍贯': '祖籍陇西成纪(今甘肃天水附近)',
+                '简介': '唐代伟大的浪漫主义诗人,被后人誉为"诗仙"。其诗风豪放飘逸,想象丰富,语言流转自然,音律和谐多变。与杜甫并称"李杜"。',
+                '成就': '存世诗作近千首,代表作有《静夜思》《将进酒》《蜀道难》《早发白帝城》等。',
+                '风格': '诗风豪放飘逸,想象丰富,语言流转自然,音律和谐多变。善于运用夸张、比喻等修辞手法,营造雄奇壮丽的意境。'
+            },
+            '杜甫': {
+                '姓名': '杜甫',
+                '字号': '字子美,自号少陵野老',
+                '生卒': '712年 - 770年',
+                '籍贯': '河南巩县(今河南巩义)',
+                '简介': '唐代伟大的现实主义诗人,被后人称为"诗圣"。其诗具有强烈的社会责任感和忧国忧民的情怀。',
+                '成就': '存世诗作约1400首,代表作有《春望》《望岳》《登高》等。',
+                '风格': '诗风沉郁顿挫,关注民生疾苦,反映社会现实。被称为"诗史"。'
+            },
+            '白居易': {
+                '姓名': '白居易',
+                '字号': '字乐天,号香山居士',
+                '生卒': '772年 - 846年',
+                '籍贯': '下邽(今陕西渭南)',
+                '简介': '唐代伟大的现实主义诗人,有"诗魔"之称。主张"文章合为时而著,歌诗合为事而作"。',
+                '成就': '存诗近3000首,代表作有《长恨歌》《琵琶行》等。',
+                '风格': '语言通俗易懂,反映社会现实。'
+            },
+            '王维': {
+                '姓名': '王维',
+                '字号': '字摩诘',
+                '生卒': '701年 - 761年',
+                '籍贯': '蒲州(今山西永济)',
+                '简介': '唐代著名诗人、画家,被苏轼誉为"诗中有画,画中有诗"。山水田园诗派的代表人物。',
+                '成就': '代表作有《山居秋暝》《送元二使安西》等。',
+                '风格': '诗风清新自然,意境空灵。'
+            },
+            '苏轼': {
+                '姓名': '苏轼',
+                '字号': '字子瞻,号东坡居士',
+                '生卒': '1037年 - 1101年',
+                '籍贯': '眉州眉山(今四川眉山)',
+                '简介': '北宋文学家、书画家,诗、词、文、画俱佳。是宋代文坛领袖人物。',
+                '成就': '代表作有《水调歌头·明月几时有》《念奴娇·赤壁怀古》等。',
+                '风格': '诗风豪放旷达,词风开创豪放一派。'
+            },
+            '李清照': {
+                '姓名': '李清照',
+                '字号': '号易安居士',
+                '生卒': '1084年 - 1155年',
+                '籍贯': '济南(今山东济南)',
+                '简介': '宋代女词人,婉约派代表人物,被誉为"千古第一才女"。其词风前期清新婉约,后期悲凉哀怨。',
+                '成就': '代表作有《如梦令·昨夜雨疏风骤》《声声慢·寻寻觅觅》《夏日绝句》等。',
+                '风格': '前期词风清新明快,后期沉郁悲凉,情感真挚细腻,语言优美动人。'
+            }
+        };
+
+        const bio = biographies[poem.author];
+        if (bio) {
+            return `
+                <div class="biography-item">
+                    <div class="biography-label">姓名</div>
+                    <div class="biography-value">${bio.姓名}</div>
+                </div>
+                <div class="biography-item">
+                    <div class="biography-label">字号</div>
+                    <div class="biography-value">${bio.字号}</div>
+                </div>
+                <div class="biography-item">
+                    <div class="biography-label">生卒年份</div>
+                    <div class="biography-value">${bio.生卒}</div>
+                </div>
+                <div class="biography-item">
+                    <div class="biography-label">籍贯</div>
+                    <div class="biography-value">${bio.籍贯}</div>
+                </div>
+                <div class="biography-item">
+                    <div class="biography-label">简介</div>
+                    <div class="biography-value">${bio.简介}</div>
+                </div>
+                <div class="biography-item">
+                    <div class="biography-label">主要成就</div>
+                    <div class="biography-value">${bio.成就}</div>
+                </div>
+                <div class="biography-item">
+                    <div class="biography-label">艺术风格</div>
+                    <div class="biography-value">${bio.风格}</div>
+                </div>
+            `;
+        }
+
+        return `
+            <div class="biography-item">
+                <div class="biography-label">作者</div>
+                <div class="biography-value">${poem.author} (${poem.dynasty})</div>
+            </div>
+        `;
+    }
+
+    // 生成关键字解析
+    generateKeywordAnalysis(poem) {
+        const allText = poem.up + poem.down;
+        const keywords = [];
+
+        // 优先使用poem.keywords字段
+        if (poem.keywords && Array.isArray(poem.keywords) && poem.keywords.length > 0) {
+            return poem.keywords;
+        }
+
+        // 从note字段解析关键字
+        if (poem.note) {
+            const notes = poem.note.split(/[。;；]/);
+            notes.forEach(note => {
+                if (note.includes(':')) {
+                    const [word, meaning] = note.split(':');
+                    if (word && meaning) {
+                        const cleanWord = word.replace(/^[^a-zA-Z\u4e00-\u9fa5]*/, '').trim();
+                        if (cleanWord && cleanWord.length <= 4) {
+                            keywords.push({
+                                word: cleanWord,
+                                pinyin: '',
+                                meaning: meaning.trim(),
+                                context: ''
+                            });
+                        }
+                    }
+                }
+            });
+        }
+
+        // 如果note中没有足够的关键字,从诗句中提取重要词汇
+        if (keywords.length === 0) {
+            const importantWords = ['床', '疑', '举', '低', '朝', '彩', '江', '陵', '猿', '轻', '桃', '潭', '深', '及', '汪伦', '明月', '故乡', '青山', '孤帆', '长风', '云帆', '天生', '千金'];
+            importantWords.forEach(word => {
+                if (allText.includes(word)) {
+                    keywords.push({
+                        word: word,
+                        pinyin: '',
+                        meaning: '请查看注释了解详细解释',
+                        context: ''
+                    });
+                }
+            });
+        }
+
+        return keywords.slice(0, 6);
+    }
+
+    // 获取完整的诗词文本
+    getFullPoemText(poem) {
+        // 优先使用fullPoem字段
+        if (poem.fullPoem) {
+            return poem.fullPoem;
+        }
+        // 尝试从note字段中提取其他诗句
+        if (poem.note) {
+            // note字段格式通常是：字1:解释。字2:解释。
+            // 我们需要提取出其他诗句
+            const lines = [];
+            lines.push(poem.up);
+            lines.push(poem.down);
+
+            // 尝试从note中识别其他诗句（常见的模式）
+            const noteLines = poem.note.split(/[。；;]/);
+            const knownLines = new Set([poem.up, poem.down]);
+
+            for (const line of noteLines) {
+                if (line.includes('：') || line.includes(':')) {
+                    const [word, meaning] = line.split(/[:：]/);
+                    if (word && word.length > 2 && word.length < 8 && !knownLines.has(word)) {
+                        // 可能是另一句诗
+                        lines.push(word);
+                    }
+                }
+            }
+
+            // 去重并返回
+            const uniqueLines = [...new Set(lines)];
+            if (uniqueLines.length > 2) {
+                return uniqueLines.join('，');
+            }
+        }
+        // 默认返回up和down
+        return poem.up + '，' + poem.down;
+    }
+
+    // 获取诗词标题
+    getPoemTitle(poem, fullPoemText) {
+        // 优先使用title字段
+        if (poem.title) {
+            return poem.title;
+        }
+        // 尝试从fullPoem提取
+        if (poem.fullPoem) {
+            return this.extractTitle(poem.fullPoem);
+        }
+        // 尝试从background提取（有些诗词的背景中包含诗名）
+        if (poem.background) {
+            // 匹配《诗名》格式
+            const titleMatch1 = poem.background.match(/《(.+?)》/);
+            if (titleMatch1) return titleMatch1[1];
+            // 匹配"XX诗、XX词"等格式
+            const titleMatch2 = poem.background.match(/([^，。]+?(?:诗|词|曲|吟|歌|行))/);
+            if (titleMatch2) return titleMatch2[1].trim();
+        }
+        // 最后使用extractTitle从拼接的文本中提取
+        return this.extractTitle(fullPoemText);
+    }
+
+    // 从全文中提取标题
+    extractTitle(fullPoem) {
+        if (!fullPoem) return '无题';
+        // 简单的启发式方法:如果是常见标题,直接返回
+        const commonTitles = [
+            '静夜思', '早发白帝城', '望庐山瀑布', '赠汪伦', '黄鹤楼送孟浩然之广陵',
+            '望天门山', '独坐敬亭山', '峨眉山月歌', '子夜吴歌', '春夜洛城闻笛',
+            '将进酒', '行路难', '蜀道难', '月下独酌', '春望', '登高', '望岳',
+            '春夜喜雨', '茅屋为秋风所破歌', '绝句', '江畔独步寻花', '客至',
+            '赋得古原草送别', '问刘十九', '忆江南', '琵琶行', '长恨歌',
+            '相思', '九月九日忆山东兄弟', '山居秋暝', '送元二使安西',
+            '鹿柴', '竹里馆', '送别', '杂诗', '使至塞上', '过故人庄',
+            '题破山寺后禅院', '枫桥夜泊', '寒食', '滁州西涧', '游子吟',
+            '江雪', '寻隐者不遇', '登鹳雀楼', '凉州词', '出塞', '从军行',
+            '芙蓉楼送辛渐', '别董大', '绝句', '江南春', '泊秦淮', '秋夕',
+            '金缕衣', '乌衣巷', '浪淘沙', '竹枝词', '忆江南', '望洞庭',
+            '山行', '清明', '商山早行', '无题', '贾生', '夜雨寄北', '嫦娥',
+            '已亥杂诗', '满江红', '念奴娇', '水调歌头', '江城子', '蝶恋花',
+            '如梦令', '声声慢', '一剪梅', '醉花阴', '夏日绝句', '渔家傲',
+            '浪淘沙令', '浣溪沙', '定风波', '蝶恋花', '菩萨蛮', '虞美人'
+        ];
+        for (const title of commonTitles) {
+            if (fullPoem.includes(title)) {
+                return title;
+            }
+        }
+        // 否则返回第一句的前几个字作为标题
+        const firstLine = fullPoem.split(/[,，\n。]/)[0];
+        return firstLine.substring(0, 8) + (firstLine.length > 8 ? '...' : '');
+    }
+
+    // 生成美术风格解析
+    generateArtStyleAnalysis(poem) {
+        const keywords = poem.tags.join('、');
+        const text = (poem.up + poem.down).toLowerCase();
+
+        if (text.includes('山') || text.includes('水') || text.includes('江') || text.includes('河')) {
+            return `此诗体现了典型的山水诗美学特色。诗人以自然景观为画布,用文字勾勒出一幅生动的水墨山水画卷。诗中山川河流的描绘既有宏大的气势,又有细腻的笔触,展现了天人合一的哲学思想。整首诗色彩淡雅,意境深远,如同一幅精心构图的山水画,让读者仿佛置身于画中。`;
+        } else if (keywords.includes('思乡') || keywords.includes('思人') || text.includes('月') || text.includes('望')) {
+            return `此诗具有浓郁的抒情主义色彩。诗人以细腻的笔触描绘内心情感,将个人情感与自然景物巧妙结合。诗作采用借景抒情的手法,通过具体意象表达抽象情感,使情感表达更加生动形象。整首诗情感真挚,语言优美,体现了中国古典诗歌"情景交融"的美学特征。`;
+        } else if (keywords.includes('战争') || keywords.includes('爱国') || text.includes('铁') || text.includes('马')) {
+            return `此诗展现了豪放派的雄浑风格。诗人以雄浑的笔调描绘战争场面或表达爱国情怀,语言铿锵有力,气势磅礴。诗作运用夸张、对比等修辞手法,营造出宏大的史诗感。整首诗充满了阳刚之气和英雄气概,体现了边塞诗的独特魅力。`;
+        } else if (keywords.includes('田园') || text.includes('村') || text.includes('农')) {
+            return `此诗呈现出田园诗的恬淡美学。诗人以朴素自然的语言描绘田园生活,展现了人与自然和谐共处的美好图景。诗作风格清新自然,如同田间的一缕清风,让人心旷神怡。整首诗意境宁静淡泊,充满了对简单生活的向往和热爱。`;
+        } else {
+            return `此诗风格独特,体现了${poem.dynasty}代诗歌的艺术特色。诗人在继承传统的基础上有所创新,形成了个人独特的艺术风格。诗作在结构、韵律、意象等方面都有精心的安排,体现了古典诗歌的艺术魅力。整首诗既有思想深度,又有审美价值,是中华诗歌宝库中的珍品。`;
+        }
+    }
+
+    // 生成音乐赏析
+    generateMusicAppreciation(poem) {
+        const text = (poem.up + poem.down).toLowerCase();
+        const isPeaceful = text.includes('静') || text.includes('夜') || text.includes('月');
+        const isHappy = text.includes('笑') || text.includes('乐') || text.includes('喜');
+        const isSad = text.includes('悲') || text.includes('愁') || text.includes('泪');
+        const isGrand = text.includes('山') || text.includes('海') || text.includes('天');
+
+        if (isSad) {
+            return `这首诗适合用悲伤婉转的曲调朗诵。建议配合慢板节奏,使用低沉的音色,在每句的尾音处适当延长,营造出忧伤凄美的氛围。可想象古筝或二胡的伴奏,其哀婉的音色能更好地传达诗中的离愁别绪。`;
+        } else if (isGrand) {
+            return `这首诗适合用雄浑有力的曲调朗诵。建议配合中快板节奏,使用明亮饱满的音色,在关键意象处加重语气,展现出壮阔宏大的气势。可想象古琴或编钟的伴奏,其庄重的音色能完美契合诗中的磅礴意境。`;
+        } else if (isPeaceful) {
+            return `这首诗适合用宁静优雅的曲调朗诵。建议配合慢板或中板节奏,使用柔和清澈的音色,音调平稳自然,如潺潺流水般娓娓道来。可想象古琴或竹笛的伴奏,其清雅的音色能营造出诗中的宁静意境。`;
+        } else if (isHappy) {
+            return `这首诗适合用欢快明亮的曲调朗诵。建议配合中快板或快板节奏,使用活泼轻快的音色,在表达喜悦情绪时可适当提高音调,让声音充满活力。可想象琵琶或扬琴的伴奏,其清脆明快的音色能传达诗中的欢快情绪。`;
+        } else {
+            return `这首诗适合用平和自然的曲调朗诵。建议配合中板节奏,音色温和,语速适中,既不过于激昂也不过于低沉,让诗词本身的美感自然流露。可根据诗意调整节奏的快慢变化,使朗诵富有层次感和韵律美。`;
         }
     }
 
@@ -2176,14 +3598,30 @@ class PoemGame {
 
     closeLearnPanel() {
         this.clearAutoTransition();
+        
+        // 如果模态框是打开的,关闭模态框
+        const modal = document.getElementById('analysisModal');
+        if (modal && modal.classList.contains('active')) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            this.speechPlayer.stop();
+            return;
+        }
+        
         const panel = document.getElementById('learnPanel');
         if (panel) {
             panel.innerHTML = '';
         }
         this.learnPanelExpanded = false;
         
-        if (this.state.mode === 'fill') {
-            this.initFillMode();
+        // 根据当前模式决定下一步操作
+        if (this.state.mode === 'learn') {
+            // 学习模式：保持在学习模式，不清空收藏列表
+            // 只关闭赏析面板，让用户可以继续查看其他诗词
+        } else if (this.state.mode === 'fill') {
+            this.generateFillQuestion();
+        } else if (this.state.mode === 'challenge') {
+            this.generateChallengeQuestion();
         } else {
             setTimeout(() => {
                 if (this.state.hearts > 0) {
@@ -2217,6 +3655,28 @@ class PoemGame {
             }
         }
         this.updateUI();
+
+        // 如果在学习模式下，刷新收藏列表
+        if (this.state.mode === 'learn') {
+            this.initLearnMode();
+        }
+    }
+
+    // 标记错题集中的诗词为已复习
+    markAsReviewed(poemId) {
+        this.state.removeWrongPoem(poemId);
+        this.sound.play('correct');
+
+        // 如果在学习模式下，刷新收藏列表
+        if (this.state.mode === 'learn') {
+            // 关闭当前的学习面板
+            this.closeLearnPanel();
+            // 刷新收藏列表
+            this.initLearnMode();
+        } else {
+            // 在其他模式下，只更新UI
+            this.updateUI();
+        }
     }
 
     initChallengeMode() {
@@ -2424,12 +3884,11 @@ class PoemGame {
             this.sound.play('correct');
             this.state.addScore(10);
             
-            const poem = state.poems[leftIdx];
-            this.showLearnPanel(poem);
-            
             state.matched++;
             if (state.matched >= state.target) {
                 this.sound.play('combo');
+                // 只有全部配对完成后才显示学习面板
+                this.showLearnPanel(state.poems[leftIdx]);
             } else { 
                 state.selectedLeft = null; state.selectedRight = null; state.isProcessing = false; 
             }
@@ -2639,42 +4098,117 @@ class PoemGame {
 
     initLearnMode() {
         const main = document.getElementById('gameMain');
-        const collectedPoems = PoemDatabase.poems.filter(p => this.state.collectedPoems.has(p.id));
+        // 收集收藏的诗词和错题集中的诗词（去重）
+        const collectedPoems = PoemDatabase.poems.filter(p => this.state.collectedPoems.has(p.id) || this.state.wrongPoems.has(p.id));
 
         main.innerHTML = `
             <div style="text-align: center; margin-bottom: 24px;">
                 <div style="font-family: 'Ma Shan Zheng', cursive; font-size: 30px; color: var(--primary);">📚 我的收藏</div>
-                <div style="color: var(--ink-light); font-size: 16px;">共收藏 ${collectedPoems.length} 首诗词</div>
+                <div style="color: var(--ink-light); font-size: 16px;">共收藏 ${collectedPoems.length} 首诗词（包括错题集）</div>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <input type="text" id="collectionSearch" placeholder="🔍 搜索诗词（标题、作者、内容）..."
+                    style="width: 100%; padding: 12px 20px; border: 2px solid var(--gold); border-radius: 25px;
+                    font-size: 16px; background: white; color: var(--ink); outline: none; transition: all 0.3s ease;
+                    box-shadow: 0 2px 8px var(--shadow);"
+                    oninput="game.filterCollection(this.value)"
+                    onfocus="this.style.borderColor='var(--accent)'; this.style.boxShadow='0 4px 12px rgba(198, 142, 23, 0.3)'"
+                    onblur="this.style.borderColor='var(--gold)'; this.style.boxShadow='0 2px 8px var(--shadow)'">
             </div>
             <div class="collection-grid" id="collectionGrid"></div>
             <div id="learnPanel"></div>
         `;
 
-        const grid = document.getElementById('collectionGrid');
-        if (collectedPoems.length === 0) {
-            grid.innerHTML = '<div style="text-align: center; color: var(--ink-light); padding: 48px;">暂无收藏,快去游戏中收集吧!</div>';
-            return;
-        }
-
-        collectedPoems.forEach(poem => {
-            const card = document.createElement('div');
-            card.className = 'collection-card';
-            card.innerHTML = `
-                <div class="collection-poem">${poem.up}</div>
-                <div class="collection-author">${poem.dynasty} · ${poem.author}</div>
-                <div class="collection-preview">${poem.down}</div>
-            `;
-            card.onclick = () => {
-                this.currentQuestion = {poem, type: 'learn'};
-                this.showLearnPanel(poem);
-            };
-            grid.appendChild(card);
-        });
+        this.renderCollectionGrid(collectedPoems);
 
         const learnPanel = document.getElementById('learnPanel');
         if (learnPanel) {
             learnPanel.innerHTML = '';
         }
+    }
+
+    // 渲染收藏列表
+    renderCollectionGrid(poems) {
+        const grid = document.getElementById('collectionGrid');
+
+        if (poems.length === 0) {
+            grid.innerHTML = '<div style="text-align: center; color: var(--ink-light); padding: 48px; grid-column: 1 / -1;">暂无匹配的诗词</div>';
+            return;
+        }
+
+        grid.innerHTML = '';
+
+        poems.forEach(poem => {
+            const card = document.createElement('div');
+            card.className = 'collection-card';
+            const isWrong = this.state.wrongPoems.has(poem.id);
+            const isCollected = this.state.collectedPoems.has(poem.id);
+
+            card.innerHTML = `
+                <div class="collection-poem">${poem.title}</div>
+                <div class="collection-author">${poem.dynasty} · ${poem.author}
+                    ${isWrong ? '<span style="color: var(--error);" title="错题集">💔</span>' : ''}
+                    ${isCollected ? '<span style="color: var(--gold);" title="已收藏">⭐</span>' : ''}
+                </div>
+                <div class="collection-preview">${poem.up}，${poem.down}</div>
+                <div style="display: flex; gap: 8px; margin-top: 12px; justify-content: center;">
+                    ${isWrong ? `<button class="action-btn" style="flex: 1; padding: 6px 12px; font-size: 13px; background: var(--success); color: white;" onclick="event.stopPropagation(); game.markAsReviewed(${poem.id})">✓ 已复习</button>` : ''}
+                    <button class="action-btn view-analysis-btn" data-id="${poem.id}" style="flex: 1; padding: 6px 12px; font-size: 13px;">📖 查看赏析</button>
+                </div>
+            `;
+
+            // 为"查看赏析"按钮添加点击事件
+            const viewBtn = card.querySelector('.view-analysis-btn');
+            if (viewBtn) {
+                viewBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.currentQuestion = {poem, type: 'learn'};
+                    this.showLearnPanel(poem);
+                });
+            }
+
+            // 点击卡片主体打开赏析面板
+            card.addEventListener('click', (e) => {
+                // 如果点击的是按钮，不触发此事件
+                if (e.target.tagName === 'BUTTON') return;
+
+                this.currentQuestion = {poem, type: 'learn'};
+                this.showLearnPanel(poem);
+                // 滚动到学习面板
+                setTimeout(() => {
+                    const learnPanel = document.getElementById('learnPanel');
+                    if (learnPanel) {
+                        learnPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100);
+            });
+
+            grid.appendChild(card);
+        });
+    }
+
+    // 过滤收藏列表
+    filterCollection(keyword) {
+        const allPoems = PoemDatabase.poems.filter(p =>
+            this.state.collectedPoems.has(p.id) || this.state.wrongPoems.has(p.id)
+        );
+
+        if (!keyword.trim()) {
+            this.renderCollectionGrid(allPoems);
+            return;
+        }
+
+        const filtered = allPoems.filter(poem => {
+            const search = keyword.toLowerCase();
+            return (poem.title && poem.title.toLowerCase().includes(search)) ||
+                   poem.up.toLowerCase().includes(search) ||
+                   poem.down.toLowerCase().includes(search) ||
+                   poem.author.toLowerCase().includes(search) ||
+                   poem.dynasty.toLowerCase().includes(search) ||
+                   (poem.tags && poem.tags.some(tag => tag.toLowerCase().includes(search)));
+        });
+
+        this.renderCollectionGrid(filtered);
     }
 
     showComboBonus() {
